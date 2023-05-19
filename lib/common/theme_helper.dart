@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hexcolor/hexcolor.dart';
-import 'package:stay_home/core/constants.dart';
+
+import '../Presntation/resources/color_manager.dart';
+
 
 class ThemeHelper{
 
@@ -10,7 +13,7 @@ class ThemeHelper{
       hintText: hintText,
       fillColor: Colors.white,
       filled: true,
-      contentPadding: EdgeInsets.fromLTRB(20, 10, 20, 10),
+      contentPadding:REdgeInsetsDirectional.only(top: 10, start: 20, end: 20,bottom: 10) ,
       focusedBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(100.0), borderSide: BorderSide(color: Colors.grey)),
       enabledBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(100.0), borderSide: BorderSide(color: Colors.grey.shade400)),
       errorBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(100.0), borderSide: BorderSide(color: Colors.red, width: 2.0)),
@@ -30,7 +33,7 @@ class ThemeHelper{
 
   BoxDecoration buttonBoxDecoration(BuildContext context, [String color1 = "", String color2 = ""]) {
     Color c1 = Theme.of(context).primaryColor;
-    Color c2 = kMainColor;
+    Color c2 = ColorManager.primary;
     if (color1.isEmpty == false) {
       c1 = HexColor(color1);
     }
@@ -43,8 +46,8 @@ class ThemeHelper{
         BoxShadow(color: Colors.black26, offset: Offset(0, 4), blurRadius: 5.0)
       ],
       gradient: LinearGradient(
-        begin: Alignment.topLeft,
-        end: Alignment.bottomRight,
+        begin: Alignment.topRight,
+        end: Alignment.bottomLeft,
         stops: const [0.0, 1.0],
         colors: [
           c1,
@@ -64,8 +67,8 @@ class ThemeHelper{
         ),
       ),
       minimumSize: MaterialStateProperty.all(const Size(50, 50)),
-      backgroundColor: MaterialStateProperty.all(Colors.transparent),
-      shadowColor: MaterialStateProperty.all(Colors.transparent),
+      backgroundColor: MaterialStateProperty.all(ColorManager.primary),
+      shadowColor: MaterialStateProperty.all(ColorManager.primary),
     );
   }
 

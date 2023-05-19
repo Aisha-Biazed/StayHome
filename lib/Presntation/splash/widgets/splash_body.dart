@@ -2,10 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:stay_home/core/utils/size_config.dart';
-import 'package:stay_home/resources/strings_manager.dart';
-
-import '../../../../resources/assets_manager.dart';
-import '../../../onBoarding/presentaion/on_boarding_view.dart';
+import '../../onBoarding/presentaion/on_boarding_view.dart';
+import '../../resources/assets_manager.dart';
+import '../../resources/strings_manager.dart';
 class SplashViewBody extends StatefulWidget {
   const SplashViewBody({Key? key}) : super(key: key);
 
@@ -43,7 +42,7 @@ class _SplashViewBodyState extends State<SplashViewBody> with SingleTickerProvid
           animation: fadingAnimation!,
           builder: (context,_)=>Opacity(
             opacity: fadingAnimation?.value,
-            child:const Text(
+            child: Text(
               AppStrings.splashViewText,
               style: TextStyle(
                 fontFamily: 'Poppins',

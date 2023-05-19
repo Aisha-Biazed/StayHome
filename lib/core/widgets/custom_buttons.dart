@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:stay_home/core/constants.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:stay_home/core/utils/size_config.dart';
 import 'package:stay_home/core/widgets/space_widget.dart';
+
+import '../../Presntation/resources/color_manager.dart';
 class CustomGeneralButton extends StatelessWidget {
   const CustomGeneralButton({Key? key, this.text, this.onTap}) : super(key: key);
    final String? text;
@@ -11,21 +13,20 @@ class CustomGeneralButton extends StatelessWidget {
     return GestureDetector(
       onTap: onTap,
       child: Container(
-        height: 60,
+        height: 52.h,
         width: SizeConfig.screenWidth,
         decoration: BoxDecoration(
-          color:kMainColor,
-          borderRadius: BorderRadius.circular(8),
+          color:ColorManager.primary,
+          borderRadius: BorderRadius.circular(15.w),
         ),
         child: Center(
           child: Text(
             text!,
-            style: const TextStyle(
+            style: TextStyle(
               fontSize: 18,
-              color: Color(0xffffffff),
+              color: ColorManager.white,
               fontWeight: FontWeight.w500,
             ),
-            textAlign: TextAlign.left,
           ),
         ),
       ),
@@ -60,14 +61,14 @@ class CustomButtonWithIcon extends StatelessWidget {
               iconData,
               color: color,
             ),
-            HorizintalSpace(2),
+            const HorizintalSpace(2),
             Text(
               text,
-              style: TextStyle(
+              style: const TextStyle(
                 fontWeight: FontWeight.w600,
                 fontFamily: 'Poppins',
                 fontSize: 12,
-                color: const Color(0xff000000),
+                color: Color(0xff000000),
               ),
               textAlign: TextAlign.left,
             ),

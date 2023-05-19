@@ -1,5 +1,6 @@
 class AppStrings {
   static const splashViewText = "StayHome";
+  static const onBoardingTitle = " StayHome";
   static const onBoardingTitle1 = "الميزة الأولى";
   static const onBoardingTitle2 = "الميزة الثانية";
   static const onBoardingSubTitle1 =
@@ -10,17 +11,19 @@ class AppStrings {
   static const onBoardingButton3 = "ابدأ الآن";
   // login Page
   static const loginTitle = "تسجيل الدخول";
-  static const usernameHint = "بريد الالكتروني";
-  static const passwordHint = "كلمة المرور";
+  static const usernameHint = "البريد الالكتروني";
+  static const usernameOutBorder = "أدخل بريدك الالكتروني";
+  static const passwordHint = " كلمة المرور";
   static const forgetPasswordText = "هل نسيت كلمة المرور؟";
   static const loginBtn = "تسجيل الدخول";
-  static const login = "اذا ليس لديك حساب ؟";
-  static const forgetPassword = "انشئ الان";
+  static const login = "إذا ليس لديك حساب ؟";
+  static const forgetPassword = "انشئ الآن";
   //register Page
   static const registerText = "انشئ حسابك الخاص";
   static const firstname = "الاسم الكامل";
   static const bairthdate = "تاريخ الميلاد";
-  static const ok = "بريد الالكتروني";
+  static const bairthdatehit = "تاريخ الميلاد";
+  static const registerBtn = "اشترك الان";
   static const String mobileNumber = 'رقم الموبايل';
   static const String invalidEmail = "كلمة المرور";
   static const String resetPassword = "كلمة المرور";
@@ -43,8 +46,11 @@ class AppStrings {
       "ادخل رمز التحقق الذي ارسلناه للتو";
   static const splashViewTe = "على بريدك الالكتروني";
   static const splashViewT = "ارسال";
-  static const splashView = "العودة لتسجيل الدخول";
-//
+  static const returnTologin = "العودة لتسجيل الدخول";
+  // profile
+  static const profiledate = "7/10/2001";
+  static const addAddress = "اضافة عنوان";
+//noRouteFound
 static const search ="ابحث هنا";
-
+  static const noRouteFound ="هناك مشكلة";
 }

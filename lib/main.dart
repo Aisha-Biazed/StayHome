@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:get/get.dart';
 import 'package:hexcolor/hexcolor.dart';
-
-import 'features/splash/presentation/splash_view.dart';
-
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'Presntation/resources/routes_manager.dart';
+import 'Presntation/splash/splash_view.dart';
 
 void main() {
   runApp( MyApp());
@@ -15,27 +16,36 @@ class MyApp extends StatelessWidget {
   Color _accentColor = HexColor('#8A02AE');
   @override
   Widget build(BuildContext context) {
-    return GetMaterialApp(
-        theme: ThemeData(
-        primaryColor: _primarColor,
-        scaffoldBackgroundColor: Colors.grey.shade100,
-        primarySwatch: Colors.grey,
-        accentColor: _accentColor,
-      ),
-      debugShowCheckedModeBanner: false,
-      home: SplashView(),
+    return ScreenUtilInit(
+      designSize: const Size(375, 812),
+      minTextAdapt: true,
+      splitScreenMode: true,
+      builder: (context,child){
+        return GetMaterialApp(
+          title: 'Localizations Sample App',
+          localizationsDelegates: const[
+            GlobalMaterialLocalizations.delegate,
+            GlobalWidgetsLocalizations.delegate,
+            GlobalCupertinoLocalizations.delegate,
+          ],
+          supportedLocales: const [
+            Locale('ar', "AE"), // EnglishSpanish
+          ],
+          theme: ThemeData(
+            fontFamily: 'Inter',
+            primaryColor: _primarColor,
+            scaffoldBackgroundColor: Colors.grey.shade100,
+            primarySwatch: Colors.grey,
+            accentColor: _accentColor,
+          ),
+          onGenerateRoute: RouteGenerator.getRoute,
+          initialRoute: Routes.splashRoute,
+          debugShowCheckedModeBanner: false,
+          home: SplashView(),
+        );
+
+      },
+
     );
   }
 }
-
-//MaterialApp(theme: ThemeData(
-// //         primaryColor: _primarColor,
-// //         scaffoldBackgroundColor: Colors.grey.shade100,
-// //         primarySwatch: Colors.grey,
-// //         accentColor: _accentColor,
-// //       ),
-//
-//       debugShowCheckedModeBanner: false,
-//       title: 'Login UI - Flutter',
-//       home: SplashScreen(title: '',),
-//     );

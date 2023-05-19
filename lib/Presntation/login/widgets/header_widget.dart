@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../core/constants.dart';
-import '../../core/constants.dart';
+import '../../../core/constants.dart';
 
 class HeaderWidget extends StatefulWidget {
   final double _height;

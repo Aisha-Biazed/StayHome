@@ -2,10 +2,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import '../common/theme_helper.dart';
+import 'package:stay_home/Presntation/login/widgets/header_widget.dart';
+import '../../common/theme_helper.dart';
 import 'forgot_password_verification_page.dart';
-import 'login_page.dart';
-import 'widgets/header_widget.dart';
+import 'login_view.dart';
 
 class ForgotPasswordPage extends StatefulWidget {
   const ForgotPasswordPage({Key? key}) : super(key: key);
@@ -129,7 +129,7 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
                                       ..onTap = () {
                                         Navigator.push(
                                           context,
-                                          MaterialPageRoute(builder: (context) => LoginPage()),
+                                          MaterialPageRoute(builder: (context) => LoginView()),
                                         );
                                       },
                                     style: TextStyle(
