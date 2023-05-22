@@ -43,7 +43,7 @@ class _SplashViewBodyState extends State<SplashViewBody> with SingleTickerProvid
           builder: (context,_)=>Opacity(
             opacity: fadingAnimation?.value,
             child: Text(
-              AppStrings.splashViewText,
+              AppStrings.onBoardingTitle,
               style: TextStyle(
                 fontFamily: 'Poppins',
                 fontSize: 51,

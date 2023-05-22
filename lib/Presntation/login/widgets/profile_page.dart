@@ -33,13 +33,13 @@ class _ProfilePageState extends State<ProfilePage> {
           elevation: 0.5,
           iconTheme: const IconThemeData(color: Colors.white),
           flexibleSpace: Container(
-            decoration: const BoxDecoration(
+            decoration:  BoxDecoration(
               gradient: LinearGradient(
                 begin: Alignment.topLeft,
                 end: Alignment.bottomRight,
                colors: <Color>[
-                kMainColor,
-                kMainColor,
+                ColorManager.primary,
+                ColorManager.primary,
                 // Theme.of(context).primaryColor , Theme.of(context).accentColor
               ])
             ),

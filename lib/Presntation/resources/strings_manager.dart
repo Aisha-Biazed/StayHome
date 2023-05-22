@@ -1,5 +1,6 @@
 class AppStrings {
-  static const splashViewText = "StayHome";
+  static const appbarHome1 = "Stay";
+  static const appbarHome2 = "Home";
   static const onBoardingTitle = " StayHome";
   static const onBoardingTitle1 = "الميزة الأولى";
   static const onBoardingTitle2 = "الميزة الثانية";

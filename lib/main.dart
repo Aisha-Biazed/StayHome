@@ -3,6 +3,7 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:get/get.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:stay_home/Presntation/home/widget/home_body_view.dart';
 import 'Presntation/resources/routes_manager.dart';
 import 'Presntation/splash/splash_view.dart';
 
@@ -41,7 +42,7 @@ class MyApp extends StatelessWidget {
           onGenerateRoute: RouteGenerator.getRoute,
           initialRoute: Routes.splashRoute,
           debugShowCheckedModeBanner: false,
-          home: SplashView(),
+          home: HomeBodyView(),
         );
 
       },
