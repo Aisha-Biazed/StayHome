@@ -1,34 +1,24 @@
+import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
 
-class DioHelper {
-  static late Dio dio ;
-
-  static init() {
-    dio = Dio(BaseOptions(
-      baseUrl: 'https://student.valuxapps.com/api/',
-      receiveDataWhenStatusError: true,
-      receiveTimeout: Duration(seconds: 5),
-      connectTimeout: Duration(seconds: 6),
-      headers: {
-        'Content-Type':'application/json'
-      }
-    ));
+Future<Unit> getLogin(String dialCode, String phoneNumber) async {
+  var response = await Dio(
+      BaseOptions(
+          receiveDataWhenStatusError: true,
+          receiveTimeout: const Duration(seconds: 5),
+          connectTimeout: const Duration(seconds: 6),
+          headers: {
+            'Content-Type':'multipart/form-data',
+            'Accept':'text/plain'
+          })
+  ).post('http://52.91.25.191:85/api/Account/LogIn?dialCode=%2B963&phoneNumber=$phoneNumber');
+  if(response.statusCode==200){
+    print(response.statusCode);
+    print("Successful");
+    return Future.value(unit);
+  }else {
+    print("###############");
+    throw Exception();
   }
 
-  static Future<Response> getData(
-      {required String url, required Map<String, dynamic> query}) async {
-    return await dio.get(url, queryParameters: query);
-  }
-
-  static Future<Response> postData({
-    required String url,
-    Map<String, dynamic>? query,
-    required Map<String, dynamic> data,
-  }) async {
-    return dio.post(
-      url,
-      queryParameters: query,
-      data: data,
-    );
-  }
 }

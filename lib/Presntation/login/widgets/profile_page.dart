@@ -1,17 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:get/get.dart';
 import 'package:stay_home/Presntation/resources/color_manager.dart';
+import 'package:stay_home/Presntation/resources/routes_manager.dart';
 import 'package:stay_home/Presntation/resources/strings_manager.dart';
-import 'package:stay_home/core/constants.dart';
 import 'package:stay_home/core/widgets/custom_text.dart';
 
-import '../../splash/splash_view.dart';
-import '../forgot_password_page.dart';
-import '../forgot_password_verification_page.dart';
-import '../login_view.dart';
-import '../registartion_page.dart';
 import 'header_widget.dart';
 class ProfilePage extends StatefulWidget {
   const ProfilePage({Key? key}) : super(key: key);
@@ -44,26 +38,6 @@ class _ProfilePageState extends State<ProfilePage> {
               ])
             ),
           ),
-          actions: [
-            Container(
-              margin: REdgeInsetsDirectional.only(end: 16,top: 16),
-              child: Stack(
-                children: <Widget>[
-                  const Icon(Icons.notifications),
-                  Positioned(
-                    right:0,
-                      child: Container(
-                        padding: const EdgeInsets.all(1),
-                        decoration: BoxDecoration(color: Colors.red, borderRadius: BorderRadius.circular(6)),
-                        constraints: const BoxConstraints(minWidth: 12, minHeight: 12),
-                        child: const Text('5',style: TextStyle(color: Colors.white,fontSize: 8),
-                        textAlign: TextAlign.center,),
-                      ))
-                ],
-
-              ),
-            )
-          ],
         ),
         body: SingleChildScrollView(
           child: Stack(
@@ -91,10 +65,9 @@ class _ProfilePageState extends State<ProfilePage> {
                       child:  Icon(Icons.person, size: 80,color: Colors.grey.shade300,),
                     ),
                     const SizedBox(height: 20,),
-                    const Text('Mr.Joudi & Hiba',style: TextStyle(
-                      fontSize: 22, fontWeight: FontWeight.bold
-                    ),),
-
+                    CustomText(txt: AppStrings.hiba ,txtColor: ColorManager.dark,fontSize: 25.sp,
+                    fontWeight: FontWeight.w700,
+                    ),
                     65.verticalSpace,
                     Card(
                       child: Container(
@@ -105,15 +78,20 @@ class _ProfilePageState extends State<ProfilePage> {
                           ...ListTile.divideTiles(
                             color:Colors.grey,
                               tiles: [
-                                 ListTile(
-                                  contentPadding: EdgeInsets.symmetric(
-                                    horizontal: 12,vertical: 4,),
-                                  leading: Icon(Icons.my_location,color:ColorManager.primary),
-                                  title: const CustomText(txt:  AppStrings.addAddress),
-                                  subtitle: Text("سوريا"),
+                                 GestureDetector(
+                                   child: ListTile(
+                                    contentPadding: const EdgeInsets.symmetric(
+                                      horizontal: 12,vertical: 4,),
+                                    leading: Icon(Icons.my_location,color:ColorManager.primary),
+                                    title: const CustomText(txt:  AppStrings.addAddress),
+                                    subtitle: Text("سوريا"),
+                                     onTap: (){
+                                      Navigator.pushNamed(context, Routes.addressRoute);
+                                     },
                                 ),
+                                 ),
                                  ListTile(
-                                  contentPadding: EdgeInsets.symmetric(
+                                  contentPadding: const EdgeInsets.symmetric(
                                     horizontal: 12,vertical: 4,),
                                   leading: Icon(Icons.email,color:ColorManager.primary),
                                   title: const CustomText(txt:  AppStrings.usernameHint),
@@ -129,7 +107,7 @@ class _ProfilePageState extends State<ProfilePage> {
                                  ListTile(
                                   contentPadding: EdgeInsets.symmetric(
                                     horizontal: 12,vertical: 4,),
-                                  leading: Icon(Icons.person,color: ColorManager.primary,),
+                                  leading: Icon(Icons.calendar_month_outlined,color: ColorManager.primary,),
                                   title:  CustomText(txt:  AppStrings.bairthdatehit),
                                   subtitle:CustomText(txt:  AppStrings.profiledate),
                                 ),

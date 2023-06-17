@@ -46,7 +46,11 @@ dependencies:
   rive: ^0.10.3
   dio: ^5.1.2
   flutter_bloc: ^8.1.2
+  equatable: ^2.0.5
+  dartz: ^0.10.1
   conditional_builder_null_safety: ^0.0.6
+  dropdown_textfield: ^1.0.8
+
 dev_dependencies:
   flutter_test:
     sdk: flutter

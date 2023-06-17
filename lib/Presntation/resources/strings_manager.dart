@@ -27,31 +27,63 @@ class AppStrings {
   static const registerBtn = "اشترك الان";
   static const String mobileNumber = 'رقم الموبايل';
   static const String invalidEmail = "كلمة المرور";
-  static const String resetPassword = "كلمة المرور";
+  static const String resetPassword = "تاكيد كلمة المرور";
   static const String emailHint = "انضم لنا قبل؟";
   static const String userNameInvalid = "سجل دخول";
 //forgetPassword Page
-  static const splashViewText1 = "هل نسيت كلمة المرور؟";
-  static const splashViewText2 =
+  static const dontWorryTxt =
       "لا تقلق لقد حدث مشكلة فقط";
-  static const splashViewText3 = "اعد ادخال بريدك الالكتروني";
+  static const reEnteremail = "اعد إدخال بريدك الالكتروني";
   static const splashViewText4 = "بريد الالكتروني";
   static const splashViewText5 = "كلمة المرور";
-  static const splashViewText6 = "تاكيد كلمة المرور";
-  static const splashViewText7 = "ارسال";
-  static const splashViewText8 = "ان لم يصل الكود؟";
-  static const splashViewText9 = "اعد ارسال";
-  //
+  static const splashViewText6 = "تأكيد كلمة المرور";
+  static const sendBtn = "إرسال";
+  static const fieldCodeTxt = "إن لم يصل الكود؟";
+  static const resendTxt = "اعدالإرسال";
   static const validate = "ادخل رمز التحقق الخاص بك";
   static const splashViewTex =
       "ادخل رمز التحقق الذي ارسلناه للتو";
   static const splashViewTe = "على بريدك الالكتروني";
-  static const splashViewT = "ارسال";
   static const returnTologin = "العودة لتسجيل الدخول";
   // profile
   static const profiledate = "7/10/2001";
   static const addAddress = "اضافة عنوان";
+  static const hiba = "هبة بعيج";
+  //add Address
+  static const addNewAddress = " عنوان جديد";
+  static const save ="حفظ";
+  static const addDetails = "تفاصيل اضافية";
+  static const theFloor = "الطابق";
+  static const theBuilding = "البناء";
+  static const theStreet = "الشارع";
+  static const theTown = "المنطقة";
+
 //noRouteFound
 static const search ="ابحث هنا";
   static const noRouteFound ="هناك مشكلة";
+  // home
+  static const homeNavLabel_1 = "الرئيسية";
+  static const homeNavLabel_2 = "التصنيفات";
+  static const homeNavLabel_3 = "الطلبات";
+  static const homeNavLabel_4 = "البروفايل";
+  static const store1 = "متاجر";
+  static const store2 = "تصنيفات";
+  static const store3 = "شاحنات";
+  static const store4 = "طلبات";
+  static const homeText = "المتاجر الاكثر تقيماً ";
+  static const pizza = "بيتزا";
+  static const mario = "طعام |  ماريو";
+  static const hodi = "هودي";
+  static const shadowsTxt = "ملابس | شادوز";
+// Service page
+  static const serviceText1 = " توصيل الاغراض";
+  static const serviceText2 = " توصيل شخصي";
+  static const serviceText3 = "توصيل بضائع";
+
+
+
+//
+
+
+
 }

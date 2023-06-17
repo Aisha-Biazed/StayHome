@@ -18,6 +18,14 @@ class ImageAssets {
   static const String logoutIc = "$imagePath/logout_ic.svg";
   static const String rightArrowSettingsIc =
       "$imagePath/right_arrow_settings_ic.svg";
+  static const String home_img1 = "$imagePath/home_img1.png";
+  static const String home_img2 = "$imagePath/home_img2.png";
+  static const String store1 = "$imagePath/store1.png";
+  static const String store2 = "$imagePath/store2.png";
+  static const String servicesImg = "$imagePath/services_img.png";
+  static const String serviceImg1 = "$imagePath/service_img1.png";
+  static const String serviceImg2 = "$imagePath/service_img2.png";
+  static const String serviceImg3 = "$imagePath/service_img3.png";
 }
 
 class JsonAssets {

@@ -1,6 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:stay_home/Presntation/home/home_view.dart';
+import 'package:stay_home/Presntation/home/pages/service_page.dart';
 import 'package:stay_home/Presntation/resources/strings_manager.dart';
 
+// import '../Auth/presentation/pages/login/add_address_page.dart';
+// import '../Auth/presentation/pages/login/forgot_password_page.dart';
+// import '../Auth/presentation/pages/login/forgot_password_verification_page.dart';
+// import '../Auth/presentation/pages/login/login_view.dart';
+// import '../Auth/presentation/pages/login/registartion_page.dart';
+// import '../Auth/presentation/pages/login/widgets/profile_page.dart';
+import '../login/add_address_page.dart';
 import '../login/forgot_password_page.dart';
 import '../login/forgot_password_verification_page.dart';
 import '../login/login_view.dart';
@@ -18,6 +27,9 @@ class Routes {
   static const String forgotPasswordRoute = "/forgotPassword";
   static const String verificationRoute = "/verification";
   static const String profilesRoute = "/profile";
+  static const String homesRoute = "/home";
+  static const String serviceRoute = "/service";
+  static const String addressRoute = "/address";
 }
 
 class RouteGenerator {
@@ -37,6 +49,12 @@ class RouteGenerator {
         return MaterialPageRoute(builder: (_) => const ForgotPasswordVerificationPage());
       case Routes.profilesRoute:
         return MaterialPageRoute(builder: (_) => const ProfilePage());
+      case Routes.homesRoute:
+        return MaterialPageRoute(builder: (_) => const HomeView());
+      case Routes.serviceRoute:
+        return MaterialPageRoute(builder: (_) => const ServicePage());
+      case Routes.addressRoute:
+        return MaterialPageRoute(builder: (_) => const AddAddressPage());
       default:
         return unDefinedRoute();
     }

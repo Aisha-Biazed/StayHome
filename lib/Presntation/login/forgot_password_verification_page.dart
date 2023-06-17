@@ -1,4 +1,3 @@
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:otp_text_field/otp_field.dart';
@@ -49,14 +48,6 @@ class _ForgotPasswordVerificationPageState extends State<ForgotPasswordVerificat
                           mainAxisAlignment: MainAxisAlignment.start,
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children:  [
-                            // Text('Verification',
-                            //   style: TextStyle(
-                            //       fontSize: 35,
-                            //       fontWeight: FontWeight.bold,
-                            //       color: Colors.black54
-                            //   ),
-                            //   // textAlign: TextAlign.center,
-                            // ),
                             Container(
                                 margin: const EdgeInsets.fromLTRB(25, 10, 25, 10),
                                 padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
@@ -75,15 +66,6 @@ class _ForgotPasswordVerificationPageState extends State<ForgotPasswordVerificat
                                 ],
                               ),
                             )
-                            // Text(
-                            //   'Enter the verification code we just sent you on your email address.',
-                            //   style: TextStyle(
-                            //     // fontSize: 20,
-                            //       fontWeight: FontWeight.bold,
-                            //       color: Colors.black54
-                            //   ),
-                            //   // textAlign: TextAlign.center,
-                            // ),
                           ],
                         ),
                       ),
@@ -116,7 +98,7 @@ class _ForgotPasswordVerificationPageState extends State<ForgotPasswordVerificat
                                   padding: const EdgeInsets.fromLTRB(
                                       100, 10, 100, 10),
                                   child: CustomText(
-                                    txt: AppStrings.splashViewText7,
+                                    txt: AppStrings.sendBtn,
                                     fontSize: 16.sp,
                                     txtColor: ColorManager.white,
                                   ),
@@ -140,7 +122,7 @@ class _ForgotPasswordVerificationPageState extends State<ForgotPasswordVerificat
                                   onTap: (){
                                     Navigator.pushNamed(context, Routes.loginRoute);
                                   },
-                                    child: CustomText(txt:AppStrings.returnTologin , fontSize: 16.sp, txtColor: ColorManager.dark,))),
+                                    child: CustomText(txt:AppStrings.returnTologin , fontSize: 17.sp, txtColor: ColorManager.secondaryGrey,))),
                           ],
                         ),
                       )

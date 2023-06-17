@@ -47,7 +47,6 @@ class _RegistrationPageState extends State<RegistrationPage>{
                 alignment: Alignment.center,
                 child: Column(
                   children: [
-
                     Form(
                       key: _formKey,
                       child: Column(
@@ -197,7 +196,7 @@ class _RegistrationPageState extends State<RegistrationPage>{
                               text: AppStrings.registerBtn,
 
                             onTap: (){
-                              Navigator.pushNamed(context, Routes.verificationRoute);
+                              Navigator.pushNamed(context, Routes.profilesRoute);
                             },
                             ),
                           ),
@@ -210,10 +209,15 @@ class _RegistrationPageState extends State<RegistrationPage>{
                                   txt: AppStrings.emailHint,
                                 ),
                                 10.horizontalSpace,
-                                CustomText(
-                                  txt: AppStrings.userNameInvalid,
-                                  txtColor: ColorManager.primary,
-                                  fontWeight: FontWeight.w700,
+                                GestureDetector(
+                                  onTap: (){
+                                    Navigator.pushNamed(context, Routes.loginRoute);
+                                  },
+                                  child: CustomText(
+                                    txt: AppStrings.userNameInvalid,
+                                    txtColor: ColorManager.primary,
+                                    fontWeight: FontWeight.w700,
+                                  ),
                                 ),
                               ],
                             ),
