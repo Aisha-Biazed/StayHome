@@ -93,14 +93,14 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
                                   decoration: ThemeHelper().buttonBoxDecoration(context),
                                   child: CustomGeneralButton(text: AppStrings.sendBtn,
                                     onTap: (){
-                                      if(formkey.currentState!.validate()){
-                                        print("sldfoak");
-                                        LoginCubit.get(context).userLogin(
-                                          email: emailController.text,
-                                          password:passwordController.text,
-                                        );
-
-                                      }
+                                      // if(formkey.currentState!.validate()){
+                                      //   print("sldfoak");
+                                      //   LoginCubit.get(context).userLogin(
+                                      //     email: emailController.text,
+                                      //     password:passwordController.text,
+                                      //   );
+                                      //
+                                      // }
 
                                       Navigator.pushNamed(context, Routes.homesRoute);
                                     }

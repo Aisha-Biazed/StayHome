@@ -9,6 +9,7 @@ import 'package:stay_home/Presntation/resources/strings_manager.dart';
 // import '../Auth/presentation/pages/login/login_view.dart';
 // import '../Auth/presentation/pages/login/registartion_page.dart';
 // import '../Auth/presentation/pages/login/widgets/profile_page.dart';
+import '../home/pages/store_page.dart';
 import '../login/add_address_page.dart';
 import '../login/forgot_password_page.dart';
 import '../login/forgot_password_verification_page.dart';
@@ -18,7 +19,6 @@ import '../login/widgets/profile_page.dart';
 import '../onBoarding/presentaion/on_boarding_view.dart';
 import '../splash/splash_view.dart';
 
-
 class Routes {
   static const String splashRoute = "/";
   static const String onBoardingRoute = "/onBoarding";
@@ -27,9 +27,10 @@ class Routes {
   static const String forgotPasswordRoute = "/forgotPassword";
   static const String verificationRoute = "/verification";
   static const String profilesRoute = "/profile";
+  static const String addressRoute = "/address";
   static const String homesRoute = "/home";
   static const String serviceRoute = "/service";
-  static const String addressRoute = "/address";
+  static const String storeRoute = "/store";
 }
 
 class RouteGenerator {
@@ -46,15 +47,18 @@ class RouteGenerator {
       case Routes.forgotPasswordRoute:
         return MaterialPageRoute(builder: (_) => const ForgotPasswordPage());
       case Routes.verificationRoute:
-        return MaterialPageRoute(builder: (_) => const ForgotPasswordVerificationPage());
+        return MaterialPageRoute(
+            builder: (_) => const ForgotPasswordVerificationPage());
       case Routes.profilesRoute:
         return MaterialPageRoute(builder: (_) => const ProfilePage());
+      case Routes.addressRoute:
+        return MaterialPageRoute(builder: (_) => const AddAddressPage());
       case Routes.homesRoute:
         return MaterialPageRoute(builder: (_) => const HomeView());
       case Routes.serviceRoute:
         return MaterialPageRoute(builder: (_) => const ServicePage());
-      case Routes.addressRoute:
-        return MaterialPageRoute(builder: (_) => const AddAddressPage());
+      case Routes.storeRoute:
+        return MaterialPageRoute(builder: (_) => const StorePage());
       default:
         return unDefinedRoute();
     }

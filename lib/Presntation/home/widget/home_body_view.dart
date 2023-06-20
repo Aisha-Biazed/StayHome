@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:stay_home/Presntation/home/navigation_page/orders_page.dart';
+import 'package:stay_home/Presntation/home/widget/custom_appbar.dart';
 import 'package:stay_home/Presntation/resources/color_manager.dart';
 import '../../resources/strings_manager.dart';
-import '../navigation_page/Categories_page.dart';
+import '../navigation_page/main_page.dart';
 import '../navigation_page/profile _page.dart';
 
 class HomeBodyView extends StatefulWidget {
@@ -16,9 +17,9 @@ class HomeBodyView extends StatefulWidget {
 class _HomeBodyViewState extends State<HomeBodyView> {
   int selectedPageIndex = 0;
   int pageIndex = 0;
-  int _currentIndex =0;
+  int _currentIndex = 0;
   List<Widget> _widgetOptions = <Widget>[
-    CategoriesPage(),
+    MainPage(),
     ProfilePageNav(),
     ProfilePageNav(),
     OrderPage(),
@@ -27,38 +28,53 @@ class _HomeBodyViewState extends State<HomeBodyView> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: _widgetOptions.elementAt(_currentIndex),
-        bottomNavigationBar: ClipRRect(
-          borderRadius: const BorderRadius.only(bottomLeft: Radius.circular(30.0), bottomRight: Radius.circular(30.0), topRight: Radius.circular(15.0), ),
-          child: BottomNavigationBar(
-            type: BottomNavigationBarType.fixed,
-            iconSize: 23.33.w,
+      bottomNavigationBar: ClipRRect(
+        borderRadius: const BorderRadius.only(
+          bottomLeft: Radius.circular(30.0),
+          bottomRight: Radius.circular(30.0),
+          topRight: Radius.circular(15.0),
+        ),
+        child: BottomNavigationBar(
+          type: BottomNavigationBarType.fixed,
+          iconSize: 23.33.w,
           showUnselectedLabels: true,
           items: const [
-            BottomNavigationBarItem(icon: Icon(Icons.home_outlined ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.home_outlined),
               label: AppStrings.homeNavLabel_1,
             ),
-            BottomNavigationBarItem(icon: Icon(Icons.border_all_outlined),
-            label: AppStrings.homeNavLabel_2,),
-            BottomNavigationBarItem(icon: Icon(Icons.shopping_cart),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.border_all_outlined),
+              label: AppStrings.homeNavLabel_2,
+            ),
+            BottomNavigationBarItem(
+                icon: Icon(Icons.shopping_cart),
                 label: AppStrings.homeNavLabel_3),
-            BottomNavigationBarItem(icon: Icon(Icons.person),
-              label: AppStrings.homeNavLabel_4,)
+            BottomNavigationBarItem(
+              icon: Icon(Icons.person),
+              label: AppStrings.homeNavLabel_4,
+            )
           ],
           currentIndex: _currentIndex,
           selectedItemColor: ColorManager.primary,
-          selectedIconTheme: IconThemeData(color:ColorManager.primary,),
-          unselectedIconTheme: IconThemeData(color:ColorManager.secondaryGrey,),
+          selectedIconTheme: IconThemeData(
+            color: ColorManager.primary,
+          ),
+          unselectedIconTheme: IconThemeData(
+            color: ColorManager.secondaryGrey,
+          ),
           unselectedItemColor: ColorManager.secondaryGrey,
-            enableFeedback: true,
-          onTap:_ChangeItem ,
-      ),
+          enableFeedback: true,
+          onTap: _ChangeItem,
         ),
-        );
+      ),
+    );
   }
-  void _ChangeItem(int value){
-      setState(() {
-        print(value);
-        _currentIndex =value;
-      });
+
+  void _ChangeItem(int value) {
+    setState(() {
+      print(value);
+      _currentIndex = value;
+    });
   }
 }

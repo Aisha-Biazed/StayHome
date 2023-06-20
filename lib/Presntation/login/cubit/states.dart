@@ -6,7 +6,11 @@ class LoginLoadingState extends LoginStates {}
 
 class LoginSuccessState extends LoginStates {}
 
-class LoginErrorState extends LoginStates {
-  final String error;
-  LoginErrorState(this.error);
-}
+class LoginErrorState extends LoginStates {}
+
+
+class CreateLoadingState extends LoginStates {}
+
+class CreateSuccessState extends LoginStates {}
+
+class CreateErrorState extends LoginStates {}

@@ -19,6 +19,8 @@ class AppStrings {
   static const loginBtn = "تسجيل الدخول";
   static const login = "إذا ليس لديك حساب ؟";
   static const forgetPassword = "انشئ الآن";
+  static const validatePassword = "يرجى إدخال كلمة المرور ";
+  static const validateEmail = "يرجى إدخال البريد الإلكتروني";
   //register Page
   static const registerText = "انشئ حسابك الخاص";
   static const firstname = "الاسم الكامل";
@@ -31,8 +33,7 @@ class AppStrings {
   static const String emailHint = "انضم لنا قبل؟";
   static const String userNameInvalid = "سجل دخول";
 //forgetPassword Page
-  static const dontWorryTxt =
-      "لا تقلق لقد حدث مشكلة فقط";
+  static const dontWorryTxt = "لا تقلق لقد حدث مشكلة فقط";
   static const reEnteremail = "اعد إدخال بريدك الالكتروني";
   static const splashViewText4 = "بريد الالكتروني";
   static const splashViewText5 = "كلمة المرور";
@@ -41,8 +42,7 @@ class AppStrings {
   static const fieldCodeTxt = "إن لم يصل الكود؟";
   static const resendTxt = "اعدالإرسال";
   static const validate = "ادخل رمز التحقق الخاص بك";
-  static const splashViewTex =
-      "ادخل رمز التحقق الذي ارسلناه للتو";
+  static const splashViewTex = "ادخل رمز التحقق الذي ارسلناه للتو";
   static const splashViewTe = "على بريدك الالكتروني";
   static const returnTologin = "العودة لتسجيل الدخول";
   // profile
@@ -51,7 +51,7 @@ class AppStrings {
   static const hiba = "هبة بعيج";
   //add Address
   static const addNewAddress = " عنوان جديد";
-  static const save ="حفظ";
+  static const save = "حفظ";
   static const addDetails = "تفاصيل اضافية";
   static const theFloor = "الطابق";
   static const theBuilding = "البناء";
@@ -59,16 +59,16 @@ class AppStrings {
   static const theTown = "المنطقة";
 
 //noRouteFound
-static const search ="ابحث هنا";
-  static const noRouteFound ="هناك مشكلة";
+  static const search = "ابحث هنا";
+  static const noRouteFound = "هناك مشكلة";
   // home
   static const homeNavLabel_1 = "الرئيسية";
   static const homeNavLabel_2 = "التصنيفات";
   static const homeNavLabel_3 = "الطلبات";
   static const homeNavLabel_4 = "البروفايل";
   static const store1 = "متاجر";
-  static const store2 = "تصنيفات";
-  static const store3 = "شاحنات";
+  static const store2 = "خدماتنا";
+  static const store3 = "سائقين";
   static const store4 = "طلبات";
   static const homeText = "المتاجر الاكثر تقيماً ";
   static const pizza = "بيتزا";
@@ -80,10 +80,5 @@ static const search ="ابحث هنا";
   static const serviceText2 = " توصيل شخصي";
   static const serviceText3 = "توصيل بضائع";
 
-
-
 //
-
-
-
 }

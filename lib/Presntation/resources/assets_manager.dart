@@ -26,6 +26,7 @@ class ImageAssets {
   static const String serviceImg1 = "$imagePath/service_img1.png";
   static const String serviceImg2 = "$imagePath/service_img2.png";
   static const String serviceImg3 = "$imagePath/service_img3.png";
+  static const String storeLogo = "$imagePath/storelogo.png";
 }
 
 class JsonAssets {

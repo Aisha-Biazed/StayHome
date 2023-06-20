@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:stay_home/Presntation/home/widget/custom_appbar.dart';
 import 'package:stay_home/Presntation/home/widget/home_body_view.dart';
+
 class HomeView extends StatefulWidget {
   const HomeView({Key? key}) : super(key: key);
 
@@ -11,10 +12,9 @@ class HomeView extends StatefulWidget {
 class _HomeViewState extends State<HomeView> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return const Scaffold(
       resizeToAvoidBottomInset: false,
-      appBar: CustomAppBar(),
-      body: const HomeBodyView(),
+      body: HomeBodyView(),
     );
   }
 }
