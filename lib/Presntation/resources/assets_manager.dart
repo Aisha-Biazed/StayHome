@@ -18,8 +18,9 @@ class ImageAssets {
   static const String logoutIc = "$imagePath/logout_ic.svg";
   static const String rightArrowSettingsIc =
       "$imagePath/right_arrow_settings_ic.svg";
-  static const String home_img1 = "$imagePath/home_img1.png";
-  static const String home_img2 = "$imagePath/home_img2.png";
+  static const String homeImg1 = "$imagePath/home_img1.png";
+  static const String homeImg2 = "$imagePath/home_img2.png";
+  static const String homeImg3 = "$imagePath/home_img3.png";
   static const String store1 = "$imagePath/store1.png";
   static const String store2 = "$imagePath/store2.png";
   static const String servicesImg = "$imagePath/services_img.png";
@@ -27,6 +28,23 @@ class ImageAssets {
   static const String serviceImg2 = "$imagePath/service_img2.png";
   static const String serviceImg3 = "$imagePath/service_img3.png";
   static const String storeLogo = "$imagePath/storelogo.png";
+  static const String storeImg1 = "$imagePath/store_img1.png";
+  static const String storeImg2 = "$imagePath/store_img2.png";
+  static const String storeImg3 = "$imagePath/store_img3.png";
+  static const String storeImg4 = "$imagePath/store_img4.png";
+  static const String storeHum = "$imagePath/store_hum.png";
+  static const String storeGirl = "$imagePath/store_girl.png";
+  static const String hum = "$imagePath/hum.png";
+  static const String barbecue = "$imagePath/barbecue.png";
+  static const String strawberry = "$imagePath/strawberry.png";
+  static const String salad = "$imagePath/salad.png";
+  static const String pizza = "$imagePath/pizza.png";
+  static const String basketImg1 = "$imagePath/basket_img1.png";
+  static const String basketImg2 = "$imagePath/basket_img2.png";
+  static const String basketImg3 = "$imagePath/basket_img3.png";
+  static const String basketImg4 = "$imagePath/basket_img4.png";
+  static const String goods = "$imagePath/goods.png";
+  static const String confirmationImg = "$imagePath/confirmation_Img.png";
 }
 
 class JsonAssets {

@@ -8,6 +8,7 @@ import '../../core/widgets/custom_text.dart';
 import '../resources/color_manager.dart';
 import '../resources/routes_manager.dart';
 import '../resources/strings_manager.dart';
+
 class AddAddressPage extends StatefulWidget {
   const AddAddressPage({Key? key}) : super(key: key);
 
@@ -36,6 +37,7 @@ class _AddAddressPageState extends State<AddAddressPage> {
     _cntMulti.dispose();
     super.dispose();
   }
+
   @override
   Widget build(BuildContext context) {
     return Directionality(
@@ -57,62 +59,27 @@ class _AddAddressPageState extends State<AddAddressPage> {
                       child: Column(
                         children: [
                           Container(
-                              margin: const EdgeInsets.fromLTRB(25, 100, 25, 10),
-                              padding: const EdgeInsets.fromLTRB(70, 0, 70, 0),
+                              margin: REdgeInsetsDirectional.only(
+                                  top: 100, start: 0, end: 10, bottom: 10),
+                              padding: REdgeInsetsDirectional.only(
+                                  top: 0, start: 10, end: 0, bottom: 0),
                               alignment: Alignment.center,
-                              child: Row(
-                                children: [
-                                  Icon(Icons.add_location_alt_sharp,color:ColorManager.primary),
-                                  CustomText(txt:AppStrings.addNewAddress , fontSize: 25, txtColor: ColorManager.primary,
-                                    fontWeight: FontWeight.w600,),
-                                ],
+                              child: CustomText(
+                                txt: AppStrings.addNewAddress,
+                                fontSize: 25,
+                                txtColor: ColorManager.primary,
+                                fontWeight: FontWeight.w600,
                               )),
 
                           20.verticalSpace,
-                          Container(
-                            child: TextFormField(
-                              decoration: ThemeHelper().textInputDecoration(AppStrings.theTown,),
-                            ),
-                            decoration: ThemeHelper().inputBoxDecorationShaddow(),
-                          ),
-                          // DropdownButtonFormField(
-                          //   // decoration: InputDecoration(
-                          //   //   enabledBorder: OutlineInputBorder(
-                          //   //     borderSide: BorderSide(color: Colors.amberAccent, width: 2), //<-- SEE HERE
-                          //   //   ),
-                          //   //   focusedBorder: OutlineInputBorder(
-                          //   //     borderSide: BorderSide(color: Colors.amberAccent, width: 2), //<-- SEE HERE
-                          //   //   ),
-                          //   //   filled: true,
-                          //   //   fillColor: ColorManager.primary,
-                          //   // ),
-                          //   decoration: ThemeHelper().textInputDecoration(AppStrings.theTown,),
-                          //   value: dropdownValue,
-                          //   onChanged: (String? newValue) {
-                          //     setState(() {
-                          //       dropdownValue = newValue!;
-                          //     });
-                          //   },
-                          //   items: <String>['add', 'Cat', 'Tiger', 'Lion'].map<DropdownMenuItem<String>>((String value) {
-                          //     return DropdownMenuItem<String>(
-                          //       value: value,
-                          //       child: Text(
-                          //         value,
-                          //         style: TextStyle(fontSize: 20),
-                          //       ),
-                          //     );
-                          //   }).toList(),
-                          // ),
                           DropDownTextField(
-                            // initialValue: "name4",
                             controller: _cnt,
-                            textFieldDecoration: InputDecoration(
-                              hintText: AppStrings.theTown
-                            ),
+                            searchDecoration: const InputDecoration(),
+                            textFieldDecoration: ThemeHelper()
+                                .textInputDecoration(AppStrings.theTown),
                             clearOption: true,
                             // enableSearch: true,
                             // dropdownColor: Colors.green,
-
                             validator: (value) {
                               if (value == null) {
                                 return "Required field";
@@ -120,61 +87,64 @@ class _AddAddressPageState extends State<AddAddressPage> {
                                 return null;
                               }
                             },
-                            dropDownItemCount: 4,
-
+                            dropDownItemCount: 2,
                             dropDownList: const [
-                              DropDownValueModel(name: 'name1', value: "value1"),
                               DropDownValueModel(
-                                  name: 'name2',
+                                name: 'حلب',
+                                value: "value1",
+                              ),
+                              DropDownValueModel(
+                                  name: 'دمشق',
                                   value: "value2",
                                   toolTipMsg:
-                                  "DropDownButton is a widget that we can use to select one unique value from a set of values"),
-                              DropDownValueModel(name: 'name3', value: "value3"),
-                              DropDownValueModel(
-                                  name: 'name4',
-                                  value: "value4",
-                                  toolTipMsg:
-                                  "DropDownButton is a widget that we can use to select one unique value from a set of values"),
-                              DropDownValueModel(name: 'name5', value: "value5"),
-                              DropDownValueModel(name: 'name6', value: "value6"),
+                                      "DropDownButton is a widget that we can use to select one unique value from a set of values")
                             ],
                             onChanged: (val) {},
                           ),
                           30.verticalSpace,
                           Container(
                             child: TextFormField(
-                              decoration: ThemeHelper().textInputDecoration(AppStrings.theStreet,),
+                              decoration: ThemeHelper().textInputDecoration(
+                                AppStrings.theStreet,
+                              ),
                             ),
-                            decoration: ThemeHelper().inputBoxDecorationShaddow(),
-                          ),
-                          20.verticalSpace,
-                          Container(
-                            child: TextFormField(
-                              decoration: ThemeHelper().textInputDecoration(AppStrings.theBuilding,),
-                            ),
-                            decoration: ThemeHelper().inputBoxDecorationShaddow(),
+                            decoration:
+                                ThemeHelper().inputBoxDecorationShadow(),
                           ),
                           20.verticalSpace,
                           Container(
                             child: TextFormField(
                               decoration: ThemeHelper().textInputDecoration(
-                                  AppStrings.theFloor),
-                              keyboardType: TextInputType.phone,
-                              validator: (val) {
-                                if(!(val!.isEmpty) && !RegExp(r"^(\d+)*$").hasMatch(val)){
-                                  return "Enter a valid phone number";
-                                }
-                                return null;
-                              },
+                                AppStrings.theBuilding,
+                              ),
                             ),
-                            decoration: ThemeHelper().inputBoxDecorationShaddow(),
+                            decoration:
+                                ThemeHelper().inputBoxDecorationShadow(),
+                          ),
+                          20.verticalSpace,
+                          Container(
+                            child: TextFormField(
+                              decoration: ThemeHelper()
+                                  .textInputDecoration(AppStrings.theFloor),
+                              keyboardType: TextInputType.text,
+                              // validator: (val) {
+                              //   if (!(val!.isEmpty) &&
+                              //       !RegExp(r"^(\d+)*$").hasMatch(val)) {
+                              //     return "Enter a valid phone number";
+                              //   }
+                              //   return null;
+                              // },
+                            ),
+                            decoration:
+                                ThemeHelper().inputBoxDecorationShadow(),
                           ),
                           20.verticalSpace,
                           Container(
                             child: TextFormField(
                               obscureText: true,
                               decoration: ThemeHelper().textInputDecoration(
-                                AppStrings.addDetails,),
+                                AppStrings.addDetails,
+                              ),
                               validator: (val) {
                                 if (val!.isEmpty) {
                                   return "Please enter your password";
@@ -182,7 +152,8 @@ class _AddAddressPageState extends State<AddAddressPage> {
                                 return null;
                               },
                             ),
-                            decoration: ThemeHelper().inputBoxDecorationShaddow(),
+                            decoration:
+                                ThemeHelper().inputBoxDecorationShadow(),
                           ),
                           // 15.verticalSpace,
                           //    FormField<bool>(
@@ -222,13 +193,17 @@ class _AddAddressPageState extends State<AddAddressPage> {
                           //    ),
                           50.verticalSpace,
                           Container(
-                            margin: const EdgeInsets.fromLTRB(25, 10, 25, 10),
-                            padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
-                            decoration: ThemeHelper().buttonBoxDecoration(context),
+                            margin: REdgeInsetsDirectional.only(
+                                end: 25, top: 10, start: 25, bottom: 10),
+                            padding: REdgeInsetsDirectional.only(
+                                end: 10, top: 0, start: 10, bottom: 0),
+                            decoration:
+                                ThemeHelper().buttonBoxDecoration(context),
                             child: CustomGeneralButton(
                               text: AppStrings.save,
-                              onTap: (){
-                                Navigator.pushNamed(context, Routes.profilesRoute);
+                              onTap: () {
+                                Navigator.pushNamed(
+                                    context, Routes.orderReview3Route);
                               },
                             ),
                           ),

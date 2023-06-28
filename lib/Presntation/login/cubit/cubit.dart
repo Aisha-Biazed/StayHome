@@ -12,7 +12,6 @@ class LoginCubit extends Cubit<LoginStates> {
   LoginCubit() : super(LoginInitialState()) {
     _authRepo = AuthRepo();
   }
-
   static LoginCubit get(context) => BlocProvider.of(context);
   void login({required String email, required String password}) async {
     emit(LoginLoadingState());
@@ -35,7 +34,8 @@ class LoginCubit extends Cubit<LoginStates> {
       required String password,
       required String phoneNumber,
       required String birthdate,
-      required String deviceToken,required BuildContext context,
+      required String deviceToken,
+      required BuildContext context,
       required String cityId}) async {
     emit(CreateLoadingState());
 
@@ -54,7 +54,7 @@ class LoginCubit extends Cubit<LoginStates> {
       //show error
     }, (r) {
       emit(CreateSuccessState());
-      Navigator.pushNamed(context, Routes.profilesRoute,arguments: r);
+      Navigator.pushNamed(context, Routes.profilesRoute, arguments: r);
     });
   }
 }

@@ -4,24 +4,33 @@ import 'package:hexcolor/hexcolor.dart';
 
 import '../Presntation/resources/color_manager.dart';
 
-
-class ThemeHelper{
-
-  InputDecoration textInputDecoration([String lableText="", String hintText = ""]){
+class ThemeHelper {
+  InputDecoration textInputDecoration(
+      [String lableText = "", String hintText = "", Icon? icon]) {
     return InputDecoration(
+      suffix: icon,
       labelText: lableText,
       hintText: hintText,
       fillColor: Colors.white,
       filled: true,
-      contentPadding:REdgeInsetsDirectional.only(top: 10, start: 20, end: 20,bottom: 10) ,
-      focusedBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(100.0), borderSide: BorderSide(color: Colors.grey)),
-      enabledBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(100.0), borderSide: BorderSide(color: Colors.grey.shade400)),
-      errorBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(100.0), borderSide: BorderSide(color: Colors.red, width: 2.0)),
-      focusedErrorBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(100.0), borderSide: BorderSide(color: Colors.red, width: 2.0)),
+      contentPadding:
+          REdgeInsetsDirectional.only(top: 10, start: 20, end: 20, bottom: 10),
+      focusedBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(100.0),
+          borderSide: const BorderSide(color: Colors.grey)),
+      enabledBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(100.0),
+          borderSide: BorderSide(color: Colors.grey.shade400)),
+      errorBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(100.0),
+          borderSide: const BorderSide(color: Colors.red, width: 2.0)),
+      focusedErrorBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(100.0),
+          borderSide: const BorderSide(color: Colors.red, width: 2.0)),
     );
   }
 
-  BoxDecoration inputBoxDecorationShaddow() {
+  BoxDecoration inputBoxDecorationShadow() {
     return BoxDecoration(boxShadow: [
       BoxShadow(
         color: Colors.black.withOpacity(0.1),
@@ -31,7 +40,8 @@ class ThemeHelper{
     ]);
   }
 
-  BoxDecoration buttonBoxDecoration(BuildContext context, [String color1 = "", String color2 = ""]) {
+  BoxDecoration buttonBoxDecoration(BuildContext context,
+      [String color1 = "", String color2 = ""]) {
     Color c1 = Theme.of(context).primaryColor;
     Color c2 = ColorManager.primary;
     if (color1.isEmpty == false) {
@@ -91,9 +101,6 @@ class ThemeHelper{
       ],
     );
   }
-
 }
 
-class LoginFormStyle{
-
-}
+class LoginFormStyle {}

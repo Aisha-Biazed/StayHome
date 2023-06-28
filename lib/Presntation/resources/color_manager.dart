@@ -10,5 +10,5 @@ class ColorManager {
   static Color mainGrey = const Color(0xffF8F8F8);
   static Color secondaryGrey = const Color(0xff69696A);
   static Color black = const Color(0xff000000);
-
+  static Color green = const Color(0xff6BC384);
 }

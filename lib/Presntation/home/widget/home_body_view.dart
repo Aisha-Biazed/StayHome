@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:stay_home/Presntation/home/navigation_page/orders_page.dart';
-import 'package:stay_home/Presntation/home/widget/custom_appbar.dart';
 import 'package:stay_home/Presntation/resources/color_manager.dart';
+import '../../login/widgets/profile_page.dart';
 import '../../resources/strings_manager.dart';
 import '../navigation_page/main_page.dart';
 import '../navigation_page/profile _page.dart';
@@ -21,8 +21,8 @@ class _HomeBodyViewState extends State<HomeBodyView> {
   List<Widget> _widgetOptions = <Widget>[
     MainPage(),
     ProfilePageNav(),
-    ProfilePageNav(),
     OrderPage(),
+    ProfilePage(),
   ];
   @override
   Widget build(BuildContext context) {

@@ -4,6 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:stay_home/Presntation/resources/assets_manager.dart';
 import 'package:stay_home/Presntation/resources/color_manager.dart';
 import 'package:stay_home/core/widgets/custom_text.dart';
+import '../../resources/routes_manager.dart';
 import '../../resources/strings_manager.dart';
 import '../widget/card_item.dart';
 
@@ -33,7 +34,7 @@ class ServicePage extends StatelessWidget {
                   padding: REdgeInsetsDirectional.only(
                       start: 150, end: 25, top: 100),
                   child: CustomText(
-                    txt: AppStrings.store2,
+                    txt: AppStrings.service,
                     txtColor: ColorManager.white,
                     fontSize: 40.sp,
                   ),
@@ -45,21 +46,27 @@ class ServicePage extends StatelessWidget {
               child: Padding(
                   padding: REdgeInsetsDirectional.only(start: 44, end: 25),
                   child: ListView(
-                    children: const <Widget>[
+                    children: <Widget>[
                       CardItem2(
                         title: AppStrings.serviceText1,
                         img: ImageAssets.serviceImg1,
                         subtitle: '',
                       ),
-                      CardItem2(
+                      const CardItem2(
                         title: AppStrings.serviceText2,
                         img: ImageAssets.serviceImg2,
                         subtitle: '',
                       ),
-                      CardItem2(
-                        title: AppStrings.serviceText3,
-                        img: ImageAssets.serviceImg3,
-                        subtitle: '',
+                      GestureDetector(
+                        onTap: () {
+                          Navigator.pushNamed(
+                              context, Routes.orderReview1Route);
+                        },
+                        child: const CardItem2(
+                          title: AppStrings.serviceText3,
+                          img: ImageAssets.serviceImg3,
+                          subtitle: '',
+                        ),
                       ),
                     ],
                   )),

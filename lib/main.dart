@@ -5,8 +5,16 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:get/get.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:stay_home/Presntation/home/home_view.dart';
+import 'package:stay_home/Presntation/orders/order_review_page_1.dart';
 import 'package:stay_home/Presntation/login/cubit/cubit.dart';
+import 'Presntation/home/navigation_page/main_page.dart';
+import 'Presntation/home/pages/my_basket_page.dart';
+import 'Presntation/home/pages/service_page.dart';
+import 'Presntation/home/widget/home_body_view.dart';
+import 'Presntation/orders/add_address_page.dart';
+import 'Presntation/orders/confirmation_page.dart';
+import 'Presntation/orders/confirmation_with_notice_page.dart';
+import 'Presntation/orders/order_review_page_2.dart';
 import 'Presntation/resources/routes_manager.dart';
 
 void main() {
@@ -52,7 +60,7 @@ class MyApp extends StatelessWidget {
             onGenerateRoute: RouteGenerator.getRoute,
             initialRoute: Routes.splashRoute,
             debugShowCheckedModeBanner: false,
-            home: HomeView(),
+            home: const MyBasketPage(),
           ),
         );
       },

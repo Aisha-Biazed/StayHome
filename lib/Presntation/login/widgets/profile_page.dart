@@ -7,6 +7,7 @@ import 'package:stay_home/Presntation/resources/strings_manager.dart';
 import 'package:stay_home/core/widgets/custom_text.dart';
 
 import 'header_widget.dart';
+
 class ProfilePage extends StatefulWidget {
   const ProfilePage({Key? key}) : super(key: key);
 
@@ -18,7 +19,6 @@ class _ProfilePageState extends State<ProfilePage> {
   @override
   Widget build(BuildContext context) {
     return Directionality(
-      
       textDirection: TextDirection.rtl,
       child: Scaffold(
         appBar: AppBar(
@@ -27,23 +27,24 @@ class _ProfilePageState extends State<ProfilePage> {
           elevation: 0.5,
           iconTheme: const IconThemeData(color: Colors.white),
           flexibleSpace: Container(
-            decoration:  BoxDecoration(
-              gradient: LinearGradient(
-                begin: Alignment.topLeft,
-                end: Alignment.bottomRight,
-               colors: <Color>[
-                ColorManager.primary,
-                ColorManager.primary,
-                // Theme.of(context).primaryColor , Theme.of(context).accentColor
-              ])
-            ),
+            decoration: BoxDecoration(
+                gradient: LinearGradient(
+                    begin: Alignment.topLeft,
+                    end: Alignment.bottomRight,
+                    colors: <Color>[
+                  ColorManager.primary,
+                  ColorManager.primary,
+                  // Theme.of(context).primaryColor , Theme.of(context).accentColor
+                ])),
           ),
         ),
         body: SingleChildScrollView(
           child: Stack(
             children: [
-              Container(height: 100,
-              child: const HeaderWidget(100,false,Icons.house_rounded),),
+              Container(
+                height: 100,
+                child: const HeaderWidget(100, false, Icons.house_rounded),
+              ),
               Container(
                 alignment: Alignment.center,
                 margin: const EdgeInsets.fromLTRB(25, 10, 25, 10),
@@ -56,17 +57,27 @@ class _ProfilePageState extends State<ProfilePage> {
                         borderRadius: BorderRadius.circular(100),
                         border: Border.all(width: 5, color: Colors.white),
                         color: Colors.white,
-                        boxShadow: const [BoxShadow(
-                          color: Colors.black12,
-                          blurRadius: 20,
-                          offset: Offset(5,5)
-                        ),],
+                        boxShadow: const [
+                          BoxShadow(
+                              color: Colors.black12,
+                              blurRadius: 20,
+                              offset: Offset(5, 5)),
+                        ],
                       ),
-                      child:  Icon(Icons.person, size: 80,color: Colors.grey.shade300,),
+                      child: Icon(
+                        Icons.person,
+                        size: 80,
+                        color: Colors.grey.shade300,
+                      ),
                     ),
-                    const SizedBox(height: 20,),
-                    CustomText(txt: AppStrings.hiba ,txtColor: ColorManager.dark,fontSize: 25.sp,
-                    fontWeight: FontWeight.w700,
+                    const SizedBox(
+                      height: 20,
+                    ),
+                    CustomText(
+                      txt: AppStrings.hiba,
+                      txtColor: ColorManager.dark,
+                      fontSize: 25.sp,
+                      fontWeight: FontWeight.w700,
                     ),
                     65.verticalSpace,
                     Card(
@@ -75,44 +86,61 @@ class _ProfilePageState extends State<ProfilePage> {
                         padding: const EdgeInsets.all(15),
                         child: Column(
                           children: <Widget>[
-                          ...ListTile.divideTiles(
-                            color:Colors.grey,
-                              tiles: [
-                                 GestureDetector(
-                                   child: ListTile(
-                                    contentPadding: const EdgeInsets.symmetric(
-                                      horizontal: 12,vertical: 4,),
-                                    leading: Icon(Icons.my_location,color:ColorManager.primary),
-                                    title: const CustomText(txt:  AppStrings.addAddress),
-                                    subtitle: Text("سوريا"),
-                                     onTap: (){
-                                      Navigator.pushNamed(context, Routes.addressRoute);
-                                     },
-                                ),
-                                 ),
-                                 ListTile(
+                            ...ListTile.divideTiles(color: Colors.grey, tiles: [
+                              GestureDetector(
+                                child: ListTile(
                                   contentPadding: const EdgeInsets.symmetric(
-                                    horizontal: 12,vertical: 4,),
-                                  leading: Icon(Icons.email,color:ColorManager.primary),
-                                  title: const CustomText(txt:  AppStrings.usernameHint),
-                                  subtitle: Text("mishubiazed@gmail.com"),
+                                    horizontal: 12,
+                                    vertical: 4,
+                                  ),
+                                  leading: Icon(Icons.my_location,
+                                      color: ColorManager.primary),
+                                  title: const CustomText(
+                                      txt: AppStrings.addAddress),
+                                  subtitle: Text("سوريا"),
+                                  onTap: () {
+                                    Navigator.pushNamed(
+                                        context, Routes.addressRoute);
+                                  },
                                 ),
-                                   ListTile(
-                                  contentPadding: EdgeInsets.symmetric(
-                                  horizontal: 12,vertical: 4,),
-                                leading: Icon(Icons.phone ,color:ColorManager.primary),
-                                title: CustomText(txt:  AppStrings.mobileNumber),
+                              ),
+                              ListTile(
+                                contentPadding: const EdgeInsets.symmetric(
+                                  horizontal: 12,
+                                  vertical: 4,
+                                ),
+                                leading: Icon(Icons.email,
+                                    color: ColorManager.primary),
+                                title: const CustomText(
+                                    txt: AppStrings.usernameHint),
+                                subtitle: Text("mishubiazed@gmail.com"),
+                              ),
+                              ListTile(
+                                contentPadding: const EdgeInsets.symmetric(
+                                  horizontal: 12,
+                                  vertical: 4,
+                                ),
+                                leading: Icon(Icons.phone,
+                                    color: ColorManager.primary),
+                                title: const CustomText(
+                                    txt: AppStrings.mobileNumber),
                                 subtitle: Text("+963 956 186 397"),
+                              ),
+                              ListTile(
+                                contentPadding: const EdgeInsets.symmetric(
+                                  horizontal: 12,
+                                  vertical: 4,
                                 ),
-                                 ListTile(
-                                  contentPadding: EdgeInsets.symmetric(
-                                    horizontal: 12,vertical: 4,),
-                                  leading: Icon(Icons.calendar_month_outlined,color: ColorManager.primary,),
-                                  title:  CustomText(txt:  AppStrings.bairthdatehit),
-                                  subtitle:CustomText(txt:  AppStrings.profiledate),
+                                leading: Icon(
+                                  Icons.calendar_month_outlined,
+                                  color: ColorManager.primary,
                                 ),
-                              ]
-                          )
+                                title: const CustomText(
+                                    txt: AppStrings.bairthdatehit),
+                                subtitle: const CustomText(
+                                    txt: AppStrings.profiledate),
+                              ),
+                            ])
                           ],
                         ),
                       ),

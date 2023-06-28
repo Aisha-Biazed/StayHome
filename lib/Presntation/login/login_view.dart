@@ -25,7 +25,6 @@ class LoginView extends StatefulWidget {
 
 class _LoginViewState extends State<LoginView> {
   double _headerHeight = 250;
-
   TextEditingController controllerDilocode = TextEditingController();
   TextEditingController controllerPhoneNumber = TextEditingController();
   final DilocodeFoucs = FocusNode();
@@ -108,21 +107,7 @@ class _LoginViewState extends State<LoginView> {
                                           }
                                         },
                                       ),
-                                      15.verticalSpace,
-                                      Container(
-                                        margin: const EdgeInsets.fromLTRB(
-                                            10, 0, 10, 20),
-                                        child: GestureDetector(
-                                            onTap: () {
-                                              Navigator.pushNamed(context,
-                                                  Routes.forgotPasswordRoute);
-                                            },
-                                            child: CustomText(
-                                              txt:
-                                                  AppStrings.forgetPasswordText,
-                                              txtColor: ColorManager.primary,
-                                            )),
-                                      ),
+                                      30.verticalSpace,
                                       ConditionalBuilder(
                                         fallback: (BuildContext context) =>
                                             Center(
@@ -161,14 +146,19 @@ class _LoginViewState extends State<LoginView> {
                                         ),
                                       ),
                                       Container(
-                                        margin: const EdgeInsets.fromLTRB(
-                                            10, 20, 10, 20),
-                                        child: Row(
+                                        margin: REdgeInsetsDirectional.only(
+                                            end: 50,
+                                            top: 20,
+                                            start: 100,
+                                            bottom: 20),
+                                        child: Column(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
                                           children: [
                                             const CustomText(
                                               txt: AppStrings.login,
                                             ),
-                                            10.horizontalSpace,
+                                            10.verticalSpace,
                                             GestureDetector(
                                               onTap: () {
                                                 Navigator.pushNamed(context,

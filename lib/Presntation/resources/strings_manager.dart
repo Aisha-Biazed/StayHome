@@ -17,7 +17,7 @@ class AppStrings {
   static const passwordHint = " كلمة المرور";
   static const forgetPasswordText = "هل نسيت كلمة المرور؟";
   static const loginBtn = "تسجيل الدخول";
-  static const login = "إذا ليس لديك حساب ؟";
+  static const login = "ليس لديك حساب ؟";
   static const forgetPassword = "انشئ الآن";
   static const validatePassword = "يرجى إدخال كلمة المرور ";
   static const validateEmail = "يرجى إدخال البريد الإلكتروني";
@@ -30,8 +30,10 @@ class AppStrings {
   static const String mobileNumber = 'رقم الموبايل';
   static const String invalidEmail = "كلمة المرور";
   static const String resetPassword = "تاكيد كلمة المرور";
-  static const String emailHint = "انضم لنا قبل؟";
+  static const String emailHint = "هل انت منضم لنا قبل؟";
   static const String userNameInvalid = "سجل دخول";
+  static const String male = "ذكر";
+  static const String female = "أنثى";
 //forgetPassword Page
   static const dontWorryTxt = "لا تقلق لقد حدث مشكلة فقط";
   static const reEnteremail = "اعد إدخال بريدك الالكتروني";
@@ -50,7 +52,7 @@ class AppStrings {
   static const addAddress = "اضافة عنوان";
   static const hiba = "هبة بعيج";
   //add Address
-  static const addNewAddress = " عنوان جديد";
+  static const addNewAddress = "إضافة تفاصيل الوجهة الهدف ";
   static const save = "حفظ";
   static const addDetails = "تفاصيل اضافية";
   static const theFloor = "الطابق";
@@ -66,19 +68,64 @@ class AppStrings {
   static const homeNavLabel_2 = "التصنيفات";
   static const homeNavLabel_3 = "الطلبات";
   static const homeNavLabel_4 = "البروفايل";
-  static const store1 = "متاجر";
-  static const store2 = "خدماتنا";
-  static const store3 = "سائقين";
-  static const store4 = "طلبات";
-  static const homeText = "المتاجر الاكثر تقيماً ";
-  static const pizza = "بيتزا";
-  static const mario = "طعام |  ماريو";
-  static const hodi = "هودي";
-  static const shadowsTxt = "ملابس | شادوز";
+  static const store = "ابدأ الطلب";
+  static const service = "خدماتنا";
+  static const driver = "السائقين";
+  static const orders = "الطلبات";
+  static const homeText = "المتاجر الاكثر طلباَ";
+  static const pizza = "بيتزا هت";
+  static const mario = "أطعمة";
+  static const hodi = "ريبون";
+  static const shadowsTxt = "هدايا";
 // Service page
   static const serviceText1 = " توصيل الاغراض";
   static const serviceText2 = " توصيل شخصي";
   static const serviceText3 = "توصيل بضائع";
 
-//
+//Store Page
+  static const storeText1 = "ماريو الفرقان";
+  static const open = "مفتوح";
+  static const aleppo = "حلب";
+  static const date = "12:00 - 9:00";
+  static const pricePizza = " 20000 ل.س ";
+  static const priceStrawberry = " 10000 ل.س";
+  static const priceSalad = "20000 ل.س ";
+  static const priceBarbecue = "40000 ل.س";
+
+  static const barbecueStore = "مشاوي";
+  static const strawberryStore = "عصير الفريز";
+  static const saladStore = "سلطات";
+  static const addToTrash = "إضافة إلى السلة";
+  //MyBasket page
+  static const myBasketTitle = "سلتي";
+  static const sportShose = "حذاء رياضي";
+  static const sportT_shirt = "تيشيرت قطني";
+  static const sportBag = "حقيبة";
+  static const sportHot = "قبعة";
+  static const priceShose = "50000 ل.س";
+  static const shippingGoods = "شحن بضائع";
+  static const textGoods = "هل تريد الوجهة الاولى من أي نقطة؟";
+  static const storePrice = "194000 ل.س";
+  // orders Page
+  static const orderBeforeAdd = "مراجعة الطلب قبل الإضافة";
+  static const chooseTheTime = "أختر الوقت الذي تريد فيه أن يصل إليك الطلب";
+  static const fastTime = "بأسرع وقت";
+  static const selectTime = "تحديد الوقت";
+  static const dept = "متجر";
+  static const point = "نقطة ";
+  static const requestBtn = "متابعة الطلب ";
+  static const confBtn = "تأكيد الطلب";
+  static const direction = "أختر وجهة الإنطلاق التي سيبدأ منها طلبك";
+  static const textField1 = "تاريخ التوصيل ";
+  static const textField2 = "وقت التوصيل ";
+  static const textField3 = "أضف الوجهة التي سيصل إليها طلبك ";
+  static const textField4 = "أضف ملاحظاتك على الطلب ";
+  static const textField1_2 = "2/6/2023 ";
+  static const textField2_2 = "02:00 pm";
+  static const textField3_2 = "وجهة الإنطلاق: متجر ماريو الفرقان";
+  //Request Received
+  static const requestReceived1 = "تم استلام طلبك بنجاح ";
+  static const requestReceived2 = "يرجى تتبع الطلب لمعرفة التفاصيل";
+  static const sendNotice1 = "تم استلام طلبك بنجاح يرجى الانتظار";
+  static const sendNotice2 = " لإرسال إشعار وصول المركبة";
 }

@@ -21,6 +21,8 @@ class RegistrationPage extends StatefulWidget {
 }
 
 class _RegistrationPageState extends State<RegistrationPage> {
+  String? gender;
+  bool? check1 = false, check2 = true, check3 = false;
   final _formKey = GlobalKey<FormState>();
   bool checkedValue = false;
   bool checkboxValue = false;
@@ -47,251 +49,256 @@ class _RegistrationPageState extends State<RegistrationPage> {
             resizeToAvoidBottomInset: false,
             backgroundColor: Colors.white,
             body: SingleChildScrollView(
-              child: Stack(
+              child: Column(
                 children: [
-                  Container(
-                    height: 150,
-                    child: const HeaderWidget(
-                        150, false, Icons.person_add_alt_1_rounded),
+                  Stack(
+                    children: [
+                      Container(
+                        height: 150,
+                        child: const HeaderWidget(
+                            150, false, Icons.person_add_alt_1_rounded),
+                      ),
+                      Container(
+                        margin: const EdgeInsets.fromLTRB(25, 50, 25, 0),
+                        padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
+                        alignment: Alignment.center,
+                        child: Column(
+                          children: [
+                            GestureDetector(
+                              child: Stack(
+                                children: [
+                                  Container(
+                                    padding: REdgeInsetsDirectional.all(10),
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(100),
+                                      border: Border.all(
+                                          width: 5, color: Colors.white),
+                                      color: Colors.white,
+                                      boxShadow: const [
+                                        BoxShadow(
+                                          color: Colors.black12,
+                                          blurRadius: 20,
+                                          offset: Offset(5, 5),
+                                        ),
+                                      ],
+                                    ),
+                                    child: Icon(
+                                      Icons.person,
+                                      color: Colors.grey.shade300,
+                                      size: 80.0,
+                                    ),
+                                  ),
+                                  Container(
+                                    padding:
+                                        const EdgeInsets.fromLTRB(80, 80, 0, 0),
+                                    child: Icon(
+                                      Icons.add_circle,
+                                      color: Colors.grey.shade700,
+                                      size: 25.0,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
                   ),
                   Container(
-                    margin: const EdgeInsets.fromLTRB(25, 50, 25, 10),
+                    margin: const EdgeInsets.fromLTRB(25, 10, 25, 10),
                     padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
                     alignment: Alignment.center,
-                    child: Column(
-                      children: [
-                        Form(
-                          key: _formKey,
-                          child: Column(
+                    child: Form(
+                      key: _formKey,
+                      child: Column(
+                        children: [
+                          Container(
+                              margin: const EdgeInsets.fromLTRB(25, 10, 25, 10),
+                              padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
+                              alignment: Alignment.center,
+                              child: CustomText(
+                                txt: AppStrings.registerText,
+                                fontSize: 25,
+                                txtColor: ColorManager.primary,
+                                fontWeight: FontWeight.w600,
+                              )),
+                          Container(
+                            child: TextFormField(
+                              controller: fullNameController,
+                              decoration: ThemeHelper().textInputDecoration(
+                                AppStrings.firstname,
+                              ),
+                            ),
+                            decoration:
+                                ThemeHelper().inputBoxDecorationShadow(),
+                          ),
+                          30.verticalSpace,
+                          Container(
+                            child: TextFormField(
+                              controller: birthdateController,
+                              decoration: ThemeHelper().textInputDecoration(
+                                AppStrings.bairthdate,
+                              ),
+                            ),
+                            decoration:
+                                ThemeHelper().inputBoxDecorationShadow(),
+                          ),
+                          20.verticalSpace,
+                          Container(
+                            child: TextFormField(
+                              controller: emailController,
+                              decoration: ThemeHelper().textInputDecoration(
+                                AppStrings.usernameHint,
+                              ),
+                              keyboardType: TextInputType.emailAddress,
+                              validator: (val) {
+                                if (!(val!.isEmpty) &&
+                                    !RegExp(r"^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,253}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,253}[a-zA-Z0-9])?)*$")
+                                        .hasMatch(val)) {
+                                  return "Enter a valid email address";
+                                }
+                                return null;
+                              },
+                            ),
+                            decoration:
+                                ThemeHelper().inputBoxDecorationShadow(),
+                          ),
+                          20.verticalSpace,
+                          Container(
+                            child: TextFormField(
+                              controller: phoneNumberController,
+                              decoration: ThemeHelper().textInputDecoration(
+                                  AppStrings.mobileNumber,
+                                  AppStrings.mobileNumber),
+                              keyboardType: TextInputType.phone,
+                              validator: (val) {
+                                if (!(val!.isEmpty) &&
+                                    !RegExp(r"^(\d+)*$").hasMatch(val)) {
+                                  return "Enter a valid phone number";
+                                }
+                                return null;
+                              },
+                            ),
+                            decoration:
+                                ThemeHelper().inputBoxDecorationShadow(),
+                          ),
+                          20.verticalSpace,
+                          Container(
+                            child: TextFormField(
+                              controller: passwordController,
+                              obscureText: true,
+                              decoration: ThemeHelper().textInputDecoration(
+                                AppStrings.passwordHint,
+                              ),
+                              validator: (val) {
+                                if (val!.isEmpty) {
+                                  return "يرجى إدخال كلمة المرور";
+                                }
+                                return null;
+                              },
+                            ),
+                            decoration:
+                                ThemeHelper().inputBoxDecorationShadow(),
+                          ),
+                          20.verticalSpace,
+                          Row(
                             children: [
-                              GestureDetector(
-                                child: Stack(
-                                  children: [
-                                    Container(
-                                      padding: REdgeInsetsDirectional.all(10),
-                                      decoration: BoxDecoration(
-                                        borderRadius:
-                                            BorderRadius.circular(100),
-                                        border: Border.all(
-                                            width: 5, color: Colors.white),
-                                        color: Colors.white,
-                                        boxShadow: const [
-                                          BoxShadow(
-                                            color: Colors.black12,
-                                            blurRadius: 20,
-                                            offset: Offset(5, 5),
-                                          ),
-                                        ],
-                                      ),
-                                      child: Icon(
-                                        Icons.person,
-                                        color: Colors.grey.shade300,
-                                        size: 80.0,
-                                      ),
-                                    ),
-                                    Container(
-                                      padding: const EdgeInsets.fromLTRB(
-                                          80, 80, 0, 0),
-                                      child: Icon(
-                                        Icons.add_circle,
-                                        color: Colors.grey.shade700,
-                                        size: 25.0,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                              Container(
-                                  margin:
-                                      const EdgeInsets.fromLTRB(25, 10, 25, 10),
-                                  padding:
-                                      const EdgeInsets.fromLTRB(10, 0, 10, 0),
-                                  alignment: Alignment.center,
-                                  child: CustomText(
-                                    txt: AppStrings.registerText,
-                                    fontSize: 25,
-                                    txtColor: ColorManager.primary,
-                                    fontWeight: FontWeight.w600,
-                                  )),
-                              Container(
-                                child: TextFormField(
-                                  controller: fullNameController,
-                                  decoration: ThemeHelper().textInputDecoration(
-                                    AppStrings.firstname,
+                              Expanded(
+                                child: RadioListTile(
+                                  activeColor: ColorManager.primary,
+                                  title: const CustomText(
+                                    txt: AppStrings.male,
+                                    fontSize: 17,
                                   ),
-                                ),
-                                decoration:
-                                    ThemeHelper().inputBoxDecorationShaddow(),
-                              ),
-                              30.verticalSpace,
-                              Container(
-                                child: TextFormField(
-                                  controller: birthdateController,
-                                  decoration: ThemeHelper().textInputDecoration(
-                                    AppStrings.bairthdate,
-                                  ),
-                                ),
-                                decoration:
-                                    ThemeHelper().inputBoxDecorationShaddow(),
-                              ),
-                              const SizedBox(height: 20.0),
-                              Container(
-                                child: TextFormField(
-                                  controller: emailController,
-                                  decoration: ThemeHelper().textInputDecoration(
-                                    AppStrings.usernameHint,
-                                  ),
-                                  keyboardType: TextInputType.emailAddress,
-                                  validator: (val) {
-                                    if (!(val!.isEmpty) &&
-                                        !RegExp(r"^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,253}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,253}[a-zA-Z0-9])?)*$")
-                                            .hasMatch(val)) {
-                                      return "Enter a valid email address";
-                                    }
-                                    return null;
-                                  },
-                                ),
-                                decoration:
-                                    ThemeHelper().inputBoxDecorationShaddow(),
-                              ),
-                              20.verticalSpace,
-                              Container(
-                                child: TextFormField(
-                                  controller: phoneNumberController,
-                                  decoration: ThemeHelper().textInputDecoration(
-                                      AppStrings.mobileNumber,
-                                      AppStrings.mobileNumber),
-                                  keyboardType: TextInputType.phone,
-                                  validator: (val) {
-                                    if (!(val!.isEmpty) &&
-                                        !RegExp(r"^(\d+)*$").hasMatch(val)) {
-                                      return "Enter a valid phone number";
-                                    }
-                                    return null;
-                                  },
-                                ),
-                                decoration:
-                                    ThemeHelper().inputBoxDecorationShaddow(),
-                              ),
-                              20.verticalSpace,
-                              Container(
-                                child: TextFormField(
-                                  controller: passwordController,
-                                  obscureText: true,
-                                  decoration: ThemeHelper().textInputDecoration(
-                                    AppStrings.passwordHint,
-                                  ),
-                                  validator: (val) {
-                                    if (val!.isEmpty) {
-                                      return "Please enter your password";
-                                    }
-                                    return null;
-                                  },
-                                ),
-                                decoration:
-                                    ThemeHelper().inputBoxDecorationShaddow(),
-                              ),
-                              // 15.verticalSpace,
-                              //    FormField<bool>(
-                              //      builder: (state) {
-                              //        return Column(
-                              //          children: <Widget>[
-                              //            Row(
-                              //              children: <Widget>[
-                              //                Checkbox(
-                              //                    value: checkboxValue,
-                              //                    onChanged: (value) {
-                              //                      setState(() {
-                              //                        checkboxValue = value!;
-                              //                        state.didChange(value);
-                              //                      });
-                              //                    }),
-                              //               // const Text("I accept all terms and conditions.", style: TextStyle(color: Colors.grey),),
-                              //              ],
-                              //            ),
-                              //            Container(
-                              //              child: Text(
-                              //                state.errorText ?? '',
-                              //                textAlign: TextAlign.right,
-                              //                style: TextStyle(color: Theme.of(context).errorColor,fontSize: 12,),
-                              //              ),
-                              //            )
-                              //          ],
-                              //        );
-                              //      },
-                              //      validator: (value) {
-                              //        if (!checkboxValue) {
-                              //          return 'You need to accept terms and conditions';
-                              //        } else {
-                              //          return null;
-                              //        }
-                              //      },
-                              //    ),
-                              50.verticalSpace,
-                              Container(
-                                margin:
-                                    const EdgeInsets.fromLTRB(25, 10, 25, 10),
-                                padding:
-                                    const EdgeInsets.fromLTRB(10, 0, 10, 0),
-                                decoration:
-                                    ThemeHelper().buttonBoxDecoration(context),
-                                child: CustomGeneralButton(
-                                  text: AppStrings.registerBtn,
-                                  onTap: () {
-                                    if (_formKey.currentState!.validate()) {
-                                      print("ddddddddddddd");
-                                      print(phoneNumberController.text);
-                                      LoginCubit.get(context).createUser(
-                                        context: context,
-                                        email: emailController.text.toString(),
-                                        password:
-                                            passwordController.text.toString(),
-                                        fullName:
-                                            fullNameController.text.toString(),
-                                        imgUrl:
-                                            imageUrlController.text.toString(),
-                                        phoneNumber: phoneNumberController.text
-                                            .toString(),
-                                        birthdate:
-                                            birthdateController.text.toString(),
-                                        deviceToken: deviceTokenController.text
-                                            .toString(),
-                                        cityId:
-                                            cityIdController.text.toString(),
-                                      );
-                                    }
-                                    // Navigator.pushNamed(context, Routes.profilesRoute);
+                                  value: "male",
+                                  groupValue: gender,
+                                  onChanged: (value) {
+                                    setState(() {
+                                      gender = value.toString();
+                                    });
                                   },
                                 ),
                               ),
-                              Container(
-                                margin:
-                                    const EdgeInsets.fromLTRB(10, 20, 10, 20),
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    const CustomText(
-                                      txt: AppStrings.emailHint,
-                                    ),
-                                    10.horizontalSpace,
-                                    GestureDetector(
-                                      onTap: () {
-                                        Navigator.pushNamed(
-                                            context, Routes.loginRoute);
-                                      },
-                                      child: CustomText(
-                                        txt: AppStrings.userNameInvalid,
-                                        txtColor: ColorManager.primary,
-                                        fontWeight: FontWeight.w700,
-                                      ),
-                                    ),
-                                  ],
+                              Expanded(
+                                child: RadioListTile(
+                                  activeColor: ColorManager.primary,
+                                  title: const CustomText(
+                                    txt: AppStrings.female,
+                                    fontSize: 17,
+                                  ),
+                                  value: "female",
+                                  groupValue: gender,
+                                  onChanged: (value) {
+                                    setState(() {
+                                      gender = value.toString();
+                                    });
+                                  },
                                 ),
-                              )
+                              ),
                             ],
                           ),
-                        ),
-                      ],
+                          Container(
+                            margin: const EdgeInsets.fromLTRB(25, 10, 25, 10),
+                            padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
+                            decoration:
+                                ThemeHelper().buttonBoxDecoration(context),
+                            child: CustomGeneralButton(
+                              text: AppStrings.registerBtn,
+                              onTap: () {
+                                if (_formKey.currentState!.validate()) {
+                                  print("ddddddddddddd");
+                                  print(phoneNumberController.text);
+                                  LoginCubit.get(context).createUser(
+                                    context: context,
+                                    email: emailController.text.toString(),
+                                    password:
+                                        passwordController.text.toString(),
+                                    fullName:
+                                        fullNameController.text.toString(),
+                                    imgUrl: imageUrlController.text.toString(),
+                                    phoneNumber:
+                                        phoneNumberController.text.toString(),
+                                    birthdate:
+                                        birthdateController.text.toString(),
+                                    deviceToken:
+                                        deviceTokenController.text.toString(),
+                                    cityId: cityIdController.text.toString(),
+                                  );
+                                }
+                                Navigator.pushNamed(
+                                    context, Routes.profilesRoute);
+                              },
+                            ),
+                          ),
+                          Container(
+                            margin: REdgeInsetsDirectional.only(
+                                end: 10, top: 5, start: 10, bottom: 20),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                CustomText(
+                                  txt: AppStrings.emailHint,
+                                  txtColor: ColorManager.dark,
+                                  fontWeight: FontWeight.w500,
+                                ),
+                                10.horizontalSpace,
+                                GestureDetector(
+                                  onTap: () {
+                                    Navigator.pushNamed(
+                                        context, Routes.loginRoute);
+                                  },
+                                  child: CustomText(
+                                    txt: AppStrings.userNameInvalid,
+                                    txtColor: ColorManager.primary,
+                                    fontWeight: FontWeight.w700,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          )
+                        ],
+                      ),
                     ),
                   ),
                 ],
