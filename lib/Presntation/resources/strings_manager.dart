@@ -49,7 +49,7 @@ class AppStrings {
   static const returnTologin = "العودة لتسجيل الدخول";
   // profile
   static const profiledate = "7/10/2001";
-  static const addAddress = "اضافة عنوان";
+  static const gender = "الجنس";
   static const hiba = "هبة بعيج";
   //add Address
   static const addNewAddress = "إضافة تفاصيل الوجهة الهدف ";
@@ -65,10 +65,10 @@ class AppStrings {
   static const noRouteFound = "هناك مشكلة";
   // home
   static const homeNavLabel_1 = "الرئيسية";
-  static const homeNavLabel_2 = "التصنيفات";
+  static const homeNavLabel_2 = "المتاجر";
   static const homeNavLabel_3 = "الطلبات";
   static const homeNavLabel_4 = "البروفايل";
-  static const store = "ابدأ الطلب";
+  static const store = "أطلب الآن";
   static const service = "خدماتنا";
   static const driver = "السائقين";
   static const orders = "الطلبات";
@@ -83,8 +83,11 @@ class AppStrings {
   static const serviceText3 = "توصيل بضائع";
 
 //Store Page
+  static const storeText = "المتاجر";
   static const storeText1 = "ماريو الفرقان";
+  static const storeText2 = "ريبون";
   static const open = "مفتوح";
+  static const close = "مغلق";
   static const aleppo = "حلب";
   static const date = "12:00 - 9:00";
   static const pricePizza = " 20000 ل.س ";
@@ -114,6 +117,7 @@ class AppStrings {
   static const dept = "متجر";
   static const point = "نقطة ";
   static const requestBtn = "متابعة الطلب ";
+  static const basketBtn = "مراجعة السلة";
   static const confBtn = "تأكيد الطلب";
   static const direction = "أختر وجهة الإنطلاق التي سيبدأ منها طلبك";
   static const textField1 = "تاريخ التوصيل ";

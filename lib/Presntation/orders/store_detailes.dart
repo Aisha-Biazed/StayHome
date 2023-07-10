@@ -38,7 +38,7 @@ class StoreDetails extends StatelessWidget {
                 height: 700.h,
                 child: Container(
                   padding:
-                      REdgeInsetsDirectional.only(top: 20, start: 27, end: 27),
+                      REdgeInsetsDirectional.only(top: 20, start: 20, end: 20),
                   width: double.infinity,
                   height: 509.h,
                   decoration: BoxDecoration(

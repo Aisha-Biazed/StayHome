@@ -22,7 +22,7 @@ class RegistrationPage extends StatefulWidget {
 
 class _RegistrationPageState extends State<RegistrationPage> {
   String? gender;
-  bool? check1 = false, check2 = true, check3 = false;
+  // bool? check1 = false, check2 = true, check3 = false;
   final _formKey = GlobalKey<FormState>();
   bool checkedValue = false;
   bool checkboxValue = false;
@@ -41,7 +41,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
     var deviceTokenController = TextEditingController(text: "");
     var cityIdController = TextEditingController(text: "");
 
-    return BlocBuilder<LoginCubit, LoginStates>(
+    return BlocBuilder<InitialCubit, InitialStates>(
       builder: (context, state) {
         return Directionality(
           textDirection: TextDirection.rtl,
@@ -249,14 +249,13 @@ class _RegistrationPageState extends State<RegistrationPage> {
                                 if (_formKey.currentState!.validate()) {
                                   print("ddddddddddddd");
                                   print(phoneNumberController.text);
-                                  LoginCubit.get(context).createUser(
+                                  InitialCubit.get(context).createUser(
                                     context: context,
                                     email: emailController.text.toString(),
                                     password:
                                         passwordController.text.toString(),
                                     fullName:
                                         fullNameController.text.toString(),
-                                    imgUrl: imageUrlController.text.toString(),
                                     phoneNumber:
                                         phoneNumberController.text.toString(),
                                     birthdate:
@@ -264,6 +263,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
                                     deviceToken:
                                         deviceTokenController.text.toString(),
                                     cityId: cityIdController.text.toString(),
+                                    // gender: null,
                                   );
                                 }
                                 Navigator.pushNamed(

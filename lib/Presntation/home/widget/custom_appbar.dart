@@ -32,7 +32,7 @@ AppBar CustomAppBar() => AppBar(
           ),
         )
       ],
-      toolbarHeight: 100.h,
+      toolbarHeight: 70.h,
       backgroundColor: ColorManager.white,
       title: Column(
         children: [
@@ -79,6 +79,6 @@ AppBar CustomAppBar() => AppBar(
       ),
       shape: const RoundedRectangleBorder(
           borderRadius: BorderRadius.only(
-              bottomLeft: Radius.circular(30),
-              bottomRight: Radius.circular(30))),
+              bottomLeft: Radius.circular(15),
+              bottomRight: Radius.circular(15))),
     );

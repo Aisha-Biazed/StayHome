@@ -22,6 +22,9 @@ class ExceptionHandler {
         if (e.response?.statusCode == 403) {
           return "غير مسموح";
         }
+        if (e.response?.statusCode == 401) {
+          return "هناك مشلكة في الـ accessToken ";
+        }
       }
     }
     return "خطأ ما";

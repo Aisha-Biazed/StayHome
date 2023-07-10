@@ -3,9 +3,9 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:stay_home/Presntation/home/navigation_page/orders_page.dart';
 import 'package:stay_home/Presntation/resources/color_manager.dart';
 import '../../login/widgets/profile_page.dart';
+import '../../orders/store_page.dart';
 import '../../resources/strings_manager.dart';
 import '../navigation_page/main_page.dart';
-import '../navigation_page/profile _page.dart';
 
 class HomeBodyView extends StatefulWidget {
   const HomeBodyView({Key? key}) : super(key: key);
@@ -20,7 +20,7 @@ class _HomeBodyViewState extends State<HomeBodyView> {
   int _currentIndex = 0;
   List<Widget> _widgetOptions = <Widget>[
     MainPage(),
-    ProfilePageNav(),
+    StorePage(),
     OrderPage(),
     ProfilePage(),
   ];
@@ -44,7 +44,7 @@ class _HomeBodyViewState extends State<HomeBodyView> {
               label: AppStrings.homeNavLabel_1,
             ),
             BottomNavigationBarItem(
-              icon: Icon(Icons.border_all_outlined),
+              icon: Icon(Icons.storefront),
               label: AppStrings.homeNavLabel_2,
             ),
             BottomNavigationBarItem(

@@ -1,16 +1,48 @@
-abstract class LoginStates {}
+import 'package:dartz/dartz.dart';
 
-class LoginInitialState extends LoginStates {}
+import '../../../model/home_model.dart';
+import '../../../model/profile_model.dart';
+import '../../../model/shope_model.dart';
 
-class LoginLoadingState extends LoginStates {}
+abstract class InitialStates {}
 
-class LoginSuccessState extends LoginStates {}
+class LoginInitialState extends InitialStates {}
 
-class LoginErrorState extends LoginStates {}
+class LoginLoadingState extends InitialStates {}
 
+class LoginSuccessState extends InitialStates {}
 
-class CreateLoadingState extends LoginStates {}
+class LoginErrorState extends InitialStates {}
 
-class CreateSuccessState extends LoginStates {}
+class CreateLoadingState extends InitialStates {}
 
-class CreateErrorState extends LoginStates {}
+class CreateSuccessState extends InitialStates {}
+
+class CreateErrorState extends InitialStates {}
+
+class ProfileLoadingState extends InitialStates {}
+
+class ProfileSuccessState extends InitialStates {
+  ProfileModel result;
+  ProfileSuccessState(this.result);
+}
+
+class ProfileErrorState extends InitialStates {}
+
+class HomeLoadingState extends InitialStates {}
+
+class HomeSuccessState extends InitialStates {
+  List<HomeModel> result;
+  HomeSuccessState(this.result);
+}
+
+class HomeErrorState extends InitialStates {}
+
+class ShopLoadingState extends InitialStates {}
+
+class ShopSuccessState extends InitialStates {
+  List<ShopModel> listShop;
+  ShopSuccessState(this.listShop);
+}
+
+class ShopErrorState extends InitialStates {}

@@ -4,9 +4,11 @@ import 'package:stay_home/core/utils/size_config.dart';
 import 'package:stay_home/core/widgets/space_widget.dart';
 
 import '../../Presntation/resources/color_manager.dart';
+
 class CustomGeneralButton extends StatelessWidget {
-  const CustomGeneralButton({Key? key, this.text, this.onTap}) : super(key: key);
-   final String? text;
+  const CustomGeneralButton({Key? key, this.text, this.onTap})
+      : super(key: key);
+  final String? text;
   final VoidCallback? onTap;
   @override
   Widget build(BuildContext context) {
@@ -16,7 +18,7 @@ class CustomGeneralButton extends StatelessWidget {
         height: 52.h,
         width: SizeConfig.screenWidth,
         decoration: BoxDecoration(
-          color:ColorManager.primary,
+          color: ColorManager.primary,
           borderRadius: BorderRadius.circular(15.w),
         ),
         child: Center(
@@ -33,6 +35,7 @@ class CustomGeneralButton extends StatelessWidget {
     );
   }
 }
+
 class CustomButtonWithIcon extends StatelessWidget {
   const CustomButtonWithIcon(
       {Key? key, required this.text, this.onTap, this.iconData, this.color})

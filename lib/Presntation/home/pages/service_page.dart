@@ -31,8 +31,8 @@ class ServicePage extends StatelessWidget {
                   ),
                 ),
                 Padding(
-                  padding: REdgeInsetsDirectional.only(
-                      start: 150, end: 25, top: 100),
+                  padding:
+                      REdgeInsetsDirectional.only(start: 127, end: 30, top: 65),
                   child: CustomText(
                     txt: AppStrings.service,
                     txtColor: ColorManager.white,
@@ -47,15 +47,13 @@ class ServicePage extends StatelessWidget {
                   padding: REdgeInsetsDirectional.only(start: 44, end: 25),
                   child: ListView(
                     children: <Widget>[
-                      CardItem2(
+                      const CardItem2(
                         title: AppStrings.serviceText1,
                         img: ImageAssets.serviceImg1,
-                        subtitle: '',
                       ),
                       const CardItem2(
                         title: AppStrings.serviceText2,
                         img: ImageAssets.serviceImg2,
-                        subtitle: '',
                       ),
                       GestureDetector(
                         onTap: () {
@@ -65,7 +63,6 @@ class ServicePage extends StatelessWidget {
                         child: const CardItem2(
                           title: AppStrings.serviceText3,
                           img: ImageAssets.serviceImg3,
-                          subtitle: '',
                         ),
                       ),
                     ],

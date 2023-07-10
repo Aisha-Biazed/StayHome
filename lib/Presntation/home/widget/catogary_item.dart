@@ -16,12 +16,12 @@ class CategoryItem extends StatelessWidget {
     return GestureDetector(
       onTap: onTap,
       child: Container(
-        height: 71.h,
-        // width: 200.w,
+        height: 61.h,
+        width: 200.w,
         decoration: BoxDecoration(
-            color: ColorManager.purple,
+            color: ColorManager.primary,
             border: Border.all(
-              color: ColorManager.purple, //color of border
+              color: ColorManager.primary, //color of border
               width: 2, //width of border
             ),
             borderRadius: BorderRadius.circular(10.r)),
@@ -35,7 +35,7 @@ class CategoryItem extends StatelessWidget {
             CustomText(
               txt: text,
               textAlign: TextAlign.center,
-              txtColor: ColorManager.secondaryGrey,
+              txtColor: ColorManager.white,
             ),
           ],
         ),

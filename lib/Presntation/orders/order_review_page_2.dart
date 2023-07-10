@@ -189,14 +189,14 @@ class _OrderReviewPage2State extends State<OrderReviewPage2> {
               ),
               20.verticalSpace,
               Container(
-                margin: REdgeInsetsDirectional.only(start: 71, end: 71),
+                margin: REdgeInsetsDirectional.only(start: 40, end: 20),
                 child: CustomGeneralButton(
                   text: AppStrings.requestBtn,
                   onTap: () {
                     Navigator.pushNamed(context, Routes.addressRoute);
                   },
                 ),
-              )
+              ),
             ],
           ),
         ),
