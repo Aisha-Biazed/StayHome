@@ -84,6 +84,7 @@ class AppStrings {
 
 //Store Page
   static const storeText = "المتاجر";
+  static const cardEmpty = "لايوجد متاجر متاحة لهذا التصنيف 🥺";
   static const storeText1 = "ماريو الفرقان";
   static const storeText2 = "ريبون";
   static const open = "مفتوح";

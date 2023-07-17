@@ -51,7 +51,7 @@ dependencies:
   dartz: ^0.10.1
   conditional_builder_null_safety: ^0.0.6
   dropdown_textfield: ^1.0.8
-#  table_calendar: ^3.0.0
+  #  table_calendar: ^3.0.0
   intl: ^0.17.0
 dev_dependencies:
   flutter_test:

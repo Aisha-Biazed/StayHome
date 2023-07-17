@@ -1,13 +1,11 @@
 import 'package:dio/dio.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import '../../data_remote/cash_helper.dart';
-
 class DioFactory {
   final Dio _dio = Dio(BaseOptions(
-    baseUrl: "http://stayhome22-001-site1.ftempurl.com/api/",
-    receiveTimeout: const Duration(seconds: 6),
-    connectTimeout: const Duration(seconds: 7),
+    baseUrl: "http://finalstayhome-001-site1.atempurl.com/api/",
+    receiveTimeout: const Duration(seconds: 200),
+    connectTimeout: const Duration(seconds: 200),
   ));
   DioFactory._() {
     _dio.interceptors.addAll(<Interceptor>{

@@ -1,5 +1,6 @@
 import 'package:dartz/dartz.dart';
 
+import '../../../model/details_shop_model.dart';
 import '../../../model/home_model.dart';
 import '../../../model/profile_model.dart';
 import '../../../model/shope_model.dart';
@@ -46,3 +47,12 @@ class ShopSuccessState extends InitialStates {
 }
 
 class ShopErrorState extends InitialStates {}
+
+class DetailsLoadingState extends InitialStates {}
+
+class DetailsShopSuccessState extends InitialStates {
+  DetailsShopModel listIdShop;
+  DetailsShopSuccessState(this.listIdShop);
+}
+
+class DetailsShopErrorState extends InitialStates {}

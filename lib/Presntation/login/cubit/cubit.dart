@@ -5,6 +5,7 @@ import 'package:stay_home/Presntation/login/cubit/states.dart';
 import 'package:stay_home/Presntation/resources/routes_manager.dart';
 import 'package:stay_home/data_remote/auth_repo.dart';
 import 'package:stay_home/model/create_model.dart';
+import 'package:stay_home/model/details_shop_model.dart';
 import 'package:stay_home/model/shope_model.dart';
 
 import '../../../model/home_model.dart';
@@ -97,6 +98,19 @@ class InitialCubit extends Cubit<InitialStates> {
       //show error
     }, (r) {
       emit(ShopSuccessState(r as List<ShopModel>));
+      //save user
+    });
+  }
+
+  void detailsShopCubit(String shopId) async {
+    emit(ProfileLoadingState());
+    Either<String, DetailsShopModel> result =
+        await _authRepo.detailsShop(shopId);
+    result.fold((l) {
+      emit(DetailsShopErrorState());
+      //show error
+    }, (r) {
+      emit(DetailsShopSuccessState(r as DetailsShopModel));
       //save user
     });
   }

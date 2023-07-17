@@ -1,14 +1,21 @@
 class ShopModel {
   ShopModel({
     required this.id,
+    required this.name,
+    required this.imageUrl,
     required this.shops,
   });
+
   final String? id;
+  final String? name;
+  final String? imageUrl;
   final List<Shop> shops;
 
   factory ShopModel.fromJson(Map<String, dynamic> json) {
     return ShopModel(
       id: json["id"],
+      name: json["name"],
+      imageUrl: json["imageUrl"],
       shops: json["shops"] == null
           ? []
           : List<Shop>.from(json["shops"]!.map((x) => Shop.fromJson(x))),

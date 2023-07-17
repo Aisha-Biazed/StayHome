@@ -127,6 +127,7 @@ class _MainPageState extends State<MainPage> {
                                         AspectRatio(
                                           aspectRatio: 3 / 2.3,
                                           child: Container(
+                                            height: 100.h,
                                             margin: REdgeInsetsDirectional.only(
                                                 end: 10,
                                                 start: 20,
@@ -138,7 +139,7 @@ class _MainPageState extends State<MainPage> {
                                                 image: DecorationImage(
                                                     fit: BoxFit.cover,
                                                     image: NetworkImage(
-                                                        "http://stayhome22-001-site1.ftempurl.com/${item.imageUrl}"))),
+                                                        "http://finalstayhome-001-site1.atempurl.com/${item.imageUrl}"))),
                                           ),
                                         ),
                                         Column(

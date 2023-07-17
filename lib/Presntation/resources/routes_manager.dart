@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:stay_home/Presntation/home/home_view.dart';
 import 'package:stay_home/Presntation/home/pages/service_page.dart';
+import 'package:stay_home/Presntation/login/cubit/cubit.dart';
 import 'package:stay_home/Presntation/orders/confirmation_page.dart';
 import 'package:stay_home/Presntation/orders/store_detailes.dart';
 import 'package:stay_home/Presntation/resources/strings_manager.dart';
+import 'package:stay_home/model/shope_model.dart';
 import '../orders/order_review_page_1.dart';
 import '../home/pages/my_basket_page.dart';
 import '../orders/order_review_page_2.dart';
@@ -55,10 +58,17 @@ class RouteGenerator {
         return MaterialPageRoute(builder: (_) => const HomeView());
       case Routes.serviceRoute:
         return MaterialPageRoute(builder: (_) => const ServicePage());
-      case Routes.storeRoute:
-        return MaterialPageRoute(builder: (_) => const StorePage());
-      case Routes.storeDetailsRoute:
-        return MaterialPageRoute(builder: (_) => const StoreDetails());
+      // case Routes.storeRoute:
+      //   final shopId = settings.arguments as ShopModel;
+      //   return MaterialPageRoute(
+      //       builder: (_) => BlocProvider(
+      //             create: (context) => InitialCubit(),
+      //             child: const StorePage(),
+      //           ));
+
+      // case Routes.storeDetailsRoute:
+      //   return MaterialPageRoute(
+      //       builder: (_) =>  const StoreDetails());
       case Routes.orderReview1Route:
         return MaterialPageRoute(builder: (_) => const OrderReviewPage1());
       case Routes.orderReview2Route:

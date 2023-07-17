@@ -3,6 +3,7 @@ import 'package:dio/dio.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:stay_home/core/network/dio_factory.dart';
 import 'package:stay_home/model/create_model.dart';
+import 'package:stay_home/model/details_shop_model.dart';
 import 'package:stay_home/model/home_model.dart';
 import 'package:stay_home/model/profile_model.dart';
 import 'package:stay_home/model/shope_model.dart';
@@ -94,6 +95,20 @@ class AuthRepo {
       return Right((result.data["response"] as List).map((e) {
         return ShopModel.fromJson(e);
       }).toList());
+    } catch (error) {
+      print("error =$error");
+      return Left(ExceptionHandler.handle(error as Exception));
+    }
+  }
+
+  Future<Either<String, DetailsShopModel>> detailsShop(String shopId) async {
+    try {
+      final result = await _dio.get(
+        'Mobile/Shop/GetById',
+        queryParameters: {'Id': shopId},
+      );
+      print("SuccessfulDetailsSop");
+      return Right(DetailsShopModel.fromJson(result.data["response"]));
     } catch (error) {
       print("error =$error");
       return Left(ExceptionHandler.handle(error as Exception));
