@@ -1,5 +1,3 @@
-import 'package:dartz/dartz.dart';
-
 import '../../../model/details_shop_model.dart';
 import '../../../model/home_model.dart';
 import '../../../model/profile_model.dart';
@@ -56,3 +54,24 @@ class DetailsShopSuccessState extends InitialStates {
 }
 
 class DetailsShopErrorState extends InitialStates {}
+
+class MyCartState extends InitialStates {
+  List<ProductCart> productsCart;
+  MyCartState({required this.productsCart});
+}
+
+class ProductCart {
+  ProductCart({
+    required this.id,
+    required this.name,
+    required this.imageUrl,
+    required this.cost,
+    required this.counter,
+  });
+
+  final String? id;
+  final String? name;
+  final String? imageUrl;
+  final int? cost;
+  final int? counter;
+}

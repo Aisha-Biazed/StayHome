@@ -75,10 +75,16 @@ class _StoreDetailsState extends State<StoreDetails> {
                                 height: 3.h,
                               ),
                             ),
-                            CustomText(
-                              txt: details.name!,
-                              fontSize: 25.sp,
-                              fontWeight: FontWeight.w400,
+                            GestureDetector(
+                              onTap: () {
+                                Navigator.pushNamed(
+                                    context, Routes.myBasketRoute);
+                              },
+                              child: CustomText(
+                                txt: details.name!,
+                                fontSize: 25.sp,
+                                fontWeight: FontWeight.w400,
+                              ),
                             ),
                             10.verticalSpace,
                             Row(
@@ -145,11 +151,11 @@ class _StoreDetailsState extends State<StoreDetails> {
                                 shrinkWrap: true,
                                 clipBehavior: Clip.none,
                                 gridDelegate:
-                                    const SliverGridDelegateWithFixedCrossAxisCount(
+                                    SliverGridDelegateWithFixedCrossAxisCount(
                                   crossAxisCount: 2,
                                   childAspectRatio: 2 / 3,
-                                  crossAxisSpacing: 40,
-                                  mainAxisSpacing: 1,
+                                  crossAxisSpacing: 20.h,
+                                  mainAxisSpacing: 1.h,
                                 ),
                                 physics: const ClampingScrollPhysics(),
                                 itemCount: state.listIdShop.products.length,
@@ -208,7 +214,7 @@ class _StoreDetailsState extends State<StoreDetails> {
                                 },
                               ),
                             ),
-                            RSizedBox(
+                            const RSizedBox(
                               height: 100,
                             )
                           ],

@@ -9,6 +9,7 @@ import 'package:stay_home/model/profile_model.dart';
 import 'package:stay_home/model/shope_model.dart';
 
 import '../core/error/exception_handler.dart';
+import '../model/all_cities_model.dart';
 
 class AuthRepo {
   late final Dio _dio;
@@ -32,24 +33,23 @@ class AuthRepo {
     }
   }
 
-  Future<Either<String, CreateModel>> createUser(
-      {String? id,
-      required String fullName,
-      required String email,
-      required String password,
-      required String phoneNumber,
-      required String birthdate,
-      required String deviceToken,
-      String? gender,
-      required String cityId}) async {
+  Future<Either<String, String>> createUserCubit({
+    required String fullName,
+    required String birthdate,
+    required String phoneNumber,
+    required String email,
+    required String password,
+    required String gender,
+    required String cityId,
+  }) async {
     try {
       final result = await _dio.post(
-          // 'Mobile/Customer/Create?FullName=$fullName&Email=$email&ImageUrl=asd&Password=$password&PhoneNumber=&Gender=0$phoneNumber&BirthDate=$birthdate&CityId=d024439e-9efc-4a4c-94de-50e05c4df267',
-          'Mobile/Customer/Create?FullName=joudi&Email=joudi%40gmail.com&Password=1111&PhoneNumber=123456789&BirthDate=2-6-2001&DeviceToken=5&Gender=Female&CityId=6781586e-a6c6-46c6-89b6-b68539434d89');
-      // final SharedPreferences prefs = await SharedPreferences.getInstance();
-      // await prefs.setString('token', result.data["response"]["accessToken"]);
-      print("SuccessfulData");
-      return Right(CreateModel.fromJson(result.data["response"]));
+          'Mobile/Customer/Create?FullName=$fullName&Email=$email&Password=$password&PhoneNumber=$phoneNumber&BirthDate=$birthdate&DeviceToken=3&Gender=$gender&CityId=7cf5bdbd-c952-4a63-b8c5-01e2d142eb2b');
+      final SharedPreferences prefs = await SharedPreferences.getInstance();
+      await prefs.setString('token', result.data["response"]["accessToken"]);
+      print("SuccessfulDataCreateUser");
+      print(result.data["response"]["accessToken"]);
+      return Right(result.data["response"]["accessToken"]);
     } catch (error) {
       print("error =$error");
       return Left(ExceptionHandler.handle(error as Exception));
@@ -63,6 +63,19 @@ class AuthRepo {
       );
       print("SuccessfulData");
       return Right(ProfileModel.fromJson(result.data["response"]));
+    } catch (error) {
+      print("error =$error");
+      return Left(ExceptionHandler.handle(error as Exception));
+    }
+  }
+
+  Future<Either<String, GetAllCitiesModel>> getAllCities() async {
+    try {
+      final result = await _dio.get(
+        'Mobile/Setting/GetAllCities',
+      );
+      print("SuccessfulData");
+      return Right(GetAllCitiesModel.fromJson(result.data["response"]));
     } catch (error) {
       print("error =$error");
       return Left(ExceptionHandler.handle(error as Exception));

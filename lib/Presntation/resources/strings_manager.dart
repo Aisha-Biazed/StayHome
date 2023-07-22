@@ -58,7 +58,7 @@ class AppStrings {
   static const theFloor = "الطابق";
   static const theBuilding = "البناء";
   static const theStreet = "الشارع";
-  static const theTown = "المنطقة";
+  static const theTown = "المدينة";
 
 //noRouteFound
   static const search = "ابحث هنا";

@@ -193,11 +193,6 @@ class _MainPageState extends State<MainPage> {
                               );
                             },
                           );
-                        } else if (state is HomeErrorState) {
-                          print(state);
-                          return Container(
-                            color: Colors.teal,
-                          );
                         } else {
                           return Center(
                               child: CircularProgressIndicator(

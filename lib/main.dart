@@ -43,12 +43,13 @@ class MyApp extends StatelessWidget {
                 Locale('ar', "AE"), // EnglishSpanish
               ],
               theme: ThemeData(
+                // fontFamily: 'Poppins',
                 appBarTheme: const AppBarTheme(
                   systemOverlayStyle: SystemUiOverlayStyle(
                     statusBarColor: Colors.transparent,
                   ),
                 ),
-                fontFamily: 'Inter',
+                fontFamily: 'sst-arabic',
                 primaryColor: _primarColor,
                 scaffoldBackgroundColor: Colors.grey.shade100,
                 primarySwatch: Colors.grey,

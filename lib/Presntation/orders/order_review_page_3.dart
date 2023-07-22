@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:intl/intl.dart';
 import 'package:stay_home/Presntation/resources/color_manager.dart';
 import 'package:stay_home/Presntation/resources/strings_manager.dart';
 import 'package:stay_home/core/widgets/custom_buttons.dart';
-
+import 'dart:ui' as ui;
 import '../../common/theme_helper.dart';
 import '../../core/widgets/custom_text.dart';
 import '../../core/widgets/custom_text_field.dart';
@@ -16,17 +17,31 @@ class OrderReviewPage3 extends StatefulWidget {
   State<OrderReviewPage3> createState() => _OrderReviewPage3State();
 }
 
+List<String> options = ['fastTime', 'selectTime'];
+List<String> choices = ['point', 'store'];
+
 class _OrderReviewPage3State extends State<OrderReviewPage3> {
-  String? gender;
+  String timeSelected = options[0];
+  String destination = choices[0];
   bool? check1 = false, check2 = true, check3 = false, check4 = false;
   bool checkedValue = false;
   bool checkboxValue = false;
+  TextEditingController dateinput = TextEditingController();
+  TextEditingController timeinput = TextEditingController();
+  @override
+  void initState() {
+    dateinput.text = "";
+    timeinput.text = ""; //set the initial value of text field
+    super.initState(); //set the initial value of text field
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: false,
       body: Directionality(
-        textDirection: TextDirection.rtl,
+        textDirection: ui.TextDirection.rtl,
         child: Padding(
           padding: REdgeInsetsDirectional.only(
             start: 0,
@@ -59,11 +74,11 @@ class _OrderReviewPage3State extends State<OrderReviewPage3> {
                         txtColor: ColorManager.dark,
                         fontSize: 17,
                       ),
-                      value: "male",
-                      groupValue: gender,
+                      value: options[0],
+                      groupValue: timeSelected,
                       onChanged: (value) {
                         setState(() {
-                          gender = value.toString();
+                          timeSelected = value.toString();
                         });
                       },
                     ),
@@ -76,11 +91,11 @@ class _OrderReviewPage3State extends State<OrderReviewPage3> {
                         txtColor: ColorManager.dark,
                         fontSize: 17,
                       ),
-                      value: "female",
-                      groupValue: gender,
+                      value: options[1],
+                      groupValue: timeSelected,
                       onChanged: (value) {
                         setState(() {
-                          gender = value.toString();
+                          timeSelected = value.toString();
                         });
                       },
                     ),
@@ -88,32 +103,62 @@ class _OrderReviewPage3State extends State<OrderReviewPage3> {
                 ],
               ),
               20.verticalSpace,
-              Container(
-                margin: REdgeInsetsDirectional.only(start: 21, end: 21),
-                child: CustomTextFormField(
-                  readOnly: false,
-                  suffexIcon: Icon(
-                    Icons.date_range,
-                    color: ColorManager.primary,
+              Visibility(
+                visible: timeSelected == options[1],
+                child: Container(
+                  margin: REdgeInsetsDirectional.only(start: 21, end: 21),
+                  decoration: ThemeHelper().inputBoxDecorationShadow(),
+                  child: CustomTextFormField(
+                    controller: dateinput,
+                    onTap: () async {
+                      DateTime? pickedDate = await showDatePicker(
+                          context: context,
+                          initialDate: DateTime.now(),
+                          firstDate: DateTime.now(),
+                          lastDate: DateTime(2101));
+
+                      if (pickedDate != null) {
+                        print(
+                            pickedDate); //pickedDate output format => 2021-03-10 00:00:00.000
+                        String formattedDate =
+                            DateFormat('yyyy-MM-dd').format(pickedDate);
+                        print(
+                            formattedDate); //formatted date output using intl package =>  2021-03-16
+                        //you can implement different kind of Date Format here according to your requirement
+                        setState(() {
+                          dateinput.text =
+                              formattedDate; //set output date to TextField value.
+                        });
+                      } else {
+                        print("Date is not selected");
+                      }
+                    },
+                    suffexIcon: Icon(
+                      Icons.date_range,
+                      color: ColorManager.primary,
+                    ),
+                    lableText: AppStrings.textField1,
+                    color: ColorManager.secondaryGrey,
+                    readOnly: true,
                   ),
-                  lableText: AppStrings.textField1,
-                  color: ColorManager.secondaryGrey,
                 ),
-                decoration: ThemeHelper().inputBoxDecorationShadow(),
               ),
               20.verticalSpace,
-              Container(
-                margin: REdgeInsetsDirectional.only(start: 21, end: 21),
-                child: CustomTextFormField(
-                  readOnly: false,
-                  lableText: AppStrings.textField2,
-                  color: ColorManager.secondaryGrey,
-                  suffexIcon: Icon(
-                    Icons.access_time_rounded,
-                    color: ColorManager.primary,
+              Visibility(
+                visible: timeSelected == options[1],
+                child: Container(
+                  margin: REdgeInsetsDirectional.only(start: 21, end: 21),
+                  decoration: ThemeHelper().inputBoxDecorationShadow(),
+                  child: CustomTextFormField(
+                    readOnly: false,
+                    lableText: AppStrings.textField2,
+                    color: ColorManager.secondaryGrey,
+                    suffexIcon: Icon(
+                      Icons.access_time_rounded,
+                      color: ColorManager.primary,
+                    ),
                   ),
                 ),
-                decoration: ThemeHelper().inputBoxDecorationShadow(),
               ),
               20.verticalSpace,
               CustomText(
@@ -130,11 +175,11 @@ class _OrderReviewPage3State extends State<OrderReviewPage3> {
                         txt: AppStrings.dept,
                         fontSize: 17,
                       ),
-                      value: "a",
-                      groupValue: gender,
+                      value: choices[0],
+                      groupValue: destination,
                       onChanged: (value) {
                         setState(() {
-                          gender = value.toString();
+                          destination = value.toString();
                         });
                       },
                     ),
@@ -146,11 +191,11 @@ class _OrderReviewPage3State extends State<OrderReviewPage3> {
                         txt: AppStrings.point,
                         fontSize: 17,
                       ),
-                      value: "b",
-                      groupValue: gender,
+                      value: choices[1],
+                      groupValue: destination,
                       onChanged: (value) {
                         setState(() {
-                          gender = value.toString();
+                          destination = value.toString();
                         });
                       },
                     ),
@@ -160,32 +205,32 @@ class _OrderReviewPage3State extends State<OrderReviewPage3> {
               20.verticalSpace,
               Container(
                 margin: REdgeInsetsDirectional.only(start: 21, end: 21),
+                decoration: ThemeHelper().inputBoxDecorationShadow(),
                 child: CustomTextFormField(
                   readOnly: false,
                   lableText: AppStrings.textField3_2,
                   color: ColorManager.secondaryGrey,
                 ),
-                decoration: ThemeHelper().inputBoxDecorationShadow(),
               ),
               20.verticalSpace,
               Container(
                 margin: REdgeInsetsDirectional.only(start: 21, end: 21),
+                decoration: ThemeHelper().inputBoxDecorationShadow(),
                 child: CustomTextFormField(
                   readOnly: false,
                   lableText: AppStrings.textField3,
                   color: ColorManager.secondaryGrey,
                 ),
-                decoration: ThemeHelper().inputBoxDecorationShadow(),
               ),
               20.verticalSpace,
               Container(
                 margin: REdgeInsetsDirectional.only(start: 21, end: 21),
+                decoration: ThemeHelper().inputBoxDecorationShadow(),
                 child: CustomTextFormField(
                   readOnly: false,
                   lableText: AppStrings.textField4,
                   color: ColorManager.secondaryGrey,
                 ),
-                decoration: ThemeHelper().inputBoxDecorationShadow(),
               ),
               20.verticalSpace,
               Container(

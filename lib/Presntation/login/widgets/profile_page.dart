@@ -8,6 +8,7 @@ import 'package:stay_home/Presntation/resources/routes_manager.dart';
 import 'package:stay_home/Presntation/resources/strings_manager.dart';
 import 'package:stay_home/core/widgets/custom_text.dart';
 
+import '../../resources/assets_manager.dart';
 import '../cubit/cubit.dart';
 import 'header_widget.dart';
 
@@ -67,7 +68,7 @@ class _ProfilePageState extends State<ProfilePage> {
                               decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(100),
                                 border:
-                                    Border.all(width: 5, color: Colors.white),
+                                    Border.all(width: 10, color: Colors.white),
                                 color: Colors.white,
                                 boxShadow: const [
                                   BoxShadow(
@@ -76,12 +77,26 @@ class _ProfilePageState extends State<ProfilePage> {
                                       offset: Offset(5, 5)),
                                 ],
                               ),
-                              child: Icon(
-                                Icons.person,
-                                size: 80,
-                                color: Colors.grey.shade300,
-                              ),
+                              child: item.gender == "Female"
+                                  ? Image.asset(
+                                      ImageAssets.female,
+                                      fit: BoxFit.cover,
+                                      width: 95,
+                                      height: 95,
+                                    )
+                                  : Image.asset(
+                                      ImageAssets.male,
+                                      fit: BoxFit.cover,
+                                      width: 95,
+                                      height: 95,
+                                    ),
                             ),
+                            // child: Icon(
+                            //   Icons.person,
+                            //   size: 80,
+                            //   color: Colors.grey.shade300,
+                            // ),
+
                             20.verticalSpace,
                             CustomText(
                               txt: item.fullName,
@@ -129,17 +144,24 @@ class _ProfilePageState extends State<ProfilePage> {
                                       txt: item.email,
                                     ),
                                   ),
-                                  ListTile(
-                                    contentPadding: const EdgeInsets.symmetric(
-                                      horizontal: 12,
-                                      vertical: 4,
-                                    ),
-                                    leading: Icon(Icons.phone,
-                                        color: ColorManager.primary),
-                                    title: const CustomText(
-                                        txt: AppStrings.mobileNumber),
-                                    subtitle: CustomText(
-                                      txt: item.phoneNumber,
+                                  GestureDetector(
+                                    onTap: () {
+                                      Navigator.pushNamed(
+                                          context, Routes.registerRoute);
+                                    },
+                                    child: ListTile(
+                                      contentPadding:
+                                          const EdgeInsets.symmetric(
+                                        horizontal: 12,
+                                        vertical: 4,
+                                      ),
+                                      leading: Icon(Icons.phone,
+                                          color: ColorManager.primary),
+                                      title: const CustomText(
+                                          txt: AppStrings.mobileNumber),
+                                      subtitle: CustomText(
+                                        txt: item.phoneNumber,
+                                      ),
                                     ),
                                   ),
                                   ListTile(

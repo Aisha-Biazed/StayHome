@@ -1,3 +1,4 @@
+import 'package:dropdown_textfield/dropdown_textfield.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -5,6 +6,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:stay_home/Presntation/login/cubit/cubit.dart';
 import 'package:stay_home/Presntation/login/cubit/states.dart';
 import 'package:stay_home/Presntation/login/widgets/header_widget.dart';
+import 'package:stay_home/Presntation/resources/assets_manager.dart';
 import 'package:stay_home/core/widgets/custom_buttons.dart';
 
 import '../../common/theme_helper.dart';
@@ -20,27 +22,42 @@ class RegistrationPage extends StatefulWidget {
   }
 }
 
+List<String> options = ['male', 'female'];
+List<String> city = ["value1", "value2"];
+
 class _RegistrationPageState extends State<RegistrationPage> {
-  String? gender;
-  // bool? check1 = false, check2 = true, check3 = false;
+  String gender = options[0];
   final _formKey = GlobalKey<FormState>();
+  var fullNameController = TextEditingController(text: "");
+  var emailController = TextEditingController(text: "");
+  var passwordController = TextEditingController(text: "");
+  var phoneNumberController = TextEditingController(text: "");
+  var birthdateController = TextEditingController(text: "");
+  var deviceTokenController = TextEditingController(text: "");
+  var cityIdController = TextEditingController(text: "");
+  var cityId = "7cf5bdbd-c952-4a63-b8c5-01e2d142eb2b";
   bool checkedValue = false;
   bool checkboxValue = false;
-  TextEditingController controllerDilocode = TextEditingController();
-  TextEditingController controllerPhoneNumber = TextEditingController();
-  final DilocodeFoucs = FocusNode();
-  final PhoneNumberFoucs = FocusNode();
+  String dropdownValue = 'add';
+  late SingleValueDropDownController _cnt;
+  late MultiValueDropDownController _cntMulti;
+
+  @override
+  void initState() {
+    _cnt = SingleValueDropDownController();
+    _cntMulti = MultiValueDropDownController();
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    _cnt.dispose();
+    _cntMulti.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
-    var fullNameController = TextEditingController(text: "");
-    var emailController = TextEditingController(text: "");
-    var imageUrlController = TextEditingController(text: "");
-    var passwordController = TextEditingController(text: "");
-    var phoneNumberController = TextEditingController(text: "");
-    var birthdateController = TextEditingController(text: "");
-    var deviceTokenController = TextEditingController(text: "");
-    var cityIdController = TextEditingController(text: "");
-
     return BlocBuilder<InitialCubit, InitialStates>(
       builder: (context, state) {
         return Directionality(
@@ -72,7 +89,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
                                     decoration: BoxDecoration(
                                       borderRadius: BorderRadius.circular(100),
                                       border: Border.all(
-                                          width: 5, color: Colors.white),
+                                          width: 10, color: Colors.white),
                                       color: Colors.white,
                                       boxShadow: const [
                                         BoxShadow(
@@ -82,20 +99,19 @@ class _RegistrationPageState extends State<RegistrationPage> {
                                         ),
                                       ],
                                     ),
-                                    child: Icon(
-                                      Icons.person,
-                                      color: Colors.grey.shade300,
-                                      size: 80.0,
-                                    ),
-                                  ),
-                                  Container(
-                                    padding:
-                                        const EdgeInsets.fromLTRB(80, 80, 0, 0),
-                                    child: Icon(
-                                      Icons.add_circle,
-                                      color: Colors.grey.shade700,
-                                      size: 25.0,
-                                    ),
+                                    child: gender == 'male'
+                                        ? Image.asset(
+                                            ImageAssets.male,
+                                            fit: BoxFit.cover,
+                                            width: 95,
+                                            height: 95,
+                                          )
+                                        : Image.asset(
+                                            ImageAssets.female,
+                                            fit: BoxFit.cover,
+                                            width: 95,
+                                            height: 95,
+                                          ),
                                   ),
                                 ],
                               ),
@@ -124,6 +140,45 @@ class _RegistrationPageState extends State<RegistrationPage> {
                                 fontWeight: FontWeight.w600,
                               )),
                           Container(
+                            child: DropDownTextField(
+                              controller: _cnt,
+                              searchDecoration: const InputDecoration(),
+                              textFieldDecoration: ThemeHelper()
+                                  .textInputDecoration(AppStrings.theTown),
+                              clearOption: true,
+                              // enableSearch: true,
+                              // dropdownColor: Colors.green,
+                              validator: (value) {
+                                if (value == null) {
+                                  return "Required field";
+                                } else {
+                                  return null;
+                                }
+                              },
+                              dropDownItemCount: 2,
+                              dropDownList: const [
+                                DropDownValueModel(
+                                  name: 'حلب',
+                                  value: "value1",
+                                ),
+                                DropDownValueModel(
+                                    name: 'دمشق',
+                                    value: "value2",
+                                    toolTipMsg:
+                                        "DropDownButton is a widget that we can use to select one unique value from a set of values")
+                              ],
+                              onChanged: (val) {
+                                setState(() {
+                                  cityId = val
+                                      .value; // تخزين قيمة المدينة المختارة في المتغير
+                                });
+                              },
+                            ),
+                            decoration:
+                                ThemeHelper().inputBoxDecorationShadow(),
+                          ),
+                          15.verticalSpace,
+                          Container(
                             child: TextFormField(
                               controller: fullNameController,
                               decoration: ThemeHelper().textInputDecoration(
@@ -133,7 +188,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
                             decoration:
                                 ThemeHelper().inputBoxDecorationShadow(),
                           ),
-                          30.verticalSpace,
+                          15.verticalSpace,
                           Container(
                             child: TextFormField(
                               controller: birthdateController,
@@ -144,7 +199,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
                             decoration:
                                 ThemeHelper().inputBoxDecorationShadow(),
                           ),
-                          20.verticalSpace,
+                          15.verticalSpace,
                           Container(
                             child: TextFormField(
                               controller: emailController,
@@ -164,7 +219,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
                             decoration:
                                 ThemeHelper().inputBoxDecorationShadow(),
                           ),
-                          20.verticalSpace,
+                          15.verticalSpace,
                           Container(
                             child: TextFormField(
                               controller: phoneNumberController,
@@ -183,7 +238,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
                             decoration:
                                 ThemeHelper().inputBoxDecorationShadow(),
                           ),
-                          20.verticalSpace,
+                          15.verticalSpace,
                           Container(
                             child: TextFormField(
                               controller: passwordController,
@@ -201,7 +256,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
                             decoration:
                                 ThemeHelper().inputBoxDecorationShadow(),
                           ),
-                          20.verticalSpace,
+                          15.verticalSpace,
                           Row(
                             children: [
                               Expanded(
@@ -211,7 +266,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
                                     txt: AppStrings.male,
                                     fontSize: 17,
                                   ),
-                                  value: "male",
+                                  value: options[0],
                                   groupValue: gender,
                                   onChanged: (value) {
                                     setState(() {
@@ -227,7 +282,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
                                     txt: AppStrings.female,
                                     fontSize: 17,
                                   ),
-                                  value: "female",
+                                  value: options[1],
                                   groupValue: gender,
                                   onChanged: (value) {
                                     setState(() {
@@ -246,28 +301,26 @@ class _RegistrationPageState extends State<RegistrationPage> {
                             child: CustomGeneralButton(
                               text: AppStrings.registerBtn,
                               onTap: () {
-                                if (_formKey.currentState!.validate()) {
-                                  print("ddddddddddddd");
-                                  print(phoneNumberController.text);
-                                  InitialCubit.get(context).createUser(
-                                    context: context,
-                                    email: emailController.text.toString(),
-                                    password:
-                                        passwordController.text.toString(),
-                                    fullName:
-                                        fullNameController.text.toString(),
-                                    phoneNumber:
-                                        phoneNumberController.text.toString(),
-                                    birthdate:
-                                        birthdateController.text.toString(),
-                                    deviceToken:
-                                        deviceTokenController.text.toString(),
-                                    cityId: cityIdController.text.toString(),
-                                    // gender: null,
-                                  );
-                                }
-                                Navigator.pushNamed(
-                                    context, Routes.profilesRoute);
+                                print(gender);
+                                // if (_formKey.currentState!.validate()) {
+                                // }
+                                // Navigator.pushNamed(
+                                //     context, Routes.profilesRoute);
+                                InitialCubit.get(context).createUser(
+                                  email: emailController.text.toString(),
+                                  password: passwordController.text.toString(),
+                                  fullName: fullNameController.text.toString(),
+                                  phoneNumber:
+                                      phoneNumberController.text.toString(),
+                                  birthdate:
+                                      birthdateController.text.toString(),
+                                  gender: gender,
+                                  cityId: cityId,
+                                  context: context,
+                                );
+                                //
+
+                                // cityId: cityIdController.text.toString(),
                               },
                             ),
                           ),

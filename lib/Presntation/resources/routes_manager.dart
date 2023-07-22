@@ -8,7 +8,7 @@ import 'package:stay_home/Presntation/orders/store_detailes.dart';
 import 'package:stay_home/Presntation/resources/strings_manager.dart';
 import 'package:stay_home/model/shope_model.dart';
 import '../orders/order_review_page_1.dart';
-import '../home/pages/my_basket_page.dart';
+import '../home/pages/my_cart_page.dart';
 import '../orders/order_review_page_2.dart';
 import '../orders/order_review_page_3.dart';
 import '../orders/store_page.dart';
@@ -37,6 +37,7 @@ class Routes {
   static const String orderReview3Route = "/goods3";
   static const String confirmationRoute = "/confirmation";
   static const String myBasketRoute = "/basket";
+  static const String showpicker = "/showpicker";
 }
 
 class RouteGenerator {
@@ -73,12 +74,14 @@ class RouteGenerator {
         return MaterialPageRoute(builder: (_) => const OrderReviewPage1());
       case Routes.orderReview2Route:
         return MaterialPageRoute(builder: (_) => const OrderReviewPage2());
+      case Routes.showpicker:
+        return MaterialPageRoute(builder: (_) => const Home());
       case Routes.orderReview3Route:
         return MaterialPageRoute(builder: (_) => const OrderReviewPage3());
       case Routes.confirmationRoute:
         return MaterialPageRoute(builder: (_) => const ConfirmationPage());
       case Routes.myBasketRoute:
-        return MaterialPageRoute(builder: (_) => const MyBasketPage());
+        return MaterialPageRoute(builder: (_) => const MyCartPage());
       default:
         return unDefinedRoute();
     }

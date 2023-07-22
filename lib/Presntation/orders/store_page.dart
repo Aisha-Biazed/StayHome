@@ -135,7 +135,7 @@ class _StorePageState extends State<StorePage> {
                         if (items.isEmpty) {
                           return Padding(
                             padding: REdgeInsetsDirectional.only(
-                                bottom: 50, top: 50, end: 27, start: 27),
+                                bottom: 100, top: 40, end: 35, start: 35),
                             child: Card(
                               color: ColorManager.purple,
                               child: const Center(
