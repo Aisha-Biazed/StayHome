@@ -10,7 +10,7 @@ import 'package:stay_home/core/widgets/custom_text.dart';
 
 import '../../resources/assets_manager.dart';
 import '../cubit/cubit.dart';
-import 'header_widget.dart';
+import '../widgets/header_widget.dart';
 
 class ProfilePage extends StatefulWidget {
   const ProfilePage({Key? key}) : super(key: key);

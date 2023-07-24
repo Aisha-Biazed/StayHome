@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hexcolor/hexcolor.dart';
 
-import '../Presntation/resources/color_manager.dart';
+import '../../Presntation/resources/color_manager.dart';
 
 class ThemeHelper {
   InputDecoration textInputDecoration(

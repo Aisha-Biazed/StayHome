@@ -5,10 +5,10 @@ import 'package:stay_home/Presntation/resources/color_manager.dart';
 import 'package:stay_home/Presntation/resources/strings_manager.dart';
 import 'package:stay_home/core/widgets/custom_buttons.dart';
 import 'dart:ui' as ui;
-import '../../common/theme_helper.dart';
-import '../../core/widgets/custom_text.dart';
-import '../../core/widgets/custom_text_field.dart';
-import '../resources/routes_manager.dart';
+import '../../../core/utils/theme_helper.dart';
+import '../../../core/widgets/custom_text.dart';
+import '../../../core/widgets/custom_text_field.dart';
+import '../../resources/routes_manager.dart';
 
 class OrderReviewPage3 extends StatefulWidget {
   const OrderReviewPage3({Key? key}) : super(key: key);

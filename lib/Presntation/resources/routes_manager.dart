@@ -1,23 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:stay_home/Presntation/home/home_view.dart';
+import 'package:stay_home/Presntation/home/pages/home_view.dart';
 import 'package:stay_home/Presntation/home/pages/service_page.dart';
 import 'package:stay_home/Presntation/login/cubit/cubit.dart';
-import 'package:stay_home/Presntation/orders/confirmation_page.dart';
-import 'package:stay_home/Presntation/orders/store_detailes.dart';
 import 'package:stay_home/Presntation/resources/strings_manager.dart';
 import 'package:stay_home/model/shope_model.dart';
-import '../orders/order_review_page_1.dart';
+import '../login/pages/login_view.dart';
+import '../onboarding/presentaion/pages/on_boarding_view.dart';
+import '../orders/pages/confirmation_page.dart';
+import '../orders/pages/order_review_page_1.dart';
 import '../home/pages/my_cart_page.dart';
-import '../orders/order_review_page_2.dart';
-import '../orders/order_review_page_3.dart';
-import '../orders/store_page.dart';
-import '../orders/add_address_page.dart';
-import '../login/login_view.dart';
-import '../login/registartion_page.dart';
-import '../login/widgets/profile_page.dart';
-import '../onBoarding/presentaion/on_boarding_view.dart';
-import '../splash/splash_view.dart';
+import '../orders/pages/order_review_page_2.dart';
+import '../orders/pages/add_address_page.dart';
+import '../login/pages/registartion_page.dart';
+import '../login/pages/profile_page.dart';
+import '../orders/pages/order_review_page_3.dart';
+import '../splash/pages/splash_view.dart';
 
 class Routes {
   static const String splashRoute = "/";

@@ -6,12 +6,12 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:stay_home/Presntation/login/cubit/cubit.dart';
 import 'package:stay_home/Presntation/login/cubit/states.dart';
 import 'package:stay_home/Presntation/login/widgets/header_widget.dart';
-import '../../common/theme_helper.dart';
-import '../../core/widgets/custom_buttons.dart';
-import '../../core/widgets/custom_text.dart';
-import '../resources/color_manager.dart';
-import '../resources/routes_manager.dart';
-import '../resources/strings_manager.dart';
+import '../../../core/utils/theme_helper.dart';
+import '../../../core/widgets/custom_buttons.dart';
+import '../../../core/widgets/custom_text.dart';
+import '../../resources/color_manager.dart';
+import '../../resources/routes_manager.dart';
+import '../../resources/strings_manager.dart';
 
 class LoginView extends StatefulWidget {
   const LoginView({Key? key}) : super(key: key);

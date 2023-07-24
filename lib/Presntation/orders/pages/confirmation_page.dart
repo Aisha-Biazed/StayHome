@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:stay_home/core/widgets/custom_text.dart';
 
-import '../resources/assets_manager.dart';
-import '../resources/strings_manager.dart';
+import '../../resources/assets_manager.dart';
+import '../../resources/strings_manager.dart';
 
-class ConfirmationWithNoticePage extends StatelessWidget {
-  const ConfirmationWithNoticePage({Key? key}) : super(key: key);
+class ConfirmationPage extends StatelessWidget {
+  const ConfirmationPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -23,14 +23,14 @@ class ConfirmationWithNoticePage extends StatelessWidget {
             ),
             80.verticalSpace,
             CustomText(
-              txt: AppStrings.sendNotice1,
+              txt: AppStrings.requestReceived1,
               fontWeight: FontWeight.w700,
               fontSize: 20.sp,
               textAlign: TextAlign.center,
             ),
             20.verticalSpace,
             CustomText(
-              txt: AppStrings.sendNotice2,
+              txt: AppStrings.requestReceived2,
               fontWeight: FontWeight.w700,
               fontSize: 20.sp,
             ),

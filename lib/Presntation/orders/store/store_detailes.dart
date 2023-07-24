@@ -6,9 +6,9 @@ import 'package:intl/intl.dart';
 import 'package:stay_home/Presntation/login/cubit/cubit.dart';
 import 'package:stay_home/Presntation/login/cubit/states.dart';
 import 'package:stay_home/Presntation/resources/color_manager.dart';
-import '../../core/widgets/custom_text.dart';
-import '../resources/routes_manager.dart';
-import '../resources/strings_manager.dart';
+import '../../../../core/widgets/custom_text.dart';
+import '../../resources/routes_manager.dart';
+import '../../resources/strings_manager.dart';
 
 class StoreDetails extends StatefulWidget {
   final String shopId;

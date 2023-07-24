@@ -44,7 +44,7 @@ class AuthRepo {
   }) async {
     try {
       final result = await _dio.post(
-          'Mobile/Customer/Create?FullName=$fullName&Email=$email&Password=$password&PhoneNumber=$phoneNumber&BirthDate=$birthdate&DeviceToken=3&Gender=$gender&CityId=7cf5bdbd-c952-4a63-b8c5-01e2d142eb2b');
+          'Mobile/Customer/Create?FullName=$fullName&Email=$email&Password=$password&PhoneNumber=$phoneNumber&BirthDate=$birthdate&DeviceToken=3&Gender=$gender&CityId=$cityId');
       final SharedPreferences prefs = await SharedPreferences.getInstance();
       await prefs.setString('token', result.data["response"]["accessToken"]);
       print("SuccessfulDataCreateUser");
@@ -69,19 +69,6 @@ class AuthRepo {
     }
   }
 
-  Future<Either<String, GetAllCitiesModel>> getAllCities() async {
-    try {
-      final result = await _dio.get(
-        'Mobile/Setting/GetAllCities',
-      );
-      print("SuccessfulData");
-      return Right(GetAllCitiesModel.fromJson(result.data["response"]));
-    } catch (error) {
-      print("error =$error");
-      return Left(ExceptionHandler.handle(error as Exception));
-    }
-  }
-
   Future<Either<String, List<HomeModel>>> getHome() async {
     try {
       final result = await _dio.get('Mobile/Home/Get');
@@ -91,6 +78,22 @@ class AuthRepo {
       print("SuccessfulDataHome");
       return Right((result.data["response"] as List).map((e) {
         return HomeModel.fromJson(e);
+      }).toList());
+    } catch (error) {
+      print("error =$error");
+      return Left(ExceptionHandler.handle(error as Exception));
+    }
+  }
+
+  Future<Either<String, List<GetAllCitiesModel>>> getAllCities() async {
+    try {
+      final result = await _dio.get('Mobile/Setting/GetAllCities');
+      (result.data["response"] as List).map((e) {
+        return GetAllCitiesModel.fromJson(e);
+      }).toList();
+      print("SuccessfulGetAllCities");
+      return Right((result.data["response"] as List).map((e) {
+        return GetAllCitiesModel.fromJson(e);
       }).toList());
     } catch (error) {
       print("error =$error");

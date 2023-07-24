@@ -2,12 +2,12 @@ import 'package:dropdown_textfield/dropdown_textfield.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-import '../../common/theme_helper.dart';
-import '../../core/widgets/custom_buttons.dart';
-import '../../core/widgets/custom_text.dart';
-import '../resources/color_manager.dart';
-import '../resources/routes_manager.dart';
-import '../resources/strings_manager.dart';
+import '../../../core/utils/theme_helper.dart';
+import '../../../core/widgets/custom_buttons.dart';
+import '../../../core/widgets/custom_text.dart';
+import '../../resources/color_manager.dart';
+import '../../resources/routes_manager.dart';
+import '../../resources/strings_manager.dart';
 
 class AddAddressPage extends StatefulWidget {
   const AddAddressPage({Key? key}) : super(key: key);

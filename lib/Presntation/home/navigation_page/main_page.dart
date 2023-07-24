@@ -88,7 +88,7 @@ class _MainPageState extends State<MainPage> {
                           ),
                           onTap: () {
                             Navigator.pushNamed(context, Routes.serviceRoute);
-                            // InitialCubit.get(context).profileCubit();
+                            // InitialCubit.get(context).getAllCitiesCubit();
                           }),
                     ),
                     20.verticalSpace,

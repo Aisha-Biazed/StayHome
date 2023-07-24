@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:stay_home/Presntation/splash/widgets/splash_body.dart';
+import 'package:stay_home/Presntation/splash/pages/splash_body.dart';
 
-import '../resources/color_manager.dart';
+import '../../resources/color_manager.dart';
+
 class SplashView extends StatelessWidget {
   const SplashView({Key? key}) : super(key: key);
 
@@ -9,7 +10,7 @@ class SplashView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: ColorManager.white,
-    body: const SplashViewBody(),
+      body: const SplashViewBody(),
     );
   }
 }

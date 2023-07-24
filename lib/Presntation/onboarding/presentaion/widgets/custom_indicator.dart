@@ -1,7 +1,7 @@
 import 'package:dots_indicator/dots_indicator.dart';
 import 'package:flutter/material.dart';
+import 'package:stay_home/Presntation/resources/color_manager.dart';
 
-import '../../../../core/constants.dart';
 class CustomIndicator extends StatelessWidget {
   const CustomIndicator({Key? key, required this.dotIndex}) : super(key: key);
   final double? dotIndex;
@@ -10,12 +10,10 @@ class CustomIndicator extends StatelessWidget {
     return DotsIndicator(
       decorator: DotsDecorator(
           color: Colors.transparent,
-          activeColor: kMainColor,
+          activeColor: ColorManager.primary,
           shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(8),
-              side: BorderSide(color: kMainColor)
-          )
-      ),
+              side: BorderSide(color: ColorManager.primary))),
       dotsCount: 3,
       position: dotIndex!,
     );

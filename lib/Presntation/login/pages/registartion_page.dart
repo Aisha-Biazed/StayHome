@@ -9,11 +9,11 @@ import 'package:stay_home/Presntation/login/widgets/header_widget.dart';
 import 'package:stay_home/Presntation/resources/assets_manager.dart';
 import 'package:stay_home/core/widgets/custom_buttons.dart';
 
-import '../../common/theme_helper.dart';
-import '../../core/widgets/custom_text.dart';
-import '../resources/color_manager.dart';
-import '../resources/routes_manager.dart';
-import '../resources/strings_manager.dart';
+import '../../../core/utils/theme_helper.dart';
+import '../../../core/widgets/custom_text.dart';
+import '../../resources/color_manager.dart';
+import '../../resources/routes_manager.dart';
+import '../../resources/strings_manager.dart';
 
 class RegistrationPage extends StatefulWidget {
   @override
@@ -23,7 +23,6 @@ class RegistrationPage extends StatefulWidget {
 }
 
 List<String> options = ['male', 'female'];
-List<String> city = ["value1", "value2"];
 
 class _RegistrationPageState extends State<RegistrationPage> {
   String gender = options[0];
@@ -35,10 +34,10 @@ class _RegistrationPageState extends State<RegistrationPage> {
   var birthdateController = TextEditingController(text: "");
   var deviceTokenController = TextEditingController(text: "");
   var cityIdController = TextEditingController(text: "");
-  var cityId = "7cf5bdbd-c952-4a63-b8c5-01e2d142eb2b";
-  bool checkedValue = false;
-  bool checkboxValue = false;
-  String dropdownValue = 'add';
+  var cityId;
+
+  // "7cf5bdbd-c952-4a63-b8c5-01e2d142eb2b";
+
   late SingleValueDropDownController _cnt;
   late MultiValueDropDownController _cntMulti;
 
@@ -58,6 +57,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
 
   @override
   Widget build(BuildContext context) {
+    InitialCubit.get(context).getAllCitiesCubit();
     return BlocBuilder<InitialCubit, InitialStates>(
       builder: (context, state) {
         return Directionality(
@@ -139,68 +139,87 @@ class _RegistrationPageState extends State<RegistrationPage> {
                                 txtColor: ColorManager.primary,
                                 fontWeight: FontWeight.w600,
                               )),
-                          Container(
-                            child: DropDownTextField(
-                              controller: _cnt,
-                              searchDecoration: const InputDecoration(),
-                              textFieldDecoration: ThemeHelper()
-                                  .textInputDecoration(AppStrings.theTown),
-                              clearOption: true,
-                              // enableSearch: true,
-                              // dropdownColor: Colors.green,
-                              validator: (value) {
-                                if (value == null) {
-                                  return "Required field";
+                          RSizedBox(
+                            height: 75,
+                            child: BlocBuilder<InitialCubit, InitialStates>(
+                              builder: (context, state) {
+                                if (state is GetAllCitiesSuccessState) {
+                                  final cityList = state.result;
+                                  return ListView.builder(
+                                      itemCount: 1,
+                                      itemBuilder:
+                                          (BuildContext context, int index) {
+                                        return Container(
+                                          decoration: ThemeHelper()
+                                              .inputBoxDecorationShadow(),
+                                          child: DropDownTextField(
+                                            controller: _cnt,
+                                            searchDecoration:
+                                                const InputDecoration(),
+                                            textFieldDecoration: ThemeHelper()
+                                                .textInputDecoration(
+                                                    AppStrings.theTown),
+                                            clearOption: true,
+                                            // enableSearch: true,
+                                            // dropdownColor: Colors.green,
+                                            validator: (value) {
+                                              if (value == null) {
+                                                return "Required field";
+                                              } else {
+                                                return null;
+                                              }
+                                            },
+                                            // dropDownItemCount: cityList.length,
+                                            dropDownList: [
+                                              for (final city in cityList)
+                                                DropDownValueModel(
+                                                  name: city.name!,
+                                                  value: city.id,
+                                                  toolTipMsg: "${city.id}",
+                                                ),
+                                            ],
+                                            onChanged: (val) {
+                                              setState(() {});
+                                              cityId = val
+                                                  .value; // تخزين قيمة المدينة المختارة في المتغير
+                                            },
+                                          ),
+                                        );
+                                      });
                                 } else {
-                                  return null;
+                                  return CircularProgressIndicator(
+                                    color: ColorManager.primary,
+                                  );
                                 }
                               },
-                              dropDownItemCount: 2,
-                              dropDownList: const [
-                                DropDownValueModel(
-                                  name: 'حلب',
-                                  value: "value1",
-                                ),
-                                DropDownValueModel(
-                                    name: 'دمشق',
-                                    value: "value2",
-                                    toolTipMsg:
-                                        "DropDownButton is a widget that we can use to select one unique value from a set of values")
-                              ],
-                              onChanged: (val) {
-                                setState(() {
-                                  cityId = val
-                                      .value; // تخزين قيمة المدينة المختارة في المتغير
-                                });
-                              },
                             ),
-                            decoration:
-                                ThemeHelper().inputBoxDecorationShadow(),
                           ),
                           15.verticalSpace,
                           Container(
+                            decoration:
+                                ThemeHelper().inputBoxDecorationShadow(),
                             child: TextFormField(
                               controller: fullNameController,
                               decoration: ThemeHelper().textInputDecoration(
                                 AppStrings.firstname,
                               ),
                             ),
-                            decoration:
-                                ThemeHelper().inputBoxDecorationShadow(),
                           ),
                           15.verticalSpace,
                           Container(
+                            decoration:
+                                ThemeHelper().inputBoxDecorationShadow(),
                             child: TextFormField(
                               controller: birthdateController,
                               decoration: ThemeHelper().textInputDecoration(
                                 AppStrings.bairthdate,
                               ),
                             ),
-                            decoration:
-                                ThemeHelper().inputBoxDecorationShadow(),
                           ),
                           15.verticalSpace,
                           Container(
+                            decoration:
+                                ThemeHelper().inputBoxDecorationShadow(),
                             child: TextFormField(
                               controller: emailController,
                               decoration: ThemeHelper().textInputDecoration(
@@ -216,11 +235,11 @@ class _RegistrationPageState extends State<RegistrationPage> {
                                 return null;
                               },
                             ),
-                            decoration:
-                                ThemeHelper().inputBoxDecorationShadow(),
                           ),
                           15.verticalSpace,
                           Container(
+                            decoration:
+                                ThemeHelper().inputBoxDecorationShadow(),
                             child: TextFormField(
                               controller: phoneNumberController,
                               decoration: ThemeHelper().textInputDecoration(
@@ -235,11 +254,11 @@ class _RegistrationPageState extends State<RegistrationPage> {
                                 return null;
                               },
                             ),
-                            decoration:
-                                ThemeHelper().inputBoxDecorationShadow(),
                           ),
                           15.verticalSpace,
                           Container(
+                            decoration:
+                                ThemeHelper().inputBoxDecorationShadow(),
                             child: TextFormField(
                               controller: passwordController,
                               obscureText: true,
@@ -253,8 +272,6 @@ class _RegistrationPageState extends State<RegistrationPage> {
                                 return null;
                               },
                             ),
-                            decoration:
-                                ThemeHelper().inputBoxDecorationShadow(),
                           ),
                           15.verticalSpace,
                           Row(
@@ -306,6 +323,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
                                 // }
                                 // Navigator.pushNamed(
                                 //     context, Routes.profilesRoute);
+
                                 InitialCubit.get(context).createUser(
                                   email: emailController.text.toString(),
                                   password: passwordController.text.toString(),

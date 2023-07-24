@@ -4,16 +4,13 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:intl/intl.dart';
 import 'package:stay_home/Presntation/login/cubit/cubit.dart';
 import 'package:stay_home/Presntation/login/cubit/states.dart';
-import 'package:stay_home/Presntation/orders/store_detailes.dart';
+import 'package:stay_home/Presntation/orders/store/store_detailes.dart';
 import 'package:stay_home/Presntation/resources/assets_manager.dart';
-import 'package:stay_home/Presntation/resources/routes_manager.dart';
 import 'package:stay_home/core/widgets/custom_text.dart';
 import 'dart:ui' as ui;
 
-import 'package:stay_home/model/shope_model.dart';
-
-import '../resources/color_manager.dart';
-import '../resources/strings_manager.dart';
+import '../../resources/color_manager.dart';
+import '../../resources/strings_manager.dart';
 
 class StorePage extends StatefulWidget {
   // final String shopId;

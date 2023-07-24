@@ -5,9 +5,9 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:get/get.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:stay_home/Presntation/home/home_view.dart';
+import 'package:stay_home/Presntation/home/pages/home_view.dart';
 import 'package:stay_home/Presntation/login/cubit/cubit.dart';
-import 'package:stay_home/Presntation/splash/splash_view.dart';
+import 'package:stay_home/Presntation/splash/pages/splash_view.dart';
 import 'Presntation/resources/routes_manager.dart';
 import 'data_remote/cash_helper.dart';
 

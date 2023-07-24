@@ -1,3 +1,5 @@
+import 'package:stay_home/model/all_cities_model.dart';
+
 import '../../../model/details_shop_model.dart';
 import '../../../model/home_model.dart';
 import '../../../model/profile_model.dart';
@@ -36,6 +38,15 @@ class HomeSuccessState extends InitialStates {
 }
 
 class HomeErrorState extends InitialStates {}
+
+class GetAllCitiesLoadingState extends InitialStates {}
+
+class GetAllCitiesSuccessState extends InitialStates {
+  List<GetAllCitiesModel> result;
+  GetAllCitiesSuccessState(this.result);
+}
+
+class GetAllCitiesErrorState extends InitialStates {}
 
 class ShopLoadingState extends InitialStates {}
 

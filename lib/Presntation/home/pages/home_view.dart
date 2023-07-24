@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:stay_home/Presntation/home/widget/home_body_view.dart';
+import 'package:stay_home/Presntation/home/pages/home_body_view.dart';
 
 class HomeView extends StatefulWidget {
   const HomeView({Key? key}) : super(key: key);

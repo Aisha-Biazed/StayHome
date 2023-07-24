@@ -79,6 +79,11 @@ class _MyCartPageState extends State<MyCartPage> {
                                               //     .getCounter(
                                               //         team: 'A',
                                               //         buttonNumber: 1);
+                                              // InitialCubit.get(context)
+                                              //     .addToCart(
+                                              //         (state as MyCartState)
+                                              //             .productsCart,
+                                              //         product);
                                             },
                                             icon: Icon(
                                               Icons.add_circle,
