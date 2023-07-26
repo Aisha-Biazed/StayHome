@@ -13,6 +13,7 @@ import '../../../model/profile_model.dart';
 
 class InitialCubit extends Cubit<InitialStates> {
   late final AuthRepo _authRepo;
+
   InitialCubit() : super(LoginInitialState()) {
     _authRepo = AuthRepo();
   }
@@ -47,7 +48,8 @@ class InitialCubit extends Cubit<InitialStates> {
     Either<String, String> result = await _authRepo.createUserCubit(
       // fullName: fullName,
       email: email,
-      password: password, fullName: fullName,
+      password: password,
+      fullName: fullName,
       birthdate: birthdate,
       phoneNumber: phoneNumber,
       cityId: cityId,
@@ -125,45 +127,48 @@ class InitialCubit extends Cubit<InitialStates> {
     });
   }
 
-  void addToCart(List<ProductCart> cart, ProductCart product) {
-    final pro = cart.firstWhereOrNull((element) => element.id == product.id);
-    if (pro == null) {
-      cart.add(product);
-    } else {
-      final newProduct = ProductCart(
-          id: pro.id,
-          name: pro.name,
-          imageUrl: pro.imageUrl,
-          cost: pro.cost,
-          counter: pro.counter! + 1);
-      cart.removeWhere((element) => element.id == pro.id);
-      cart.add(product);
-    }
-    emit(MyCartState(productsCart: cart));
-  }
-
-  void decreaseFromCart(List<ProductCart> cart, ProductCart product) {
-    final pro = cart.firstWhereOrNull((element) => element.id == product.id);
-    if (pro != null && pro.counter! > 1) {
-      final newProduct = ProductCart(
-          id: pro.id,
-          name: pro.name,
-          imageUrl: pro.imageUrl,
-          cost: pro.cost,
-          counter: pro.counter! - 1);
-      cart.removeWhere((element) => element.id == pro.id);
-      cart.add(newProduct);
-      emit(MyCartState(productsCart: cart));
-    }
-  }
-
-  void removeFromCart(List<ProductCart> cart, ProductCart product) {
-    cart.removeWhere((element) => element.id == product.id);
-    emit(MyCartState(productsCart: cart));
-  }
-
-  void clearCart(List<ProductCart> cart) {
-    cart.clear();
-    emit(MyCartState(productsCart: cart));
-  }
+// void addToCart(List<ProductCart> cart, ProductCart product) {
+//   final pro = cart.firstWhereOrNull((element) => element.id == product.id);
+//   if (pro == null) {
+//     cart.add(product);
+//   } else {
+//     final newProduct = ProductCart(
+//         id: pro.id,
+//         name: pro.name,
+//         imageUrl: pro.imageUrl,
+//         cost: pro.cost,
+//         counter: pro.counter! + 1);
+//     cart.removeWhere((element) => element.id == pro.id);
+//     cart.add(product);
+//   }
+//   emit(MyCartState(productsCart: cart));
+// }
+//
+// void decreaseFromCart(List<ProductCart> cart, ProductCart product) {
+//   final pro = cart.firstWhereOrNull((element) => element.id == product.id);
+//   if (pro != null && pro.counter! > 1) {
+//     final newProduct = ProductCart(
+//         id: pro.id,
+//         name: pro.name,
+//         imageUrl: pro.imageUrl,
+//         cost: pro.cost,
+//         counter: pro.counter! - 1);
+//     cart.removeWhere((element) => element.id == pro.id);
+//     cart.add(newProduct);
+//     emit(MyCartState(productsCart: cart));
+//   } else {
+//     cart.removeWhere((element) => element.id == product.id);
+//     emit(MyCartState(productsCart: cart));
+//   }
+// }
+//
+// void clearCart(List<ProductCart> cart) {
+//   cart.clear();
+//   emit(MyCartState(productsCart: cart));
+// }
 }
+
+// void removeFromCart(List<ProductCart> cart, ProductCart product) {
+//   cart.removeWhere((element) => element.id == product.id);
+//   emit(MyCartState(productsCart: cart));
+// }

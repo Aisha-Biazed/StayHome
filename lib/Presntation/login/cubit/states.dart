@@ -66,23 +66,23 @@ class DetailsShopSuccessState extends InitialStates {
 
 class DetailsShopErrorState extends InitialStates {}
 
-class MyCartState extends InitialStates {
-  List<ProductCart> productsCart;
-  MyCartState({required this.productsCart});
-}
-
-class ProductCart {
-  ProductCart({
-    required this.id,
-    required this.name,
-    required this.imageUrl,
-    required this.cost,
-    required this.counter,
-  });
-
-  final String? id;
-  final String? name;
-  final String? imageUrl;
-  final int? cost;
-  final int? counter;
-}
+// class MyCartState extends InitialStates {
+//   List<ProductCart> productsCart;
+//   MyCartState({required this.productsCart});
+// }
+//
+// class ProductCart {
+//   ProductCart({
+//     required this.id,
+//     required this.name,
+//     required this.imageUrl,
+//     required this.cost,
+//     required this.counter,
+//   });
+//
+//   final String? id;
+//   final String? name;
+//   final String? imageUrl;
+//   final int? cost;
+//   final int? counter;
+// }

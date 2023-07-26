@@ -47,12 +47,12 @@ class _OnBoardingViewBodyState extends State<OnBoardingViewBody> {
             onTap: () {
               if (pageController!.page! < 2) {
                 pageController?.nextPage(
-                    duration: Duration(milliseconds: 500),
+                    duration: const Duration(milliseconds: 500),
                     curve: Curves.easeIn);
               } else {
-                Get.to(() => LoginView(),
+                Get.to(() => const LoginView(),
                     transition: Transition.rightToLeft,
-                    duration: Duration(milliseconds: 500));
+                    duration: const Duration(milliseconds: 500));
               }
             },
             text: pageController!.hasClients

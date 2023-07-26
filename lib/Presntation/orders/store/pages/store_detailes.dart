@@ -6,9 +6,10 @@ import 'package:intl/intl.dart';
 import 'package:stay_home/Presntation/login/cubit/cubit.dart';
 import 'package:stay_home/Presntation/login/cubit/states.dart';
 import 'package:stay_home/Presntation/resources/color_manager.dart';
-import '../../../../core/widgets/custom_text.dart';
-import '../../resources/routes_manager.dart';
-import '../../resources/strings_manager.dart';
+import '../../../../../core/widgets/custom_text.dart';
+import '../../../resources/routes_manager.dart';
+import '../../../resources/strings_manager.dart';
+import '../Cubit/my_cart_cubit.dart';
 
 class StoreDetails extends StatefulWidget {
   final String shopId;
@@ -75,16 +76,10 @@ class _StoreDetailsState extends State<StoreDetails> {
                                 height: 3.h,
                               ),
                             ),
-                            GestureDetector(
-                              onTap: () {
-                                Navigator.pushNamed(
-                                    context, Routes.myBasketRoute);
-                              },
-                              child: CustomText(
-                                txt: details.name!,
-                                fontSize: 25.sp,
-                                fontWeight: FontWeight.w400,
-                              ),
+                            CustomText(
+                              txt: details.name!,
+                              fontSize: 25.sp,
+                              fontWeight: FontWeight.w400,
                             ),
                             10.verticalSpace,
                             Row(
@@ -114,10 +109,14 @@ class _StoreDetailsState extends State<StoreDetails> {
                                 Container(
                                   color: ColorManager.secondaryGrey,
                                   child: const VerticalDivider(
-                                    color: Colors.black, //color of divider
-                                    width: 2, //width space of divider
-                                    thickness: 1, //thickness of divier line
-                                    indent: 10, //Spacing at the top of divider.
+                                    color: Colors.black,
+                                    //color of divider
+                                    width: 2,
+                                    //width space of divider
+                                    thickness: 1,
+                                    //thickness of divier line
+                                    indent: 10,
+                                    //Spacing at the top of divider.
                                     endIndent:
                                         12, //Spacing at the bottom of divider.
                                   ),
@@ -196,15 +195,57 @@ class _StoreDetailsState extends State<StoreDetails> {
                                                         .toString(),
                                                   ),
                                                   40.horizontalSpace,
-                                                  IconButton(
-                                                      onPressed: () {},
-                                                      icon: Icon(
-                                                        Icons
-                                                            .add_circle_outline_sharp,
-                                                        color: ColorManager
-                                                            .primary,
-                                                        size: 25.w,
-                                                      ))
+                                                  BlocProvider(
+                                                    create: (context) =>
+                                                        MyCartCubit(),
+                                                    child: BlocBuilder<
+                                                        MyCartCubit,
+                                                        MyCartState>(
+                                                      builder:
+                                                          (context, state) {
+                                                        return IconButton(
+                                                            onPressed: () {
+                                                              final cartCubit =
+                                                                  BlocProvider.of<
+                                                                          MyCartCubit>(
+                                                                      context);
+                                                              final cart =
+                                                                  cartCubit
+                                                                      .getCart();
+                                                              final product =
+                                                                  ProductCart(
+                                                                id: details
+                                                                    .products[
+                                                                        index]
+                                                                    .id!,
+                                                                name: details
+                                                                    .products[
+                                                                        index]
+                                                                    .name!,
+                                                                imageUrl:
+                                                                    "http://finalstayhome-001-site1.atempurl.com/${details.products[index].imageUrl}",
+                                                                cost: details
+                                                                    .products[
+                                                                        index]
+                                                                    .cost!,
+                                                                counter: 1,
+                                                              );
+                                                              cartCubit
+                                                                  .addToCart(
+                                                                      cart,
+                                                                      product);
+                                                            },
+                                                            icon: Icon(
+                                                              Icons
+                                                                  .add_circle_outline_sharp,
+                                                              color:
+                                                                  ColorManager
+                                                                      .primary,
+                                                              size: 25.w,
+                                                            ));
+                                                      },
+                                                    ),
+                                                  )
                                                 ]),
                                           ],
                                         ),
@@ -264,8 +305,7 @@ class _StoreDetailsState extends State<StoreDetails> {
                         // splashColor: ColorManager.secondary,
                         // hoverColor: ColorManager.secondary,
                         onPressed: () {
-                          Navigator.pushNamed(
-                              context, Routes.orderReview2Route);
+                          Navigator.pushNamed(context, Routes.myBasketRoute);
                         },
                         label: CustomText(
                           txt: AppStrings.addToTrash,

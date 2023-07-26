@@ -9,7 +9,7 @@ import '../login/pages/login_view.dart';
 import '../onboarding/presentaion/pages/on_boarding_view.dart';
 import '../orders/pages/confirmation_page.dart';
 import '../orders/pages/order_review_page_1.dart';
-import '../home/pages/my_cart_page.dart';
+import '../orders/store/pages/my_cart_page.dart';
 import '../orders/pages/order_review_page_2.dart';
 import '../orders/pages/add_address_page.dart';
 import '../login/pages/registartion_page.dart';
