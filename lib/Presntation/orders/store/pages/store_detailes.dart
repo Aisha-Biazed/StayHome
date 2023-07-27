@@ -305,7 +305,8 @@ class _StoreDetailsState extends State<StoreDetails> {
                         // splashColor: ColorManager.secondary,
                         // hoverColor: ColorManager.secondary,
                         onPressed: () {
-                          Navigator.pushNamed(context, Routes.myBasketRoute);
+                          Navigator.pushNamed(
+                              context, Routes.addressDestinationRoute);
                         },
                         label: CustomText(
                           txt: AppStrings.addToTrash,

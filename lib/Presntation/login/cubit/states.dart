@@ -1,5 +1,7 @@
 import 'package:stay_home/model/all_cities_model.dart';
+import 'package:stay_home/model/all_cities_with_area_model.dart';
 
+import '../../../model/all_areas_model.dart';
 import '../../../model/details_shop_model.dart';
 import '../../../model/home_model.dart';
 import '../../../model/profile_model.dart';
@@ -30,6 +32,14 @@ class ProfileSuccessState extends InitialStates {
 
 class ProfileErrorState extends InitialStates {}
 
+
+
+class AddShoppingOrderLoadingState extends InitialStates {}
+
+class AddShoppingOrderErrorState extends InitialStates {}
+
+class AddShoppingOrderSuccessState extends InitialStates {}
+
 class HomeLoadingState extends InitialStates {}
 
 class HomeSuccessState extends InitialStates {
@@ -47,6 +57,25 @@ class GetAllCitiesSuccessState extends InitialStates {
 }
 
 class GetAllCitiesErrorState extends InitialStates {}
+
+class GetAllAreasLoadingState extends InitialStates {}
+
+class GetAllAreasSuccessState extends InitialStates {
+  List<GetAllAreasModel> result;
+  GetAllAreasSuccessState(this.result);
+}
+
+class GetAllAreasErrorState extends InitialStates {}
+
+
+class GetAllCitiesWithAllCitiesLoadingState extends InitialStates {}
+
+class GetAllCitiesWithAllCitiesSuccessState extends InitialStates {
+  List<GetAllCitiesWithAreasModel> result;
+  GetAllCitiesWithAllCitiesSuccessState(this.result);
+}
+
+class GetAllCitiesWithAllCitiesErrorState extends InitialStates {}
 
 class ShopLoadingState extends InitialStates {}
 

@@ -218,7 +218,7 @@ class _OrderReviewPage3State extends State<OrderReviewPage3> {
                 decoration: ThemeHelper().inputBoxDecorationShadow(),
                 child: CustomTextFormField(
                   readOnly: false,
-                  lableText: AppStrings.textField3,
+                  lableText: AppStrings.textField4,
                   color: ColorManager.secondaryGrey,
                 ),
               ),
@@ -228,7 +228,7 @@ class _OrderReviewPage3State extends State<OrderReviewPage3> {
                 decoration: ThemeHelper().inputBoxDecorationShadow(),
                 child: CustomTextFormField(
                   readOnly: false,
-                  lableText: AppStrings.textField4,
+                  lableText: AppStrings.textField5,
                   color: ColorManager.secondaryGrey,
                 ),
               ),

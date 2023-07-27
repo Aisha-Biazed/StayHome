@@ -7,11 +7,12 @@ import 'package:stay_home/Presntation/resources/strings_manager.dart';
 import 'package:stay_home/model/shope_model.dart';
 import '../login/pages/login_view.dart';
 import '../onboarding/presentaion/pages/on_boarding_view.dart';
+import '../orders/pages/add_address_source_page.dart';
 import '../orders/pages/confirmation_page.dart';
 import '../orders/pages/order_review_page_1.dart';
 import '../orders/store/pages/my_cart_page.dart';
 import '../orders/pages/order_review_page_2.dart';
-import '../orders/pages/add_address_page.dart';
+import '../orders/pages/add_address_destinationpage.dart';
 import '../login/pages/registartion_page.dart';
 import '../login/pages/profile_page.dart';
 import '../orders/pages/order_review_page_3.dart';
@@ -25,7 +26,8 @@ class Routes {
   static const String forgotPasswordRoute = "/forgotPassword";
   static const String verificationRoute = "/verification";
   static const String profilesRoute = "/profile";
-  static const String addressRoute = "/address";
+  static const String addressDestinationRoute = "/destination";
+  static const String addressSourceRoute = "/source";
   static const String homesRoute = "/home";
   static const String serviceRoute = "/service";
   static const String storeRoute = "/store";
@@ -51,8 +53,10 @@ class RouteGenerator {
         return MaterialPageRoute(builder: (_) => RegistrationPage());
       case Routes.profilesRoute:
         return MaterialPageRoute(builder: (_) => const ProfilePage());
-      case Routes.addressRoute:
-        return MaterialPageRoute(builder: (_) => const AddAddressPage());
+      case Routes.addressDestinationRoute:
+        return MaterialPageRoute(builder: (_) => const AddAddressDestinationPage());
+        case Routes.addressSourceRoute:
+        return MaterialPageRoute(builder: (_) => const AddAddressSourcePage());
       case Routes.homesRoute:
         return MaterialPageRoute(builder: (_) => const HomeView());
       case Routes.serviceRoute:

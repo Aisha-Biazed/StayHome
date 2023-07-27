@@ -36,8 +36,6 @@ class _RegistrationPageState extends State<RegistrationPage> {
   var cityIdController = TextEditingController(text: "");
   var cityId;
 
-  // "7cf5bdbd-c952-4a63-b8c5-01e2d142eb2b";
-
   late SingleValueDropDownController _cnt;
   late MultiValueDropDownController _cntMulti;
 

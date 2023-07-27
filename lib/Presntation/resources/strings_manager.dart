@@ -52,13 +52,15 @@ class AppStrings {
   static const gender = "الجنس";
   static const hiba = "هبة بعيج";
   //add Address
-  static const addNewAddress = "إضافة تفاصيل الوجهة الهدف ";
+  static const addNewAddressDestination = "إضافة تفاصيل وجهة الهدف ";
+  static const addNewAddressSource = "إضافة تفاصيل وجهة الإنطلاق ";
   static const save = "حفظ";
   static const addDetails = "تفاصيل اضافية";
   static const theFloor = "الطابق";
   static const theBuilding = "البناء";
   static const theStreet = "الشارع";
   static const theTown = "المدينة";
+  static const theArea = "المنطقة";
 
 //noRouteFound
   static const search = "ابحث هنا";
@@ -123,8 +125,9 @@ class AppStrings {
   static const direction = "أختر وجهة الإنطلاق التي سيبدأ منها طلبك";
   static const textField1 = "تاريخ التوصيل ";
   static const textField2 = "وقت التوصيل ";
-  static const textField3 = "أضف الوجهة التي سيصل إليها طلبك ";
-  static const textField4 = "أضف ملاحظاتك على الطلب ";
+  static const textField3 = "أضف الوجهة التي سينطلق منها طلبك ";
+  static const textField4 = "أضف الوجهة التي سيصل إليها طلبك ";
+  static const textField5 = "أضف ملاحظاتك على الطلب ";
   static const textField1_2 = "2/6/2023 ";
   static const textField2_2 = "02:00 pm";
   static const textField3_2 = "وجهة الإنطلاق: متجر ماريو الفرقان";

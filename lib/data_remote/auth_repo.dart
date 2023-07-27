@@ -9,7 +9,9 @@ import 'package:stay_home/model/profile_model.dart';
 import 'package:stay_home/model/shope_model.dart';
 
 import '../core/error/exception_handler.dart';
+import '../model/all_areas_model.dart';
 import '../model/all_cities_model.dart';
+import '../model/all_cities_with_area_model.dart';
 
 class AuthRepo {
   late final Dio _dio;
@@ -69,6 +71,29 @@ class AuthRepo {
     }
   }
 
+  Future<Either<String, String>> addShoppingOrder({
+    required String destinationAreaId,
+    required String destinationStreet,
+    required String destinationAdditional,
+    required String note,
+    required String sourceAreaId,
+    required String sourceStreet,
+    required String sourceAdditional,
+    required String? weight,
+    // String? scheduleDate,
+    // String? shopId,
+  }) async {
+    try {
+      final result = await _dio.post(
+          'Mobile/Order/AddShippingOrder?Destination.AreaId=528de862-161a-417b-93c5-a196983cb8b8&Destination.Street=%D8%B4%D8%A7%D8%B1%D8%B9%20%D8%AC%D8%A7%D9%85%D8%B9%20%D8%A7%D9%84%D8%B1%D9%88%D8%B6%D8%A9&Destination.Additional=%D8%A8%D8%AC%D8%A7%D9%86%D8%A8%20%D8%A7%D9%84%D8%AC%D8%A7%D9%85%D8%B9&Note=%D8%A7%D9%84%D8%B1%D8%AC%D8%A7%D8%A1%20%D8%B9%D8%AF%D9%85%20%D9%82%D8%B1%D8%B9%20%D8%A7%D9%84%D8%AC%D8%B1%D8%B3&Source.AreaId=5c8c8814-75d7-47wQbNPTDJp9hMYdvogK2hAUiHsGeiybwaWe36bwtRQ3UTpYV7YuZ8FV5j9nauFCWwcjM6dTzpL5s2N79Rp5unwdMvc8ZKUD9%82&Source.Additional=%D8%A3%D9%85%D8%A7%D9%85%20%D8%A7%D9%84%D9%81%D9%86%D8%AF%D9%82%20%D8%A7%D9%84%D8%AF%D9%8A%D8%AF%D9%85%D8%A7%D9%86&Weight=250');
+      print("SuccessfulAddShoppingOrder");
+      return Right(result.data["response"]);
+    } catch (error) {
+      print("error =$error");
+      return Left(ExceptionHandler.handle(error as Exception));
+    }
+  }
+
   Future<Either<String, List<HomeModel>>> getHome() async {
     try {
       final result = await _dio.get('Mobile/Home/Get');
@@ -94,6 +119,39 @@ class AuthRepo {
       print("SuccessfulGetAllCities");
       return Right((result.data["response"] as List).map((e) {
         return GetAllCitiesModel.fromJson(e);
+      }).toList());
+    } catch (error) {
+      print("error =$error");
+      return Left(ExceptionHandler.handle(error as Exception));
+    }
+  }
+
+  Future<Either<String, List<GetAllAreasModel>>> getAllAreas() async {
+    try {
+      final result = await _dio.get('Mobile/Setting/GetAllAreas');
+      (result.data["response"] as List).map((e) {
+        return GetAllAreasModel.fromJson(e);
+      }).toList();
+      print("SuccessfulGetAllAreas");
+      return Right((result.data["response"] as List).map((e) {
+        return GetAllAreasModel.fromJson(e);
+      }).toList());
+    } catch (error) {
+      print("error =$error");
+      return Left(ExceptionHandler.handle(error as Exception));
+    }
+  }
+
+  Future<Either<String, List<GetAllCitiesWithAreasModel>>>
+      getAllCitiesWithAreas() async {
+    try {
+      final result = await _dio.get('Mobile/Setting/GetAllCitiesWithAreas');
+      (result.data["response"] as List).map((e) {
+        return GetAllCitiesWithAreasModel.fromJson(e);
+      }).toList();
+      print("SuccessfulGetAllCitiesWithAreas");
+      return Right((result.data["response"] as List).map((e) {
+        return GetAllCitiesWithAreasModel.fromJson(e);
       }).toList());
     } catch (error) {
       print("error =$error");

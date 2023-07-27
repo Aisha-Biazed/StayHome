@@ -258,7 +258,7 @@ class _OrderReviewPage2State extends State<OrderReviewPage2> {
                 decoration: ThemeHelper().inputBoxDecorationShadow(),
                 child: CustomTextFormField(
                   readOnly: false,
-                  lableText: AppStrings.textField3,
+                  lableText: AppStrings.textField4,
                   color: ColorManager.secondaryGrey,
                 ),
               ),
@@ -268,7 +268,7 @@ class _OrderReviewPage2State extends State<OrderReviewPage2> {
                 decoration: ThemeHelper().inputBoxDecorationShadow(),
                 child: CustomTextFormField(
                   readOnly: false,
-                  lableText: AppStrings.textField4,
+                  lableText: AppStrings.textField5,
                   color: ColorManager.secondaryGrey,
                 ),
               ),
@@ -278,7 +278,8 @@ class _OrderReviewPage2State extends State<OrderReviewPage2> {
                 child: CustomGeneralButton(
                   text: AppStrings.requestBtn,
                   onTap: () {
-                    Navigator.pushNamed(context, Routes.addressRoute);
+                    Navigator.pushNamed(
+                        context, Routes.addressDestinationRoute);
                   },
                 ),
               ),
