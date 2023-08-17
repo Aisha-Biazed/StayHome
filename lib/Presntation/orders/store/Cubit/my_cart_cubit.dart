@@ -19,7 +19,7 @@ class MyCartCubit extends Cubit<MyCartState> {
           cost: pro.cost,
           counter: pro.counter! + 1);
       cart.removeWhere((element) => element.id == pro.id);
-      cart.add(product);
+      cart.add(newProduct);
     }
     emit(MyCartState(productsCart: cart));
   }

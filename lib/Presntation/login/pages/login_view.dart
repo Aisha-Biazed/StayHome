@@ -143,7 +143,7 @@ class _LoginViewState extends State<LoginView> {
                                       margin: REdgeInsetsDirectional.only(
                                           end: 50,
                                           top: 20,
-                                          start: 100,
+                                          start: 80,
                                           bottom: 20),
                                       child: Column(
                                         mainAxisAlignment:
@@ -151,6 +151,7 @@ class _LoginViewState extends State<LoginView> {
                                         children: [
                                           const CustomText(
                                             txt: AppStrings.login,
+                                            fontSize: 20,
                                           ),
                                           10.verticalSpace,
                                           GestureDetector(

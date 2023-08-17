@@ -7,6 +7,7 @@ import 'package:stay_home/Presntation/login/cubit/cubit.dart';
 import 'package:stay_home/Presntation/login/cubit/states.dart';
 import 'package:stay_home/Presntation/resources/color_manager.dart';
 import '../../../../../core/widgets/custom_text.dart';
+import '../../../resources/assets_manager.dart';
 import '../../../resources/routes_manager.dart';
 import '../../../resources/strings_manager.dart';
 import '../Cubit/my_cart_cubit.dart';
@@ -24,12 +25,12 @@ class StoreDetails extends StatefulWidget {
 }
 
 class _StoreDetailsState extends State<StoreDetails> {
-  @override
-  void initState() {
-    super.initState();
-    final mycubit = context.read<InitialCubit>();
-    mycubit.detailsShopCubit(widget.shopId);
-  }
+  // @override
+  // void initState() {
+  //   super.initState();
+  //   final mycubit = context.read<InitialCubit>();
+  //   mycubit.detailsShopCubit(widget.shopId);
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -110,11 +111,9 @@ class _StoreDetailsState extends State<StoreDetails> {
                                   color: ColorManager.secondaryGrey,
                                   child: const VerticalDivider(
                                     color: Colors.black,
-                                    //color of divider
+
                                     width: 2,
-                                    //width space of divider
                                     thickness: 1,
-                                    //thickness of divier line
                                     indent: 10,
                                     //Spacing at the top of divider.
                                     endIndent:
@@ -161,20 +160,22 @@ class _StoreDetailsState extends State<StoreDetails> {
                                 itemBuilder: (BuildContext context, int index) {
                                   return Column(
                                     children: [
-                                      RSizedBox(
-                                        height: 150,
-                                        child: Image.network(
-                                          fit: BoxFit.contain,
-                                          "http://finalstayhome-001-site1.atempurl.com/${details.products[index].imageUrl}",
-                                          // width: 100.w,
-                                          // height: 50.h,
-                                          height: 134.h,
-                                          width: 145.w,
+                                      ClipRRect(
+                                        borderRadius: const BorderRadius.all(
+                                            Radius.circular(16)),
+                                        child: RSizedBox(
+                                          height: 150,
+                                          child: Image.network(
+                                            fit: BoxFit.cover,
+                                            "http://finalstayhome-001-site1.atempurl.com/${details.products[index].imageUrl}",
+                                            height: 134.h,
+                                            width: 145.w,
+                                          ),
                                         ),
                                       ),
                                       Container(
                                         padding: REdgeInsetsDirectional.only(
-                                            start: 3, bottom: 0),
+                                            start: 10, end: 10, bottom: 0),
                                         child: Column(
                                           mainAxisAlignment:
                                               MainAxisAlignment.start,
@@ -194,57 +195,51 @@ class _StoreDetailsState extends State<StoreDetails> {
                                                         .products[index].cost!
                                                         .toString(),
                                                   ),
-                                                  40.horizontalSpace,
-                                                  BlocProvider(
-                                                    create: (context) =>
-                                                        MyCartCubit(),
-                                                    child: BlocBuilder<
-                                                        MyCartCubit,
-                                                        MyCartState>(
-                                                      builder:
-                                                          (context, state) {
-                                                        return IconButton(
-                                                            onPressed: () {
-                                                              final cartCubit =
-                                                                  BlocProvider.of<
-                                                                          MyCartCubit>(
-                                                                      context);
-                                                              final cart =
-                                                                  cartCubit
-                                                                      .getCart();
-                                                              final product =
-                                                                  ProductCart(
-                                                                id: details
-                                                                    .products[
-                                                                        index]
-                                                                    .id!,
-                                                                name: details
-                                                                    .products[
-                                                                        index]
-                                                                    .name!,
-                                                                imageUrl:
-                                                                    "http://finalstayhome-001-site1.atempurl.com/${details.products[index].imageUrl}",
-                                                                cost: details
-                                                                    .products[
-                                                                        index]
-                                                                    .cost!,
-                                                                counter: 1,
-                                                              );
-                                                              cartCubit
-                                                                  .addToCart(
-                                                                      cart,
-                                                                      product);
-                                                            },
-                                                            icon: Icon(
-                                                              Icons
-                                                                  .add_circle_outline_sharp,
-                                                              color:
-                                                                  ColorManager
-                                                                      .primary,
-                                                              size: 25.w,
-                                                            ));
-                                                      },
-                                                    ),
+                                                  const Spacer(),
+                                                  BlocBuilder<MyCartCubit,
+                                                      MyCartState>(
+                                                    builder: (context, state) {
+                                                      return IconButton(
+                                                          onPressed: () {
+                                                            final cartCubit =
+                                                                BlocProvider.of<
+                                                                        MyCartCubit>(
+                                                                    context);
+                                                            final cart =
+                                                                cartCubit
+                                                                    .getCart();
+                                                            print(cart);
+                                                            final product =
+                                                                ProductCart(
+                                                              id: details
+                                                                  .products[
+                                                                      index]
+                                                                  .id!,
+                                                              name: details
+                                                                  .products[
+                                                                      index]
+                                                                  .name!,
+                                                              imageUrl:
+                                                                  "http://finalstayhome-001-site1.atempurl.com/${details.products[index].imageUrl}",
+                                                              cost: details
+                                                                  .products[
+                                                                      index]
+                                                                  .cost!,
+                                                              counter: 1,
+                                                            );
+                                                            cartCubit.addToCart(
+                                                                cart, product);
+                                                            print(
+                                                                "${product.cost} ");
+                                                          },
+                                                          icon: Icon(
+                                                            Icons
+                                                                .add_circle_outline_sharp,
+                                                            color: ColorManager
+                                                                .primary,
+                                                            size: 25.w,
+                                                          ));
+                                                    },
                                                   )
                                                 ]),
                                           ],
@@ -291,22 +286,25 @@ class _StoreDetailsState extends State<StoreDetails> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       GestureDetector(
-                        onTap: () {
-                          Navigator.pushNamed(context, Routes.myBasketRoute);
-                        },
-                        child: Icon(
-                          Icons.local_grocery_store_outlined,
-                          size: 35.w,
-                          color: ColorManager.dark,
-                        ),
-                      ),
+                          onTap: () {
+                            Navigator.pushNamed(context, Routes.myBasketRoute);
+                          },
+                          child: Image.asset(
+                            ImageAssets.cart,
+                            width: 70,
+                          )),
                       FloatingActionButton.extended(
-                        backgroundColor: ColorManager.secondary,
+                        backgroundColor: ColorManager.secondary1,
                         // splashColor: ColorManager.secondary,
                         // hoverColor: ColorManager.secondary,
                         onPressed: () {
                           Navigator.pushNamed(
                               context, Routes.addressDestinationRoute);
+                          // Navigator.pushNamed(context, '/my_cart',
+                          //     arguments: product);
+                          // final product = ModalRoute.of(context)!
+                          //     .settings
+                          //     .arguments as ProductCart;
                         },
                         label: CustomText(
                           txt: AppStrings.addToTrash,

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
+import 'package:stay_home/Presntation/resources/color_manager.dart';
 import 'package:stay_home/core/utils/size_config.dart';
 import '../../onboarding/presentaion/pages/on_boarding_view.dart';
 import '../../resources/assets_manager.dart';
@@ -38,28 +39,25 @@ class _SplashViewBodyState extends State<SplashViewBody>
   @override
   Widget build(BuildContext context) {
     SizeConfig().init(context);
-    return Container(
-      child: Column(
-        children: [
-          const Spacer(),
-          AnimatedBuilder(
-            animation: fadingAnimation!,
-            builder: (context, _) => Opacity(
-              opacity: fadingAnimation?.value,
-              child: Text(
-                AppStrings.onBoardingTitle,
-                style: TextStyle(
-                    fontFamily: 'Poppins',
-                    fontSize: 51,
-                    fontWeight: FontWeight.bold,
-                    color: Color(0xff4958a7)),
-              ),
+    return Column(
+      children: [
+        const Spacer(),
+        AnimatedBuilder(
+          animation: fadingAnimation!,
+          builder: (context, _) => Opacity(
+            opacity: fadingAnimation?.value,
+            child: Text(
+              AppStrings.splashTitle,
+              style: TextStyle(
+                  fontSize: 51,
+                  fontWeight: FontWeight.bold,
+                  color: ColorManager.splash),
             ),
           ),
-          Image.asset(ImageAssets.splashLogo),
-          const Spacer()
-        ],
-      ),
+        ),
+        Image.asset(ImageAssets.splashLogo),
+        const Spacer()
+      ],
     );
   }
 

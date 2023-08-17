@@ -8,6 +8,7 @@ class ThemeHelper {
   InputDecoration textInputDecoration(
       [String lableText = "", String hintText = "", Icon? icon]) {
     return InputDecoration(
+      border: InputBorder.none,
       suffix: icon,
       labelText: lableText,
       hintText: hintText,

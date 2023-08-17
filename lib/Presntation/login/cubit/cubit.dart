@@ -6,6 +6,7 @@ import 'package:stay_home/Presntation/login/cubit/states.dart';
 import 'package:stay_home/Presntation/resources/routes_manager.dart';
 import 'package:stay_home/data_remote/auth_repo.dart';
 import 'package:stay_home/model/all_cities_with_area_model.dart';
+import 'package:stay_home/model/check_order_model.dart';
 import 'package:stay_home/model/details_shop_model.dart';
 import 'package:stay_home/model/shope_model.dart';
 import '../../../model/all_areas_model.dart';
@@ -21,6 +22,58 @@ class InitialCubit extends Cubit<InitialStates> {
   }
 
   static InitialCubit get(context) => BlocProvider.of(context);
+
+  String idDestinationCubit = '';
+  String nameDestinationCubit = '';
+  void getIdDestination({required String value, required String name}) {
+    idDestinationCubit = value;
+    nameDestinationCubit = name;
+    emit(GetIdAreaDestinationState());
+  }
+
+  String idSourceCubit = '';
+  String nameSourceCubit = '';
+  void getIdSource({required String value, required String name}) {
+    idSourceCubit = value;
+    nameSourceCubit = name;
+    emit(GetIdAreaSourceState());
+  }
+
+  String sourceStreetCubit = '';
+  void getSourceStreet({required String value}) {
+    sourceStreetCubit = value;
+    emit(GetSourceStreetState());
+  }
+
+  String destinationStreetCubit = '';
+  void getDestinationStreet({required String value}) {
+    destinationStreetCubit = value;
+    emit(GetDestinationStreetState());
+  }
+
+  String detailsSourceCubit = '';
+  void getDetailsSource({required String value}) {
+    detailsSourceCubit = value;
+    emit(GetSourceAdditionalState());
+  }
+
+  String detailsDestinationCubit = '';
+  void getDetailsDestination({required String value}) {
+    detailsDestinationCubit = value;
+    emit(GetDestinationAdditionalState());
+  }
+
+  String noteCubit = '';
+  void getNote({required String value}) {
+    noteCubit = value;
+    emit(NoteState());
+  }
+
+  int numberCubit = 0;
+  void getNumber({required int value}) {
+    numberCubit = value;
+    emit(NoteState());
+  }
 
   void login({required String email, required String password}) async {
     emit(LoginLoadingState());
@@ -72,10 +125,8 @@ class InitialCubit extends Cubit<InitialStates> {
     Either<String, ProfileModel> result = await _authRepo.myProfile();
     result.fold((l) {
       emit(ProfileErrorState());
-      //show error
     }, (r) {
       emit(ProfileSuccessState(r as ProfileModel));
-      //save user
     });
   }
 
@@ -175,7 +226,7 @@ class InitialCubit extends Cubit<InitialStates> {
   }
 
   void detailsShopCubit(String shopId) async {
-    emit(ProfileLoadingState());
+    emit(DetailsLoadingState());
     Either<String, DetailsShopModel> result =
         await _authRepo.detailsShop(shopId);
     result.fold((l) {
@@ -187,48 +238,57 @@ class InitialCubit extends Cubit<InitialStates> {
     });
   }
 
-// void addToCart(List<ProductCart> cart, ProductCart product) {
-//   final pro = cart.firstWhereOrNull((element) => element.id == product.id);
-//   if (pro == null) {
-//     cart.add(product);
-//   } else {
-//     final newProduct = ProductCart(
-//         id: pro.id,
-//         name: pro.name,
-//         imageUrl: pro.imageUrl,
-//         cost: pro.cost,
-//         counter: pro.counter! + 1);
-//     cart.removeWhere((element) => element.id == pro.id);
-//     cart.add(product);
-//   }
-//   emit(MyCartState(productsCart: cart));
-// }
-//
-// void decreaseFromCart(List<ProductCart> cart, ProductCart product) {
-//   final pro = cart.firstWhereOrNull((element) => element.id == product.id);
-//   if (pro != null && pro.counter! > 1) {
-//     final newProduct = ProductCart(
-//         id: pro.id,
-//         name: pro.name,
-//         imageUrl: pro.imageUrl,
-//         cost: pro.cost,
-//         counter: pro.counter! - 1);
-//     cart.removeWhere((element) => element.id == pro.id);
-//     cart.add(newProduct);
-//     emit(MyCartState(productsCart: cart));
-//   } else {
-//     cart.removeWhere((element) => element.id == product.id);
-//     emit(MyCartState(productsCart: cart));
-//   }
-// }
-//
-// void clearCart(List<ProductCart> cart) {
-//   cart.clear();
-//   emit(MyCartState(productsCart: cart));
-// }
-}
+  void orderCheckCubit(String destinationAreaId, String sourceAreaId) async {
+    emit(OrderCheckLoadingState());
+    Either<String, OrderCheckModel> result =
+        await _authRepo.orderCheck(destinationAreaId, sourceAreaId);
+    result.fold((l) {
+      emit(OrderCheckErrorState());
+      //show error
+    }, (r) {
+      emit(OrderCheckSuccessState(r as OrderCheckModel));
+      //save user
+    });
+  }
 
-// void removeFromCart(List<ProductCart> cart, ProductCart product) {
-//   cart.removeWhere((element) => element.id == product.id);
-//   emit(MyCartState(productsCart: cart));
-// }
+  void orderPassengerCubit({
+    required String sourceAreaID,
+    required String destinationAreaID,
+    required String note,
+    required int numberOfPassenger,
+    required String sourceStreet,
+    required String destinationStreet,
+    required String sourceAdditional,
+    required String destinationAdditional,
+    // required String scheduleDate
+  }) async {
+    emit(OrderPassengerLoadingState());
+    Either<String, dynamic> result = await _authRepo.passengerOrder(
+      note: note,
+      numberOfPassenger: numberOfPassenger,
+      sourceStreet: sourceStreet,
+      destinationStreet: destinationStreet,
+      sourceAdditional: sourceAdditional,
+      destinationAdditional: destinationAdditional,
+      sourceAreaID: sourceAreaID,
+      destinationAreaID: destinationAreaID,
+      // scheduleDate: scheduleDate,
+    );
+    result.fold((l) {
+      emit(OrderPassengerErrorState());
+    }, (r) {
+      emit(OrderPassengerSuccessState());
+    });
+  }
+
+  void rateCubit({required int star, required String comment}) async {
+    emit(RateLoadingState());
+    Either<String, Null> result =
+        await _authRepo.rate(star: star, comment: comment);
+    result.fold((l) {
+      emit(RateErrorState());
+    }, (r) {
+      emit(RateSuccessState());
+    });
+  }
+}

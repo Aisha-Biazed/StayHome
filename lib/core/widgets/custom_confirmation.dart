@@ -2,12 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:stay_home/core/widgets/custom_text.dart';
 
-import '../../resources/assets_manager.dart';
-import '../../resources/strings_manager.dart';
+import '../../Presntation/resources/assets_manager.dart';
 
-class ConfirmationPage extends StatelessWidget {
-  const ConfirmationPage({Key? key}) : super(key: key);
-
+class CustomConfirmationPage extends StatelessWidget {
+  const CustomConfirmationPage(
+      {Key? key, required this.titleText, required this.subTitleText})
+      : super(key: key);
+  final String titleText;
+  final String subTitleText;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -23,14 +25,14 @@ class ConfirmationPage extends StatelessWidget {
             ),
             80.verticalSpace,
             CustomText(
-              txt: AppStrings.requestReceived1,
+              txt: titleText,
               fontWeight: FontWeight.w700,
               fontSize: 20.sp,
               textAlign: TextAlign.center,
             ),
             20.verticalSpace,
             CustomText(
-              txt: AppStrings.requestReceived2,
+              txt: subTitleText,
               fontWeight: FontWeight.w700,
               fontSize: 20.sp,
             ),

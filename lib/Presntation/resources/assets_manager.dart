@@ -1,25 +1,12 @@
 const String imagePath = "assets/images";
-const String jsonPath = "assets/json";
 
 class ImageAssets {
   static const String male = "$imagePath/male.png";
   static const String female = "$imagePath/female.png";
   static const String splashLogo = "$imagePath/splash_logo.png";
-  static const String onboardingLogo1 = "$imagePath/onboarding_logo1.svg";
-  static const String onboardingLogo2 = "$imagePath/onboarding_logo2.svg";
-  static const String onboardingLogo3 = "$imagePath/onboarding_logo3.svg";
-  static const String onboardingLogo4 = "$imagePath/onboarding_logo4.svg";
-  static const String hollowCircleIc = "$imagePath/hollow_circle_ic.svg";
-  static const String solidCircleIc = "$imagePath/solid_circle_ic.svg";
-  static const String leftArrowIc = "$imagePath/left_arrow_ic.svg";
-  static const String rightArrowIc = "$imagePath/right_arrow_ic.svg";
-  static const String photoCameraIc = "$imagePath/photo-camera.svg";
-  static const String changeLangIc = "$imagePath/change_lang_ic.svg";
-  static const String contactUsIc = "$imagePath/contact_us_ic.svg";
-  static const String inviteFriendsIc = "$imagePath/invite_friends_ic.svg";
-  static const String logoutIc = "$imagePath/logout_ic.svg";
-  static const String rightArrowSettingsIc =
-      "$imagePath/right_arrow_settings_ic.svg";
+  static const String onboardingLogo1 = "$imagePath/onboarding1.png";
+  static const String onboardingLogo2 = "$imagePath/onboarding2.png";
+  static const String onboardingLogo3 = "$imagePath/onboarding3.png";
   static const String homeImg1 = "$imagePath/home_img1.png";
   static const String homeImg2 = "$imagePath/home_img2.png";
   static const String homeImg3 = "$imagePath/home_img3.png";
@@ -46,12 +33,12 @@ class ImageAssets {
   static const String basketImg3 = "$imagePath/basket_img3.png";
   static const String basketImg4 = "$imagePath/basket_img4.png";
   static const String goods = "$imagePath/goods.png";
+  static const String ratings = "$imagePath/ratings.png";
+  static const String img = "$imagePath/img.png";
+  static const String cart = "$imagePath/cart.png";
+  static const String cart_1 = "$imagePath/cart_1.png";
+  static const String box = "$imagePath/box1.png";
+  static const String trash = "$imagePath/trash.png";
+  static const String trash1 = "$imagePath/trash-bin.png";
   static const String confirmationImg = "$imagePath/confirmation_Img.png";
-}
-
-class JsonAssets {
-  static const String loading = "$jsonPath/loading.json";
-  static const String error = "$jsonPath/error.json";
-  static const String empty = "$jsonPath/empty.json";
-  static const String success = "$jsonPath/success.json";
 }

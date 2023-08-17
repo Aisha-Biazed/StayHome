@@ -2,16 +2,15 @@ import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:stay_home/core/network/dio_factory.dart';
-import 'package:stay_home/model/create_model.dart';
 import 'package:stay_home/model/details_shop_model.dart';
 import 'package:stay_home/model/home_model.dart';
 import 'package:stay_home/model/profile_model.dart';
 import 'package:stay_home/model/shope_model.dart';
-
 import '../core/error/exception_handler.dart';
 import '../model/all_areas_model.dart';
 import '../model/all_cities_model.dart';
 import '../model/all_cities_with_area_model.dart';
+import '../model/check_order_model.dart';
 
 class AuthRepo {
   late final Dio _dio;
@@ -183,6 +182,64 @@ class AuthRepo {
       );
       print("SuccessfulDetailsSop");
       return Right(DetailsShopModel.fromJson(result.data["response"]));
+    } catch (error) {
+      print("error =$error");
+      return Left(ExceptionHandler.handle(error as Exception));
+    }
+  }
+
+  Future<Either<String, OrderCheckModel>> orderCheck(
+      String destinationAreaId, String sourceAreaId) async {
+    try {
+      final result = await _dio.get(
+        'Mobile/Order/Check',
+        // '?SourceAreaId=dda57d62-b1c0-46bd-a3f3-490210dea637',
+        // 'dda57d62-b1c0-46bd-a3f3-490210dea637',
+        queryParameters: {
+          'DestinationAreaId': destinationAreaId,
+          'SourceAreaId': sourceAreaId
+        },
+      );
+      print("SuccessfulOrderCheck");
+      return Right(OrderCheckModel.fromJson(result.data["response"]));
+    } catch (error) {
+      print("error =$error");
+      return Left(ExceptionHandler.handle(error as Exception));
+    }
+  }
+
+  Future<Either<String, dynamic>> passengerOrder({
+    required String sourceAreaID,
+    required String destinationAreaID,
+    required String note,
+    required int numberOfPassenger,
+    required String sourceStreet,
+    required String destinationStreet,
+    required String sourceAdditional,
+    required String destinationAdditional,
+    // required String scheduleDate
+  }) async {
+    try {
+      final result = await _dio.post(
+          'Mobile/Order/AddPassengerOrder?Note=$note&Source.AreaId=$sourceAreaID&Source.Street=$sourceStreet&Source.Additional=$sourceAdditional&Destination.AreaId=$destinationAreaID&Destination.Street=$destinationStreet&Destination.Additional=$destinationAdditional&NumberOfPassenger=$numberOfPassenger');
+      //&ScheduleDate=$scheduleDate
+      print("SuccessfulDataOrderPassenger");
+      print(result.data["response"]);
+      return Right(result.data["response"]);
+    } catch (error) {
+      print("error =$error");
+      return Left(ExceptionHandler.handle(error as Exception));
+    }
+  }
+
+  Future<Either<String, Null>> rate(
+      {required int star, required String comment}) async {
+    try {
+      final result = await _dio.post(
+          'Mobile/Order/Rate?Id=4a4c2eea-ea10-4b08-9cc7-7422230dcde7&Star=$star&Comment=$comment');
+      print("SuccessfulDataRate");
+      print(result.data["response"]);
+      return Right(result.data["response"]);
     } catch (error) {
       print("error =$error");
       return Left(ExceptionHandler.handle(error as Exception));

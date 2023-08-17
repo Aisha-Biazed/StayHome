@@ -16,7 +16,8 @@ class CustomTextFormField extends StatelessWidget {
       required this.lableText,
       this.controller,
       required this.readOnly,
-      this.onTap})
+      this.onTap,
+      this.initialValue})
       : super(key: key);
   final TextInputType? inputType;
   final TextEditingController? controller;
@@ -29,11 +30,13 @@ class CustomTextFormField extends StatelessWidget {
   final Color? color;
   final bool readOnly;
   final Function()? onTap;
+  final String? initialValue;
   @override
   Widget build(BuildContext context) {
     return Directionality(
       textDirection: TextDirection.rtl,
       child: TextFormField(
+        initialValue: initialValue,
         readOnly: readOnly,
         controller: controller,
         keyboardType: inputType,

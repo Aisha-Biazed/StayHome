@@ -1,5 +1,6 @@
 import 'package:stay_home/model/all_cities_model.dart';
 import 'package:stay_home/model/all_cities_with_area_model.dart';
+import 'package:stay_home/model/check_order_model.dart';
 
 import '../../../model/all_areas_model.dart';
 import '../../../model/details_shop_model.dart';
@@ -31,8 +32,6 @@ class ProfileSuccessState extends InitialStates {
 }
 
 class ProfileErrorState extends InitialStates {}
-
-
 
 class AddShoppingOrderLoadingState extends InitialStates {}
 
@@ -67,7 +66,6 @@ class GetAllAreasSuccessState extends InitialStates {
 
 class GetAllAreasErrorState extends InitialStates {}
 
-
 class GetAllCitiesWithAllCitiesLoadingState extends InitialStates {}
 
 class GetAllCitiesWithAllCitiesSuccessState extends InitialStates {
@@ -93,25 +91,39 @@ class DetailsShopSuccessState extends InitialStates {
   DetailsShopSuccessState(this.listIdShop);
 }
 
+class OrderCheckErrorState extends InitialStates {}
+
+class OrderCheckLoadingState extends InitialStates {}
+
+class OrderCheckSuccessState extends InitialStates {
+  OrderCheckModel listOrder;
+  OrderCheckSuccessState(this.listOrder);
+}
+
 class DetailsShopErrorState extends InitialStates {}
 
-// class MyCartState extends InitialStates {
-//   List<ProductCart> productsCart;
-//   MyCartState({required this.productsCart});
-// }
-//
-// class ProductCart {
-//   ProductCart({
-//     required this.id,
-//     required this.name,
-//     required this.imageUrl,
-//     required this.cost,
-//     required this.counter,
-//   });
-//
-//   final String? id;
-//   final String? name;
-//   final String? imageUrl;
-//   final int? cost;
-//   final int? counter;
-// }
+class RateLoadingState extends InitialStates {}
+
+class RateSuccessState extends InitialStates {}
+
+class RateErrorState extends InitialStates {}
+
+class OrderPassengerLoadingState extends InitialStates {}
+
+class OrderPassengerSuccessState extends InitialStates {}
+
+class OrderPassengerErrorState extends InitialStates {}
+
+class GetIdAreaSourceState extends InitialStates {}
+
+class GetIdAreaDestinationState extends InitialStates {}
+
+class GetSourceStreetState extends InitialStates {}
+
+class GetDestinationStreetState extends InitialStates {}
+
+class GetSourceAdditionalState extends InitialStates {}
+
+class GetDestinationAdditionalState extends InitialStates {}
+
+class NoteState extends InitialStates {}

@@ -4,13 +4,13 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:stay_home/Presntation/login/cubit/cubit.dart';
 
-import '../../../core/utils/theme_helper.dart';
-import '../../../core/widgets/custom_buttons.dart';
-import '../../../core/widgets/custom_text.dart';
-import '../../login/cubit/states.dart';
-import '../../resources/color_manager.dart';
-import '../../resources/routes_manager.dart';
-import '../../resources/strings_manager.dart';
+import '../../../../core/utils/theme_helper.dart';
+import '../../../../core/widgets/custom_buttons.dart';
+import '../../../../core/widgets/custom_text.dart';
+import '../../../login/cubit/states.dart';
+import '../../../resources/color_manager.dart';
+import '../../../resources/routes_manager.dart';
+import '../../../resources/strings_manager.dart';
 
 class AddAddressDestinationPage extends StatefulWidget {
   const AddAddressDestinationPage({Key? key}) : super(key: key);
@@ -59,7 +59,7 @@ class _AddAddressDestinationPageState extends State<AddAddressDestinationPage> {
             child: Stack(
               children: [
                 Container(
-                  margin: const EdgeInsets.fromLTRB(25, 50, 25, 10),
+                  margin: const EdgeInsets.fromLTRB(25, 30, 25, 10),
                   padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
                   alignment: Alignment.center,
                   child: Column(
@@ -187,17 +187,7 @@ class _AddAddressDestinationPageState extends State<AddAddressDestinationPage> {
                                 ),
                               ),
                             ),
-                            20.verticalSpace,
-                            Container(
-                              decoration:
-                                  ThemeHelper().inputBoxDecorationShadow(),
-                              child: TextFormField(
-                                decoration: ThemeHelper().textInputDecoration(
-                                  AppStrings.theBuilding,
-                                ),
-                              ),
-                            ),
-                            20.verticalSpace,
+                            30.verticalSpace,
                             Container(
                               decoration:
                                   ThemeHelper().inputBoxDecorationShadow(),
@@ -214,46 +204,12 @@ class _AddAddressDestinationPageState extends State<AddAddressDestinationPage> {
                                 },
                               ),
                             ),
-                            // 15.verticalSpace,
-                            //    FormField<bool>(
-                            //      builder: (state) {
-                            //        return Column(
-                            //          children: <Widget>[
-                            //            Row(
-                            //              children: <Widget>[
-                            //                Checkbox(
-                            //                    value: checkboxValue,
-                            //                    onChanged: (value) {
-                            //                      setState(() {
-                            //                        checkboxValue = value!;
-                            //                        state.didChange(value);
-                            //                      });
-                            //                    }),
-                            //               // const Text("I accept all terms and conditions.", style: TextStyle(color: Colors.grey),),
-                            //              ],
-                            //            ),
-                            //            Container(
-                            //              child: Text(
-                            //                state.errorText ?? '',
-                            //                textAlign: TextAlign.right,
-                            //                style: TextStyle(color: Theme.of(context).errorColor,fontSize: 12,),
-                            //              ),
-                            //            )
-                            //          ],
-                            //        );
-                            //      },
-                            //      validator: (value) {
-                            //        if (!checkboxValue) {
-                            //          return 'You need to accept terms and conditions';
-                            //        } else {
-                            //          return null;
-                            //        }
-                            //      },
-                            //    ),
-                            50.verticalSpace,
                             Container(
                               margin: REdgeInsetsDirectional.only(
-                                  end: 25, top: 10, start: 25, bottom: 10),
+                                end: 25,
+                                top: 230,
+                                start: 25,
+                              ),
                               padding: REdgeInsetsDirectional.only(
                                   end: 10, top: 0, start: 10, bottom: 0),
                               decoration:

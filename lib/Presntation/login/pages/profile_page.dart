@@ -174,7 +174,7 @@ class _ProfilePageState extends State<ProfilePage> {
                                       color: ColorManager.primary,
                                     ),
                                     title: const CustomText(
-                                        txt: AppStrings.bairthdatehit),
+                                        txt: AppStrings.birthDate),
                                     subtitle: CustomText(txt: item.birthDate),
                                   ),
                                 ])

@@ -13,7 +13,6 @@ import '../../../resources/color_manager.dart';
 import '../../../resources/strings_manager.dart';
 
 class StorePage extends StatefulWidget {
-  // final String shopId;
   const StorePage({
     Key? key,
   }) : super(key: key);
@@ -75,12 +74,12 @@ class _StorePageState extends State<StorePage> {
                             );
                           },
                           child: Container(
-                            padding: REdgeInsetsDirectional.only(
-                                top: 20, bottom: 10),
+                            padding:
+                                REdgeInsetsDirectional.only(top: 0, bottom: 5),
                             width: 120.w,
                             height: 100.h,
                             decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(20),
+                              borderRadius: BorderRadius.circular(16),
                               border: Border.all(
                                 color:
                                     ColorManager.secondaryGrey.withOpacity(0.3),
@@ -90,13 +89,19 @@ class _StorePageState extends State<StorePage> {
                             child: Column(
                               children: [
                                 Expanded(
-                                  child: Image.network(
-                                    fit: BoxFit.contain,
-                                    "http://finalstayhome-001-site1.atempurl.com/${item.imageUrl}",
-                                    // width: 100.w,
-                                    // height: 50.h,
+                                  child: ClipRRect(
+                                    borderRadius: const BorderRadius.only(
+                                        topRight: Radius.circular(16),
+                                        topLeft: Radius.circular(16)),
+                                    child: Image.network(
+                                      fit: BoxFit.cover,
+                                      "http://finalstayhome-001-site1.atempurl.com/${item.imageUrl}",
+                                      height: 50.h,
+                                      width: double.infinity,
+                                    ),
                                   ),
                                 ),
+                                5.verticalSpace,
                                 Center(
                                     child: Text(
                                   item.name!,
@@ -116,7 +121,8 @@ class _StorePageState extends State<StorePage> {
                   ),
                 ),
                 Padding(
-                  padding: REdgeInsetsDirectional.only(end: 27, start: 27),
+                  padding:
+                      REdgeInsetsDirectional.only(end: 27, start: 27, top: 20),
                   child: const CustomText(
                     txt: AppStrings.storeText,
                     fontSize: 30,
@@ -149,149 +155,135 @@ class _StorePageState extends State<StorePage> {
                               final items = state.listShop[index].shops[shop];
                               return Padding(
                                 padding: REdgeInsetsDirectional.only(
-                                    start: 27, end: 28, top: 20, bottom: 0),
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Container(
-                                      margin: REdgeInsetsDirectional.only(
-                                          top: 20,
-                                          bottom: 25,
-                                          end: 0,
-                                          start: 0),
-                                      width: 400.w,
-                                      height: 280.h,
-                                      decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(20),
-                                        border: Border.all(
-                                          color: ColorManager.secondaryGrey
-                                              .withOpacity(0.3),
-                                          width: 1,
+                                    start: 27, end: 28, top: 0, bottom: 0),
+                                child: Container(
+                                  margin: REdgeInsetsDirectional.only(
+                                      top: 0, bottom: 25, end: 0, start: 0),
+                                  width: 400.w,
+                                  height: 280.h,
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(16),
+                                    border: Border.all(
+                                      color: ColorManager.secondaryGrey
+                                          .withOpacity(0.3),
+                                      width: 1.5,
+                                    ),
+                                  ),
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      GestureDetector(
+                                        child: ClipRRect(
+                                          borderRadius: const BorderRadius.only(
+                                              topRight: Radius.circular(16),
+                                              topLeft: Radius.circular(16)),
+                                          child: RSizedBox(
+                                            height: 190.h,
+                                            width: double.infinity,
+                                            child: Image.network(
+                                              fit: BoxFit.fitWidth,
+                                              "http://finalstayhome-001-site1.atempurl.com/${items.imageUrl}",
+                                              // height: 159.h,
+                                            ),
+                                          ),
+                                        ),
+                                        onTap: () {
+                                          Navigator.push(
+                                              context,
+                                              MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      StoreDetails(
+                                                          shopId: items.id!)));
+                                        },
+                                      ),
+                                      Padding(
+                                        padding: REdgeInsetsDirectional.only(
+                                            start: 20),
+                                        child: CustomText(
+                                          txt: items.name!,
+                                          fontWeight: FontWeight.w700,
+                                          fontSize: 24.sp,
                                         ),
                                       ),
-                                      child: Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
+                                      Column(
                                         children: [
-                                          GestureDetector(
-                                            child: RSizedBox(
-                                              height: 180.h,
-                                              width: double.infinity,
-                                              child: Image.network(
-                                                fit: BoxFit.fitHeight,
-                                                "http://finalstayhome-001-site1.atempurl.com/${items.imageUrl}",
-                                                width: double.infinity,
-                                                // height: 159.h,
-                                              ),
-                                            ),
-                                            onTap: () {
-                                              Navigator.push(
-                                                  context,
-                                                  MaterialPageRoute(
-                                                      builder: (context) =>
-                                                          StoreDetails(
-                                                              shopId:
-                                                                  items.id!)));
-                                            },
-                                          ),
-                                          Padding(
-                                            padding:
-                                                REdgeInsetsDirectional.only(
-                                                    start: 20),
-                                            child: CustomText(
-                                              txt: items.name!,
-                                              fontWeight: FontWeight.w700,
-                                              fontSize: 24.sp,
-                                            ),
-                                          ),
-                                          Column(
+                                          Row(
                                             children: [
-                                              Row(
-                                                children: [
-                                                  10.horizontalSpace,
-                                                  Icon(
-                                                    Icons.circle,
-                                                    color: items.isOnline!
-                                                        ? ColorManager.green
-                                                        : Colors.red,
-                                                  ),
-                                                  3.horizontalSpace,
-                                                  CustomText(
-                                                    txt: items.isOnline!
-                                                        ? AppStrings.open
-                                                        : AppStrings.close,
-                                                    txtColor: ColorManager
-                                                        .secondaryGrey,
-                                                  ),
-                                                  3.horizontalSpace,
-                                                  Icon(
-                                                    Icons.location_on_outlined,
-                                                    color: ColorManager
-                                                        .secondaryGrey,
-                                                  ),
-                                                  CustomText(
-                                                    txt: items.address!,
-                                                    txtColor: ColorManager
-                                                        .secondaryGrey,
-                                                  ),
-                                                  10.horizontalSpace,
-                                                  Container(
-                                                    color: ColorManager
-                                                        .secondaryGrey,
-                                                    child:
-                                                        const VerticalDivider(
-                                                      color: Colors
-                                                          .black, //color of divider
-                                                      width:
-                                                          2, //width space of divider
-                                                      thickness:
-                                                          1, //thickness of divier line
-                                                      indent:
-                                                          10, //Spacing at the top of divider.
-                                                      endIndent:
-                                                          12, //Spacing at the bottom of divider.
-                                                    ),
-                                                  ),
-                                                  4.horizontalSpace,
-                                                  Icon(
-                                                    Icons.update_outlined,
-                                                    color: ColorManager
-                                                        .secondaryGrey,
-                                                  ),
-                                                  CustomText(
-                                                    txt: items.startTime
-                                                                ?.isNotEmpty ==
-                                                            true
-                                                        ? DateFormat(
-                                                                'dd/MM/yyyy HH:mm')
-                                                            .format(DateTime
-                                                                .parse(items
-                                                                    .startTime))
-                                                        : '',
-                                                    txtColor: ColorManager
-                                                        .secondaryGrey,
-                                                  ),
-                                                  CustomText(
-                                                    txt: items.endTime
-                                                                ?.isNotEmpty ==
-                                                            true
-                                                        ? DateFormat(
-                                                                'dd/MM/yyyy HH:mm')
-                                                            .format(DateTime
-                                                                .parse(items
-                                                                    .endTime))
-                                                        : '',
-                                                    txtColor: ColorManager
-                                                        .secondaryGrey,
-                                                  ),
-                                                ],
+                                              10.horizontalSpace,
+                                              Icon(
+                                                Icons.circle,
+                                                color: items.isOnline!
+                                                    ? ColorManager.green
+                                                    : Colors.red,
+                                              ),
+                                              3.horizontalSpace,
+                                              CustomText(
+                                                txt: items.isOnline!
+                                                    ? AppStrings.open
+                                                    : AppStrings.close,
+                                                txtColor:
+                                                    ColorManager.secondaryGrey,
+                                              ),
+                                              3.horizontalSpace,
+                                              Icon(
+                                                Icons.location_on_outlined,
+                                                color:
+                                                    ColorManager.secondaryGrey,
+                                              ),
+                                              CustomText(
+                                                txt: items.address!,
+                                                txtColor:
+                                                    ColorManager.secondaryGrey,
+                                              ),
+                                              10.horizontalSpace,
+                                              Container(
+                                                color:
+                                                    ColorManager.secondaryGrey,
+                                                child: const VerticalDivider(
+                                                  color: Colors.black,
+                                                  width: 2,
+                                                  thickness: 1,
+                                                  indent: 10,
+                                                  endIndent: 12,
+                                                ),
+                                              ),
+                                              4.horizontalSpace,
+                                              Icon(
+                                                Icons.update_outlined,
+                                                color:
+                                                    ColorManager.secondaryGrey,
+                                              ),
+                                              CustomText(
+                                                txt: items.startTime
+                                                            ?.isNotEmpty ==
+                                                        true
+                                                    ? DateFormat(
+                                                            'dd/MM/yyyy HH:mm')
+                                                        .format(DateTime.parse(
+                                                            items.startTime))
+                                                    : '',
+                                                txtColor:
+                                                    ColorManager.secondaryGrey,
+                                              ),
+                                              CustomText(
+                                                txt: items.endTime
+                                                            ?.isNotEmpty ==
+                                                        true
+                                                    ? DateFormat(
+                                                            'dd/MM/yyyy HH:mm')
+                                                        .format(DateTime.parse(
+                                                            items.endTime))
+                                                    : '',
+                                                txtColor:
+                                                    ColorManager.secondaryGrey,
                                               ),
                                             ],
                                           ),
                                         ],
                                       ),
-                                    ),
-                                  ],
+                                    ],
+                                  ),
                                 ),
                               );
                             },

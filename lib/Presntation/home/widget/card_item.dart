@@ -18,6 +18,10 @@ class CardItem2 extends StatelessWidget {
     return Column(
       children: [
         Card(
+          elevation: 3,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(20.0),
+          ),
           margin: const EdgeInsetsDirectional.only(bottom: 20, top: 10),
           color: ColorManager.white,
           shadowColor: Colors.grey,
@@ -36,15 +40,11 @@ class CardItem2 extends StatelessWidget {
                   ),
                 ),
                 Padding(
-                  padding: REdgeInsetsDirectional.only(start: 14, top: 8),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      CustomText(
-                        txt: title,
-                        txtColor: ColorManager.dark,
-                      ),
-                    ],
+                  padding:
+                      REdgeInsetsDirectional.only(start: 14, top: 8, bottom: 8),
+                  child: CustomText(
+                    txt: title,
+                    txtColor: ColorManager.dark,
                   ),
                 )
               ],

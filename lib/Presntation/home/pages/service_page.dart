@@ -51,18 +51,30 @@ class ServicePage extends StatelessWidget {
                         title: AppStrings.serviceText1,
                         img: ImageAssets.serviceImg1,
                       ),
-                      const CardItem2(
-                        title: AppStrings.serviceText2,
-                        img: ImageAssets.serviceImg2,
+                      GestureDetector(
+                        onTap: () {
+                          Navigator.pushNamed(
+                              context, Routes.orderReview1PassengerRoute);
+                        },
+                        child: const CardItem2(
+                          title: AppStrings.serviceText2,
+                          img: ImageAssets.serviceImg2,
+                        ),
                       ),
                       GestureDetector(
                         onTap: () {
                           Navigator.pushNamed(
                               context, Routes.orderReview1Route);
                         },
-                        child: const CardItem2(
-                          title: AppStrings.serviceText3,
-                          img: ImageAssets.serviceImg3,
+                        child: GestureDetector(
+                          onTap: () {
+                            Navigator.pushNamed(
+                                context, Routes.reviewDelivery_1Route);
+                          },
+                          child: const CardItem2(
+                            title: AppStrings.serviceText3,
+                            img: ImageAssets.serviceImg3,
+                          ),
                         ),
                       ),
                     ],
