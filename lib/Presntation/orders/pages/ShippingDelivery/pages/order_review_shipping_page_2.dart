@@ -1,3 +1,4 @@
+import 'package:day_night_time_picker/lib/state/time.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -52,6 +53,16 @@ class _OrderReviewShippingPage2State extends State<OrderReviewShippingPage2> {
     super.initState();
   }
 
+  String? selectedTime;
+  void onTimeChanged(Time newTime) {
+    setState(() {
+      _time = newTime;
+      selectedTime = '${newTime.hour}:${newTime.minute}';
+    });
+  }
+
+  Time _time = Time(hour: 11, minute: 30, second: 20);
+
   @override
   Widget build(BuildContext context) {
     InitialCubit.get(context).orderCheckCubit(
@@ -100,11 +111,11 @@ class _OrderReviewShippingPage2State extends State<OrderReviewShippingPage2> {
                           child: RadioListTile(
                             activeColor: ColorManager.primary,
                             title: CustomText(
-                              txt: AppStrings.selectTime,
+                              txt: AppStrings.fastTime,
                               txtColor: ColorManager.dark,
                               fontSize: 17,
                             ),
-                            value: options[0],
+                            value: options[1],
                             groupValue: timeSelected,
                             onChanged: (value) {
                               setState(() {
@@ -117,11 +128,11 @@ class _OrderReviewShippingPage2State extends State<OrderReviewShippingPage2> {
                           child: RadioListTile(
                             activeColor: ColorManager.primary,
                             title: CustomText(
-                              txt: AppStrings.fastTime,
+                              txt: AppStrings.selectTime,
                               txtColor: ColorManager.dark,
                               fontSize: 17,
                             ),
-                            value: options[1],
+                            value: options[0],
                             groupValue: timeSelected,
                             onChanged: (value) {
                               setState(() {
@@ -181,7 +192,7 @@ class _OrderReviewShippingPage2State extends State<OrderReviewShippingPage2> {
                         decoration: ThemeHelper().inputBoxDecorationShadow(),
                         child: CustomTextFormField(
                           controller: timeinput,
-                          readOnly: true,
+                          readOnly: false,
                           onTap: () async {
                             TimeOfDay now = TimeOfDay.now();
                             TimeOfDay? pickedTime = await showTimePicker(
@@ -189,20 +200,14 @@ class _OrderReviewShippingPage2State extends State<OrderReviewShippingPage2> {
                               initialTime: now,
                             );
                             if (pickedTime != null) {
-                              print(
-                                  pickedTime.format(context)); //output 10:51 PM
-                              DateTime parsedTime = DateFormat.jm()
-                                  .parse(pickedTime.format(context).toString());
-                              //converting to DateTime so that we can further format on different pattern.
-                              print(
-                                  parsedTime); //output 1970-01-01 22:53:00.000
                               String formattedTime =
-                                  DateFormat('HH:mm:ss').format(parsedTime);
-                              print(formattedTime); //output 14:59:00
-                              //DateFormat() is from intl package, you can format the time on any pattern you need.
+                                  DateFormat('h:mm a').format(
+                                DateTime(2023, 1, 1, pickedTime.hour,
+                                    pickedTime.minute),
+                              );
                               setState(() {
-                                timeinput.text =
-                                    formattedTime; //set the value of text field.
+                                selectedTime = formattedTime;
+                                timeinput.text = formattedTime;
                               });
                             } else {
                               print("Time is not selected");

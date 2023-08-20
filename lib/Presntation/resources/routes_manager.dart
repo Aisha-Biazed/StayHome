@@ -9,9 +9,8 @@ import '../onboarding/presentaion/pages/on_boarding_view.dart';
 import '../orders/pages/DeliveryOrder/add_address_destinationpage.dart';
 import '../orders/pages/DeliveryOrder/add_address_source_page.dart';
 import '../orders/pages/DeliveryOrder/confirmation_page.dart';
-import '../orders/pages/DeliveryOrder/order_review_page_1.dart';
-import '../orders/pages/ShippingDelivery/pages/order_review_page_2.dart';
-import '../orders/pages/ShippingDelivery/pages/order_review_page_3.dart';
+import '../orders/pages/ShippingDelivery/pages/order_review_for_shop_page_1.dart';
+import '../orders/pages/ShippingDelivery/pages/order_review_for_shop_page_2.dart';
 import '../orders/pages/ShippingDelivery/pages/add_address_destination_shipping_page.dart';
 import '../orders/pages/ShippingDelivery/pages/order_review_shipping_page_1.dart';
 import '../orders/pages/ShippingDelivery/pages/order_review_shipping_page_2.dart';
@@ -54,7 +53,7 @@ class Routes {
   static const String confirmationRoute = "/confirmation";
   static const String confirmationPassengerRoute = "/confirmation_passenger";
   static const String myCartRoute = "/basket";
-  static const String showpicker = "/showpicker";
+  static const String showPicker = "/showpicker";
   static const String ratingRoute = "/rating";
 }
 
@@ -123,7 +122,7 @@ class RouteGenerator {
       case Routes.orderReviewRoute2:
         return MaterialPageRoute(
             builder: (_) => const OrderReviewForShopPage1());
-      case Routes.showpicker:
+      case Routes.showPicker:
         return MaterialPageRoute(builder: (_) => const ShowPickerPage());
       case Routes.orderReviewRoute3:
         return MaterialPageRoute(

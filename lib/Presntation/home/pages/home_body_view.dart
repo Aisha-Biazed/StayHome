@@ -3,8 +3,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:stay_home/Presntation/home/pages/service_page.dart';
 import 'package:stay_home/Presntation/resources/color_manager.dart';
 import '../../login/pages/profile_page.dart';
-import '../../orders/pages/DeliveryOrder/order_review_page_1.dart';
-import '../../orders/pages/ShippingDelivery/pages/order_review_page_2.dart';
 import '../../orders/store/pages/store_page.dart';
 import '../../resources/strings_manager.dart';
 import '../navigation_page/main_page.dart';

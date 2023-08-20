@@ -25,13 +25,6 @@ class StoreDetails extends StatefulWidget {
 }
 
 class _StoreDetailsState extends State<StoreDetails> {
-  // @override
-  // void initState() {
-  //   super.initState();
-  //   final mycubit = context.read<InitialCubit>();
-  //   mycubit.detailsShopCubit(widget.shopId);
-  // }
-
   @override
   Widget build(BuildContext context) {
     InitialCubit.get(context).detailsShopCubit(widget.shopId);
@@ -111,13 +104,10 @@ class _StoreDetailsState extends State<StoreDetails> {
                                   color: ColorManager.secondaryGrey,
                                   child: const VerticalDivider(
                                     color: Colors.black,
-
                                     width: 2,
                                     thickness: 1,
                                     indent: 10,
-                                    //Spacing at the top of divider.
-                                    endIndent:
-                                        12, //Spacing at the bottom of divider.
+                                    endIndent: 12,
                                   ),
                                 ),
                                 4.horizontalSpace,
@@ -271,15 +261,12 @@ class _StoreDetailsState extends State<StoreDetails> {
                         color: ColorManager.secondaryGrey.withOpacity(0.2),
                         spreadRadius: 5,
                         blurRadius: 7,
-                        offset:
-                            const Offset(0, 3), // changes position of shadow
+                        offset: const Offset(0, 3),
                       ),
                     ],
                     borderRadius: BorderRadius.only(
                       topRight: Radius.circular(46.r),
                       topLeft: Radius.circular(46.r),
-                      // bottomLeft: Radius.circular(46.r),
-                      // bottomRight: Radius.circular(46.r)
                     ),
                   ),
                   child: Row(
@@ -295,16 +282,8 @@ class _StoreDetailsState extends State<StoreDetails> {
                           )),
                       FloatingActionButton.extended(
                         backgroundColor: ColorManager.secondary1,
-                        // splashColor: ColorManager.secondary,
-                        // hoverColor: ColorManager.secondary,
                         onPressed: () {
-                          Navigator.pushNamed(
-                              context, Routes.addressDestinationRoute);
-                          // Navigator.pushNamed(context, '/my_cart',
-                          //     arguments: product);
-                          // final product = ModalRoute.of(context)!
-                          //     .settings
-                          //     .arguments as ProductCart;
+                          Navigator.pushNamed(context, Routes.myCartRoute);
                         },
                         label: CustomText(
                           txt: AppStrings.addToTrash,
