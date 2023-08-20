@@ -7,6 +7,7 @@ part 'my_cart_state.dart';
 
 class MyCartCubit extends Cubit<MyCartState> {
   MyCartCubit() : super(MyCartState(productsCart: []));
+  static MyCartCubit get(context) => BlocProvider.of(context);
   void addToCart(List<ProductCart> cart, ProductCart product) {
     final pro = cart.firstWhereOrNull((element) => element.id == product.id);
     if (pro == null) {
@@ -50,4 +51,13 @@ class MyCartCubit extends Cubit<MyCartState> {
   List<ProductCart> getCart() {
     return state.productsCart;
   }
+
+  // int getTotalProductsCount() {
+  //   final cart = state.productsCart;
+  //   int totalCount = 0;
+  //   for (var product in cart) {
+  //     totalCount += product.counter ?? 0;
+  //   }
+  //   return totalCount;
+  // }
 }

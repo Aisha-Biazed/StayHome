@@ -33,12 +33,6 @@ class ProfileSuccessState extends InitialStates {
 
 class ProfileErrorState extends InitialStates {}
 
-class AddShoppingOrderLoadingState extends InitialStates {}
-
-class AddShoppingOrderErrorState extends InitialStates {}
-
-class AddShoppingOrderSuccessState extends InitialStates {}
-
 class HomeLoadingState extends InitialStates {}
 
 class HomeSuccessState extends InitialStates {
@@ -107,23 +101,3 @@ class RateLoadingState extends InitialStates {}
 class RateSuccessState extends InitialStates {}
 
 class RateErrorState extends InitialStates {}
-
-class OrderPassengerLoadingState extends InitialStates {}
-
-class OrderPassengerSuccessState extends InitialStates {}
-
-class OrderPassengerErrorState extends InitialStates {}
-
-class GetIdAreaSourceState extends InitialStates {}
-
-class GetIdAreaDestinationState extends InitialStates {}
-
-class GetSourceStreetState extends InitialStates {}
-
-class GetDestinationStreetState extends InitialStates {}
-
-class GetSourceAdditionalState extends InitialStates {}
-
-class GetDestinationAdditionalState extends InitialStates {}
-
-class NoteState extends InitialStates {}

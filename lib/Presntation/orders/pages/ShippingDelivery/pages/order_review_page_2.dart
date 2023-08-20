@@ -1,40 +1,35 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:intl/intl.dart';
-import 'package:stay_home/Presntation/login/cubit/cubit.dart';
-import 'package:stay_home/Presntation/login/cubit/states.dart';
+import 'package:stay_home/Presntation/orders/pages/ShippingDelivery/cubit/shipping_cubit.dart';
+import 'package:stay_home/Presntation/ratings/widgets/custom_buttons.dart';
+import 'package:stay_home/Presntation/resources/assets_manager.dart';
 import 'package:stay_home/Presntation/resources/color_manager.dart';
 import 'package:stay_home/Presntation/resources/strings_manager.dart';
 import 'package:stay_home/core/widgets/custom_buttons.dart';
 import 'dart:ui' as ui;
 import 'package:day_night_time_picker/day_night_time_picker.dart';
+import '../../../../../core/utils/theme_helper.dart';
+import '../../../../../core/widgets/custom_text.dart';
+import '../../../../../core/widgets/custom_text_field.dart';
+import '../../../../resources/routes_manager.dart';
 
-import '../../../../core/utils/theme_helper.dart';
-import '../../../../core/widgets/custom_text.dart';
-import '../../../../core/widgets/custom_text_field.dart';
-import '../../../resources/routes_manager.dart';
-
-class OrderReviewPassengerPage1 extends StatefulWidget {
-  const OrderReviewPassengerPage1({Key? key}) : super(key: key);
+class OrderReviewForShopPage1 extends StatefulWidget {
+  const OrderReviewForShopPage1({Key? key}) : super(key: key);
 
   @override
-  State<OrderReviewPassengerPage1> createState() =>
-      _OrderReviewPassengerPage1State();
+  State<OrderReviewForShopPage1> createState() =>
+      _OrderReviewForShopPage1State();
 }
 
 List<String> options = ['fastTime', 'selectTime'];
-List<String> choices = ['point', 'store'];
 
-class _OrderReviewPassengerPage1State extends State<OrderReviewPassengerPage1> {
+class _OrderReviewForShopPage1State extends State<OrderReviewForShopPage1> {
   String timeSelected = options[0];
-  String destination = choices[0];
-  TextEditingController dateinput = TextEditingController(text: "");
-  TextEditingController timeinput = TextEditingController(text: "");
+  TextEditingController dateinput = TextEditingController();
+  TextEditingController timeinput = TextEditingController();
   TextEditingController noteController = TextEditingController(text: "");
-  TextEditingController sourceController = TextEditingController(text: "");
   TextEditingController destinationController = TextEditingController(text: "");
-  int number = 1;
   @override
   void initState() {
     dateinput.text = "";
@@ -43,32 +38,33 @@ class _OrderReviewPassengerPage1State extends State<OrderReviewPassengerPage1> {
     super.initState();
   }
 
-  String? selectedTime;
-  void onTimeChanged(Time newTime) {
-    setState(() {
-      _time = newTime;
-      selectedTime = '${newTime.hour}:${newTime.minute}';
-    });
-  }
-
   Time _time = Time(hour: 11, minute: 30, second: 20);
   bool iosStyle = true;
 
+  void onTimeChanged(Time newTime) {
+    setState(() {
+      _time = newTime;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
+    var shopIdController = TextEditingController(
+        text:
+            "${AppStrings.destinationText}${ShippingCubit.get(context).shoppNameCubit}");
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      body: BlocBuilder<InitialCubit, InitialStates>(
-        builder: (context, state) {
-          return Directionality(
-            textDirection: ui.TextDirection.rtl,
-            child: Padding(
-              padding: REdgeInsetsDirectional.only(
-                start: 0,
-                end: 0,
-                top: 61,
-              ),
-              child: Column(
+      body: Directionality(
+        textDirection: ui.TextDirection.rtl,
+        child: Padding(
+          padding: REdgeInsetsDirectional.only(
+            start: 0,
+            end: 0,
+            top: 61,
+          ),
+          child: Stack(
+            children: [
+              Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   CustomText(
@@ -172,107 +168,54 @@ class _OrderReviewPassengerPage1State extends State<OrderReviewPassengerPage1> {
                       child: CustomTextFormField(
                         controller: timeinput,
                         readOnly: false,
-                        onTap: () async {
-                          TimeOfDay now = TimeOfDay.now();
-                          TimeOfDay? pickedTime = await showTimePicker(
-                            context: context,
-                            initialTime: now,
-                          );
-                          if (pickedTime != null) {
-                            String formattedTime = DateFormat('h:mm a').format(
-                              DateTime(2023, 1, 1, pickedTime.hour,
-                                  pickedTime.minute),
-                            );
-                            setState(() {
-                              selectedTime = formattedTime;
-                              timeinput.text = formattedTime;
-                            });
-                          } else {
-                            print("Time is not selected");
-                          }
-                        },
+                        // onTap: () async {
+                        //   TimeOfDay now = TimeOfDay.now();
+                        //   TimeOfDay? pickedTime = await showTimePicker(
+                        //     context: context,
+                        //     initialTime: now,
+                        //   );
+                        //   if (pickedTime != null) {
+                        //     print(pickedTime.format(context)); //output 10:51 PM
+                        //     DateTime parsedTime = DateFormat.jm()
+                        //         .parse(pickedTime.format(context).toString());
+                        //     //converting to DateTime so that we can further format on different pattern.
+                        //     print(parsedTime); //output 1970-01-01 22:53:00.000
+                        //     String formattedTime =
+                        //         DateFormat('HH:mm:ss').format(parsedTime);
+                        //     print(formattedTime); //output 14:59:00
+                        //     //DateFormat() is from intl package, you can format the time on any pattern you need.
+                        //     setState(() {
+                        //       timeinput.text =
+                        //           formattedTime; //set the value of text field.
+                        //     });
+                        //   } else {
+                        //     print("Time is not selected");
+                        //   }
+                        // },
                         lableText: AppStrings.textField2,
                         color: ColorManager.secondaryGrey,
-                        suffexIcon: Icon(
-                          Icons.access_time_rounded,
-                          color: ColorManager.primary,
+                        suffexIcon: GestureDetector(
+                          onTap: () {
+                            Navigator.pushNamed(context, Routes.showpicker);
+                          },
+                          child: Icon(
+                            Icons.access_time_rounded,
+                            color: ColorManager.primary,
+                          ),
                         ),
                       ),
                     ),
                   ),
-                  // Visibility(
-                  //   visible: timeSelected == options[1],
-                  //   child: Container(
-                  //     margin: REdgeInsetsDirectional.only(start: 21, end: 21),
-                  //     decoration: ThemeHelper().inputBoxDecorationShadow(),
-                  //     child: CustomTextFormField(
-                  //       initialValue: selectedTime,
-                  //       inputType: TextInputType.datetime,
-                  //       controller: timeinput,
-                  //       readOnly: false,
-                  //       lableText: AppStrings.textField2,
-                  //       color: ColorManager.secondaryGrey,
-                  //       suffexIcon: GestureDetector(
-                  //         onTap: () {
-                  //           Navigator.pushNamed(context, Routes.showpicker);
-                  //         },
-                  //         child: Icon(
-                  //           Icons.access_time_rounded,
-                  //           color: ColorManager.primary,
-                  //         ),
-                  //       ),
-                  //     ),
-                  //   ),
-                  // ),
                   20.verticalSpace,
-                  CustomText(
-                      txt: AppStrings.numberOfPassenger,
-                      fontSize: 20.sp,
-                      txtColor: ColorManager.dark,
-                      fontWeight: FontWeight.w400),
-                  5.verticalSpace,
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      IconButton(
-                          onPressed: () {
-                            setState(() {
-                              number++;
-                            });
-                          },
-                          icon: Icon(
-                            Icons.add_circle,
-                            color: ColorManager.primary,
-                          )),
-                      CustomText(txt: number.toString()),
-                      IconButton(
-                          onPressed: () {
-                            setState(() {
-                              number--;
-                            });
-                          },
-                          icon: Icon(
-                            Icons.remove_circle_outlined,
-                            color: ColorManager.primary,
-                          )),
-                    ],
-                  ),
-                  30.verticalSpace,
+                  20.verticalSpace,
                   Container(
                     margin: REdgeInsetsDirectional.only(start: 21, end: 21),
                     decoration: ThemeHelper().inputBoxDecorationShadow(),
                     child: CustomTextFormField(
-                      controller: sourceController,
-                      onTap: () {
-                        Navigator.pushNamed(
-                            context, Routes.addressSourcePassengerRoute);
-                      },
-                      readOnly: true,
-                      hintText: InitialCubit.get(context).nameSourceCubit == ''
-                          ? AppStrings.textField3
-                          : InitialCubit.get(context).nameSourceCubit,
+                      controller: shopIdController,
+                      readOnly: false,
+                      lableText: AppStrings.labelDestination,
                       color: ColorManager.secondaryGrey,
-                      lableText: AppStrings.textField3,
                     ),
                   ),
                   30.verticalSpace,
@@ -283,13 +226,13 @@ class _OrderReviewPassengerPage1State extends State<OrderReviewPassengerPage1> {
                       controller: destinationController,
                       onTap: () {
                         Navigator.pushNamed(
-                            context, Routes.addressDestinationPassengerRoute);
+                            context, Routes.shippingAddressDestinationRoute);
                       },
                       readOnly: false,
                       hintText:
-                          InitialCubit.get(context).nameDestinationCubit == ''
+                          ShippingCubit.get(context).nameDestinationCubit == ''
                               ? AppStrings.textField3
-                              : InitialCubit.get(context).nameDestinationCubit,
+                              : ShippingCubit.get(context).nameDestinationCubit,
                       lableText: AppStrings.textField4,
                       color: ColorManager.secondaryGrey,
                     ),
@@ -300,7 +243,7 @@ class _OrderReviewPassengerPage1State extends State<OrderReviewPassengerPage1> {
                     decoration: ThemeHelper().inputBoxDecorationShadow(),
                     child: CustomTextFormField(
                       onTap: () {
-                        InitialCubit.get(context)
+                        ShippingCubit.get(context)
                             .getNote(value: noteController.text.toString());
                       },
                       controller: noteController,
@@ -309,64 +252,72 @@ class _OrderReviewPassengerPage1State extends State<OrderReviewPassengerPage1> {
                       color: ColorManager.secondaryGrey,
                     ),
                   ),
-                  30.verticalSpace,
-                  Container(
-                    margin: REdgeInsetsDirectional.only(start: 40, end: 40),
-                    child: CustomGeneralButton(
-                      text: AppStrings.requestBtn,
-                      onTap: () {
-                        print(InitialCubit.get(context).sourceStreetCubit);
-                        print(InitialCubit.get(context).detailsSourceCubit);
-                        print(InitialCubit.get(context).idSourceCubit);
-                        print("ddddddddddddddddddddddddddddddddddd");
-                        print(InitialCubit.get(context).destinationStreetCubit);
-                        print(
-                            InitialCubit.get(context).detailsDestinationCubit);
-                        print(InitialCubit.get(context).idDestinationCubit);
-                        InitialCubit.get(context).getNumber(value: number);
-                        InitialCubit.get(context)
-                            .getNote(value: noteController.text.toString());
-                        InitialCubit.get(context).orderPassengerCubit(
-                          sourceAreaID: InitialCubit.get(context).idSourceCubit,
-                          destinationAreaID:
-                              InitialCubit.get(context).idDestinationCubit,
-                          note: InitialCubit.get(context).noteCubit,
-                          numberOfPassenger:
-                              InitialCubit.get(context).numberCubit,
-                          sourceStreet:
-                              InitialCubit.get(context).sourceStreetCubit,
-                          destinationStreet:
-                              InitialCubit.get(context).destinationStreetCubit,
-                          sourceAdditional:
-                              InitialCubit.get(context).detailsSourceCubit,
-                          destinationAdditional:
-                              InitialCubit.get(context).detailsDestinationCubit,
-                          // scheduleDate: ,
-                        );
-                        Navigator.pushNamed(
-                            context, Routes.orderReviewPassengerRoute2);
-                      },
-                    ),
-                  ),
                 ],
               ),
-            ),
-          );
-        },
+              Container(
+                margin: REdgeInsetsDirectional.only(top: 640, end: 0, start: 0),
+                padding: REdgeInsetsDirectional.only(start: 20, end: 20),
+                width: double.infinity,
+                height: 117.h,
+                decoration: BoxDecoration(
+                  color: ColorManager.purple,
+                  borderRadius: BorderRadius.only(
+                    topRight: Radius.circular(46.r),
+                    topLeft: Radius.circular(46.r),
+                  ),
+                ),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Expanded(
+                        child: CustomButtons(
+                      onPressed: () {
+                        print(ShippingCubit.get(context).shopIdCubit);
+                        ShippingCubit.get(context).shippingShopCubit(
+                          note: ShippingCubit.get(context).noteCubit,
+                          destinationStreet:
+                              ShippingCubit.get(context).destinationStreetCubit,
+                          destinationAdditional: ShippingCubit.get(context)
+                              .detailsDestinationCubit,
+                          destinationAreaId:
+                              ShippingCubit.get(context).idDestinationCubit,
+                          shopId: ShippingCubit.get(context).shopIdCubit,
+                          // scheduleDate: ,
+                        );
+                        Navigator.pushNamed(context, Routes.orderReviewRoute3);
+                      },
+                      text: AppStrings.requestBtn,
+                      color: ColorManager.primary,
+                    )),
+                    const Spacer(),
+                    Expanded(
+                        child: CustomButtons(
+                      onPressed: () {
+                        Navigator.pushNamed(context, Routes.myCartRoute);
+                      },
+                      text: AppStrings.basketBtn,
+                      color: ColorManager.secondary1,
+                    )),
+                  ],
+                ),
+              )
+            ],
+          ),
+        ),
       ),
     );
   }
 }
 
-class Home extends StatefulWidget {
-  const Home({Key? key}) : super(key: key);
+class ShowPickerPage extends StatefulWidget {
+  const ShowPickerPage({Key? key}) : super(key: key);
 
   @override
   // ignore: library_private_types_in_public_api
-  _HomeState createState() => _HomeState();
+  _ShowPickerPageState createState() => _ShowPickerPageState();
 }
 
-class _HomeState extends State<Home> {
+class _ShowPickerPageState extends State<ShowPickerPage> {
   Time _time = Time(hour: 11, minute: 30, second: 20);
   bool iosStyle = true;
 
@@ -386,7 +337,6 @@ class _HomeState extends State<Home> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
                 showPicker(
-                  context: context,
                   isInlinePicker: true,
                   elevation: 1,
                   value: _time,

@@ -40,5 +40,6 @@ class ImageAssets {
   static const String box = "$imagePath/box1.png";
   static const String trash = "$imagePath/trash.png";
   static const String trash1 = "$imagePath/trash-bin.png";
+  static const String shipping = "$imagePath/shipping.png";
   static const String confirmationImg = "$imagePath/confirmation_Img.png";
 }

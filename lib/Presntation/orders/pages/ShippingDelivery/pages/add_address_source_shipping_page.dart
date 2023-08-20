@@ -3,25 +3,24 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:stay_home/Presntation/login/cubit/cubit.dart';
+import 'package:stay_home/Presntation/orders/pages/ShippingDelivery/cubit/shipping_cubit.dart';
+import '../../../../../core/utils/theme_helper.dart';
+import '../../../../../core/widgets/custom_buttons.dart';
+import '../../../../../core/widgets/custom_text.dart';
+import '../../../../login/cubit/states.dart';
+import '../../../../resources/color_manager.dart';
+import '../../../../resources/strings_manager.dart';
 
-import '../../../../core/utils/theme_helper.dart';
-import '../../../../core/widgets/custom_buttons.dart';
-import '../../../../core/widgets/custom_text.dart';
-import '../../../login/cubit/states.dart';
-import '../../../resources/color_manager.dart';
-import '../../../resources/routes_manager.dart';
-import '../../../resources/strings_manager.dart';
-
-class AddAddressSourcePassengerPage extends StatefulWidget {
-  const AddAddressSourcePassengerPage({Key? key}) : super(key: key);
+class AddAddressSourceShippingPage extends StatefulWidget {
+  const AddAddressSourceShippingPage({Key? key}) : super(key: key);
 
   @override
-  State<AddAddressSourcePassengerPage> createState() =>
-      _AddAddressSourcePassengerPageState();
+  State<AddAddressSourceShippingPage> createState() =>
+      _AddAddressSourceShippingPageState();
 }
 
-class _AddAddressSourcePassengerPageState
-    extends State<AddAddressSourcePassengerPage> {
+class _AddAddressSourceShippingPageState
+    extends State<AddAddressSourceShippingPage> {
   final _formKey = GlobalKey<FormState>();
   bool checkedValue = false;
   bool checkboxValue = false;
@@ -87,18 +86,18 @@ class _AddAddressSourcePassengerPageState
                             20.verticalSpace,
                             RSizedBox(
                               height: 75,
-                              child: BlocBuilder<InitialCubit, InitialStates>(
-                                builder: (context, state) {
-                                  if (state is GetAllAreasSuccessState) {
-                                    final areaList = state.result;
-                                    return ListView.separated(
-                                      itemCount: 1,
-                                      itemBuilder:
-                                          (BuildContext context, int index) {
-                                        return Container(
-                                          decoration: ThemeHelper()
-                                              .inputBoxDecorationShadow(),
-                                          child: DropDownTextField(
+                              child: Container(
+                                decoration:
+                                    ThemeHelper().inputBoxDecorationShadow(),
+                                child: BlocBuilder<InitialCubit, InitialStates>(
+                                  builder: (context, state) {
+                                    if (state is GetAllAreasSuccessState) {
+                                      final areaList = state.result;
+                                      return ListView.builder(
+                                        itemCount: 1,
+                                        itemBuilder:
+                                            (BuildContext context, int index) {
+                                          return DropDownTextField(
                                             controller: _cnt,
                                             searchDecoration:
                                                 const InputDecoration(),
@@ -128,20 +127,18 @@ class _AddAddressSourcePassengerPageState
                                                 areaName = val.name;
                                               });
                                             },
-                                          ),
-                                        );
-                                      },
-                                      separatorBuilder:
-                                          (BuildContext context, int index) {
-                                        return 20.verticalSpace;
-                                      },
-                                    );
-                                  } else {
-                                    return CircularProgressIndicator(
-                                      color: ColorManager.primary,
-                                    );
-                                  }
-                                },
+                                          );
+                                        },
+                                      );
+                                    } else {
+                                      return Center(
+                                        child: CircularProgressIndicator(
+                                          color: ColorManager.primary,
+                                        ),
+                                      );
+                                    }
+                                  },
+                                ),
                               ),
                             ),
                             30.verticalSpace,
@@ -179,24 +176,15 @@ class _AddAddressSourcePassengerPageState
                                 text: AppStrings.save,
                                 onTap: () {
                                   print(areaId);
-                                  // print(
-                                  //     InitialCubit.get(context).listOrders?[1]
-                                  // );
-                                  InitialCubit.get(context).getIdSource(
+                                  ShippingCubit.get(context).getIdSource(
                                       value: areaId.toString(),
                                       name: areaName.toString());
-                                  InitialCubit.get(context).getSourceStreet(
+                                  ShippingCubit.get(context).getSourceStreet(
                                       value: streetSourceController.text
                                           .toString());
-                                  InitialCubit.get(context).getDetailsSource(
+                                  ShippingCubit.get(context).getDetailsSource(
                                       value: detailsSourceController.text
                                           .toString());
-                                  // InitialCubit.get(context).orderPassengerCubit(
-                                  //   note: InitialCubit.get(context)
-                                  //       .listOrders?[0],
-                                  //   numberOfPassenger: InitialCubit.get(context)
-                                  //       .listOrders?[1] as int,
-                                  // );
                                   Navigator.pop(context);
                                 },
                               ),

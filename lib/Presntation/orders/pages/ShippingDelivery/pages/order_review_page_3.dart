@@ -1,29 +1,33 @@
+import 'package:dotted_line/dotted_line.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:intl/intl.dart';
-import 'package:stay_home/Presntation/ratings/widgets/custom_buttons.dart';
-import 'package:stay_home/Presntation/resources/assets_manager.dart';
+import 'package:stay_home/Presntation/login/cubit/states.dart';
+import 'package:stay_home/Presntation/orders/pages/ShippingDelivery/cubit/shipping_cubit.dart';
 import 'package:stay_home/Presntation/resources/color_manager.dart';
 import 'package:stay_home/Presntation/resources/strings_manager.dart';
 import 'package:stay_home/core/widgets/custom_buttons.dart';
 import 'dart:ui' as ui;
-import 'package:day_night_time_picker/day_night_time_picker.dart';
-import '../../../../core/utils/theme_helper.dart';
-import '../../../../core/widgets/custom_text.dart';
-import '../../../../core/widgets/custom_text_field.dart';
-import '../../../resources/routes_manager.dart';
+import '../../../../../core/utils/theme_helper.dart';
+import '../../../../../core/widgets/custom_text.dart';
+import '../../../../../core/widgets/custom_text_field.dart';
+import '../../../../login/cubit/cubit.dart';
+import '../../../../ratings/widgets/custom_buttons.dart';
+import '../../../../resources/routes_manager.dart';
 
-class OrderReviewPage2 extends StatefulWidget {
-  const OrderReviewPage2({Key? key}) : super(key: key);
+class OrderReviewForShopPage2 extends StatefulWidget {
+  const OrderReviewForShopPage2({Key? key}) : super(key: key);
 
   @override
-  State<OrderReviewPage2> createState() => _OrderReviewPage2State();
+  State<OrderReviewForShopPage2> createState() =>
+      _OrderReviewForShopPage2State();
 }
 
 List<String> options = ['fastTime', 'selectTime'];
 List<String> choices = ['point', 'store'];
 
-class _OrderReviewPage2State extends State<OrderReviewPage2> {
+class _OrderReviewForShopPage2State extends State<OrderReviewForShopPage2> {
   String timeSelected = options[0];
   String destination = choices[0];
   bool? check1 = false, check2 = true, check3 = false, check4 = false;
@@ -31,6 +35,7 @@ class _OrderReviewPage2State extends State<OrderReviewPage2> {
   bool checkboxValue = false;
   TextEditingController dateinput = TextEditingController();
   TextEditingController timeinput = TextEditingController();
+  var noteController = TextEditingController(text: "");
   @override
   void initState() {
     dateinput.text = "";
@@ -39,17 +44,13 @@ class _OrderReviewPage2State extends State<OrderReviewPage2> {
     super.initState();
   }
 
-  Time _time = Time(hour: 11, minute: 30, second: 20);
-  bool iosStyle = true;
-
-  void onTimeChanged(Time newTime) {
-    setState(() {
-      _time = newTime;
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
+    InitialCubit.get(context).orderCheckCubit(
+        ShippingCubit.get(context).idDestinationCubit,
+        ShippingCubit.get(context).shopIdCubit);
+    var noteController =
+        TextEditingController(text: ShippingCubit.get(context).noteCubit);
     return Scaffold(
       resizeToAvoidBottomInset: false,
       body: Directionality(
@@ -58,7 +59,7 @@ class _OrderReviewPage2State extends State<OrderReviewPage2> {
           padding: REdgeInsetsDirectional.only(
             start: 0,
             end: 0,
-            top: 61,
+            top: 31,
           ),
           child: Stack(
             children: [
@@ -71,13 +72,13 @@ class _OrderReviewPage2State extends State<OrderReviewPage2> {
                     txtColor: ColorManager.primary,
                     fontWeight: FontWeight.w700,
                   ),
-                  20.verticalSpace,
+                  15.verticalSpace,
                   CustomText(
                       txt: AppStrings.chooseTheTime,
                       fontSize: 20.sp,
                       txtColor: ColorManager.dark,
                       fontWeight: FontWeight.w400),
-                  10.verticalSpace,
+                  15.verticalSpace,
                   Row(
                     children: [
                       Expanded(
@@ -116,7 +117,7 @@ class _OrderReviewPage2State extends State<OrderReviewPage2> {
                       ),
                     ],
                   ),
-                  20.verticalSpace,
+                  15.verticalSpace,
                   Visibility(
                     visible: timeSelected == options[1],
                     child: Container(
@@ -157,7 +158,7 @@ class _OrderReviewPage2State extends State<OrderReviewPage2> {
                       ),
                     ),
                   ),
-                  20.verticalSpace,
+                  15.verticalSpace,
                   Visibility(
                     visible: timeSelected == options[1],
                     child: Container(
@@ -204,49 +205,8 @@ class _OrderReviewPage2State extends State<OrderReviewPage2> {
                       ),
                     ),
                   ),
-                  20.verticalSpace,
-                  CustomText(
-                      txt: AppStrings.direction,
-                      fontSize: 20.sp,
-                      txtColor: ColorManager.dark,
-                      fontWeight: FontWeight.w400),
-                  Row(
-                    children: [
-                      Expanded(
-                        child: RadioListTile(
-                          activeColor: ColorManager.primary,
-                          title: const CustomText(
-                            txt: AppStrings.dept,
-                            fontSize: 17,
-                          ),
-                          value: choices[0],
-                          groupValue: destination,
-                          onChanged: (value) {
-                            setState(() {
-                              destination = value.toString();
-                            });
-                          },
-                        ),
-                      ),
-                      Expanded(
-                        child: RadioListTile(
-                          activeColor: ColorManager.primary,
-                          title: const CustomText(
-                            txt: AppStrings.point,
-                            fontSize: 17,
-                          ),
-                          value: choices[1],
-                          groupValue: destination,
-                          onChanged: (value) {
-                            setState(() {
-                              destination = value.toString();
-                            });
-                          },
-                        ),
-                      ),
-                    ],
-                  ),
-                  20.verticalSpace,
+                  15.verticalSpace,
+                  15.verticalSpace,
                   Container(
                     margin: REdgeInsetsDirectional.only(start: 21, end: 21),
                     decoration: ThemeHelper().inputBoxDecorationShadow(),
@@ -256,33 +216,35 @@ class _OrderReviewPage2State extends State<OrderReviewPage2> {
                       color: ColorManager.secondaryGrey,
                     ),
                   ),
-                  20.verticalSpace,
+                  15.verticalSpace,
                   Container(
                     margin: REdgeInsetsDirectional.only(start: 21, end: 21),
                     decoration: ThemeHelper().inputBoxDecorationShadow(),
                     child: CustomTextFormField(
                       readOnly: false,
-                      lableText: AppStrings.textField4,
+                      lableText: AppStrings.note1,
                       color: ColorManager.secondaryGrey,
                     ),
                   ),
-                  20.verticalSpace,
+                  15.verticalSpace,
                   Container(
                     margin: REdgeInsetsDirectional.only(start: 21, end: 21),
                     decoration: ThemeHelper().inputBoxDecorationShadow(),
                     child: CustomTextFormField(
+                      controller: noteController,
                       readOnly: false,
-                      lableText: AppStrings.textField5,
+                      lableText: AppStrings.note,
                       color: ColorManager.secondaryGrey,
                     ),
                   ),
                 ],
               ),
               Container(
-                margin: REdgeInsetsDirectional.only(top: 640, end: 0, start: 0),
-                padding: REdgeInsetsDirectional.only(start: 20, end: 20),
+                margin: REdgeInsetsDirectional.only(top: 600, end: 0, start: 0),
+                padding: REdgeInsetsDirectional.only(
+                    start: 20, end: 20, bottom: 10, top: 10),
                 width: double.infinity,
-                height: 117.h,
+                height: 200.h,
                 decoration: BoxDecoration(
                   color: ColorManager.purple,
                   borderRadius: BorderRadius.only(
@@ -290,92 +252,137 @@ class _OrderReviewPage2State extends State<OrderReviewPage2> {
                     topLeft: Radius.circular(46.r),
                   ),
                 ),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
-                    Expanded(
-                        child: CustomButtons(
-                      onPressed: () {
-                        Navigator.pushNamed(
-                            context, Routes.addressDestinationRoute);
-                      },
-                      text: AppStrings.requestBtn,
-                      color: ColorManager.primary,
-                    )),
-                    const Spacer(),
-                    Expanded(
-                        child: CustomButtons(
-                      onPressed: () {
-                        Navigator.pushNamed(
-                            context, Routes.addressDestinationRoute);
-                      },
-                      text: AppStrings.basketBtn,
-                      color: ColorManager.secondary1,
-                    )),
+                    Row(
+                      children: const [
+                        CustomText(
+                          txt: AppStrings.numberOfProducts,
+                          fontSize: 14,
+                        ),
+                        Spacer(),
+                        CustomText(
+                          txt: AppStrings.n6,
+                          fontSize: 14,
+                        ),
+                      ],
+                    ),
+                    DottedLine(
+                      dashColor: ColorManager.lineGrey,
+                      lineThickness: 2,
+                    ),
+                    Row(
+                      children: [
+                        CustomText(
+                          txt: AppStrings.totalCost,
+                          fontSize: 14,
+                        ),
+                        const Spacer(),
+                        CustomText(
+                          txt: ShippingCubit.get(context).totalCubit.toString(),
+                          fontSize: 14,
+                        ),
+                      ],
+                    ),
+                    DottedLine(
+                      dashColor: ColorManager.lineGrey,
+                      lineThickness: 2,
+                    ),
+                    Row(
+                      children: [
+                        const CustomText(
+                          txt: AppStrings.costDelivery,
+                          fontSize: 14,
+                        ),
+                        const Spacer(),
+                        BlocBuilder<InitialCubit, InitialStates>(
+                          builder: (context, state) {
+                            if (state is OrderCheckSuccessState) {
+                              return CustomText(
+                                txt: state.listOrder.deliveryCoast.toString(),
+                                fontSize: 14,
+                              );
+                            } else {
+                              return SizedBox(
+                                height: 2,
+                                child: Center(
+                                  child: CircularProgressIndicator(
+                                    color: ColorManager.primary,
+                                    strokeWidth: 2,
+                                  ),
+                                ),
+                              );
+                            }
+                          },
+                        ),
+                      ],
+                    ),
+                    DottedLine(
+                      direction: Axis.horizontal,
+                      alignment: WrapAlignment.center,
+                      lineLength: double.infinity,
+                      lineThickness: 1.0,
+                      dashLength: 4.0,
+                      dashColor: Colors.black,
+                      dashGradient: [
+                        ColorManager.primary,
+                        ColorManager.lineGrey
+                      ],
+                      dashRadius: 0.0,
+                      dashGapLength: 4.0,
+                      dashGapColor: Colors.transparent,
+                      dashGapGradient: [
+                        ColorManager.primary,
+                        ColorManager.lineGrey
+                      ],
+                      dashGapRadius: 0.0,
+                    ),
+                    Row(
+                      children: const [
+                        CustomText(
+                          txt: AppStrings.finalCost,
+                          fontSize: 19,
+                          fontWeight: FontWeight.w400,
+                        ),
+                        Spacer(),
+                        CustomText(
+                          txt: AppStrings.n700,
+                          fontSize: 14,
+                        ),
+                      ],
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      crossAxisAlignment: CrossAxisAlignment.end,
+                      children: [
+                        Expanded(
+                            child: CustomButtons(
+                          onPressed: () {
+                            print(
+                                ShippingCubit.get(context).idDestinationCubit);
+                            // Navigator.pushNamed(
+                            //     context, Routes.addressDestinationRoute);
+                          },
+                          text: AppStrings.confBtn,
+                          color: ColorManager.primary,
+                        )),
+                        const Spacer(),
+                        Expanded(
+                            child: CustomButtons(
+                          onPressed: () {
+                            Navigator.pushNamed(
+                                context, Routes.addressDestinationRoute);
+                          },
+                          text: AppStrings.basketBtn,
+                          color: ColorManager.secondary1,
+                        )),
+                      ],
+                    ),
                   ],
                 ),
               )
             ],
-          ),
-        ),
-      ),
-    );
-  }
-}
-
-class ShowPickerPage extends StatefulWidget {
-  const ShowPickerPage({Key? key}) : super(key: key);
-
-  @override
-  // ignore: library_private_types_in_public_api
-  _ShowPickerPageState createState() => _ShowPickerPageState();
-}
-
-class _ShowPickerPageState extends State<ShowPickerPage> {
-  Time _time = Time(hour: 11, minute: 30, second: 20);
-  bool iosStyle = true;
-
-  void onTimeChanged(Time newTime) {
-    setState(() {
-      _time = newTime;
-    });
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      body: SafeArea(
-        child: Center(
-          child: SingleChildScrollView(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                showPicker(
-                  isInlinePicker: true,
-                  elevation: 1,
-                  value: _time,
-                  onChange: onTimeChanged,
-                  minuteInterval: TimePickerInterval.FIVE,
-                  iosStylePicker: iosStyle,
-                  minHour: DateTime.now().hour.toDouble(),
-                  minMinute: DateTime.now().minute.toDouble(),
-                  maxHour: 21,
-                  is24HrFormat: false,
-                ),
-                Text(
-                  "IOS Style",
-                  style: Theme.of(context).textTheme.bodyLarge,
-                ),
-                Switch(
-                  value: iosStyle,
-                  onChanged: (newVal) {
-                    setState(() {
-                      iosStyle = newVal;
-                    });
-                  },
-                )
-              ],
-            ),
           ),
         ),
       ),

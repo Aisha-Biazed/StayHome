@@ -7,6 +7,8 @@ import 'package:hexcolor/hexcolor.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:stay_home/Presntation/home/pages/home_view.dart';
 import 'package:stay_home/Presntation/login/cubit/cubit.dart';
+import 'package:stay_home/Presntation/orders/pages/ShippingDelivery/cubit/shipping_cubit.dart';
+import 'package:stay_home/Presntation/orders/pages/passenger/cubit/passenger_cubit.dart';
 import 'package:stay_home/Presntation/orders/store/Cubit/my_cart_cubit.dart';
 import 'package:stay_home/Presntation/splash/pages/splash_view.dart';
 import 'Presntation/login/pages/registartion_page.dart';
@@ -32,39 +34,49 @@ class MyApp extends StatelessWidget {
       minTextAdapt: true,
       splitScreenMode: true,
       builder: (context, child) {
-        return BlocProvider(
-          create: (context) => MyCartCubit(),
+        return MultiBlocProvider(
+          providers: [
+            BlocProvider(
+              create: (context) => PassengerCubit(),
+            ),
+            BlocProvider(
+              create: (context) => ShippingCubit(),
+            ),
+          ],
           child: BlocProvider(
-            create: (context) => InitialCubit(),
-            child: GetMaterialApp(
-                title: 'Localizations Sample App',
-                localizationsDelegates: const [
-                  GlobalMaterialLocalizations.delegate,
-                  GlobalWidgetsLocalizations.delegate,
-                  GlobalCupertinoLocalizations.delegate,
-                ],
-                supportedLocales: const [
-                  Locale('ar', "AE"), // EnglishSpanish
-                ],
-                theme: ThemeData(
-                  // fontFamily: 'Poppins',
-                  appBarTheme: const AppBarTheme(
-                    systemOverlayStyle: SystemUiOverlayStyle(
-                      statusBarColor: Colors.transparent,
+            create: (context) => MyCartCubit(),
+            child: BlocProvider(
+              create: (context) => InitialCubit(),
+              child: GetMaterialApp(
+                  title: 'Localizations Sample App',
+                  localizationsDelegates: const [
+                    GlobalMaterialLocalizations.delegate,
+                    GlobalWidgetsLocalizations.delegate,
+                    GlobalCupertinoLocalizations.delegate,
+                  ],
+                  supportedLocales: const [
+                    Locale('ar', "AE"), // EnglishSpanish
+                  ],
+                  theme: ThemeData(
+                    // fontFamily: 'Poppins',
+                    appBarTheme: const AppBarTheme(
+                      systemOverlayStyle: SystemUiOverlayStyle(
+                        statusBarColor: Colors.transparent,
+                      ),
                     ),
+                    fontFamily: 'sst-arabic',
+                    primaryColor: _primarColor,
+                    scaffoldBackgroundColor: Colors.grey.shade100,
+                    primarySwatch: Colors.grey,
+                    // accentColor: _accentColor,
                   ),
-                  fontFamily: 'sst-arabic',
-                  primaryColor: _primarColor,
-                  scaffoldBackgroundColor: Colors.grey.shade100,
-                  primarySwatch: Colors.grey,
-                  // accentColor: _accentColor,
-                ),
-                onGenerateRoute: RouteGenerator.getRoute,
-                initialRoute: Routes.splashRoute,
-                debugShowCheckedModeBanner: false,
-                home: CachHelper.sharedPreferences.getString('token') != null
-                    ? const HomeView()
-                    : const SplashView()),
+                  onGenerateRoute: RouteGenerator.getRoute,
+                  initialRoute: Routes.splashRoute,
+                  debugShowCheckedModeBanner: false,
+                  home: CachHelper.sharedPreferences.getString('token') != null
+                      ? const HomeView()
+                      : const SplashView()),
+            ),
           ),
         );
       },

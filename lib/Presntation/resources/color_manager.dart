@@ -15,4 +15,5 @@ class ColorManager {
   static Color black = const Color(0xff000000);
   static Color green = const Color(0xff6BC384);
   static Color amber = const Color(0xffffc107);
+  static Color peg = const Color(0xffffd0a4);
 }

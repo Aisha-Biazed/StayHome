@@ -1,7 +1,6 @@
 import 'package:dartz/dartz.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:get/get.dart';
 import 'package:stay_home/Presntation/login/cubit/states.dart';
 import 'package:stay_home/Presntation/resources/routes_manager.dart';
 import 'package:stay_home/data_remote/auth_repo.dart';
@@ -22,59 +21,6 @@ class InitialCubit extends Cubit<InitialStates> {
   }
 
   static InitialCubit get(context) => BlocProvider.of(context);
-
-  String idDestinationCubit = '';
-  String nameDestinationCubit = '';
-  void getIdDestination({required String value, required String name}) {
-    idDestinationCubit = value;
-    nameDestinationCubit = name;
-    emit(GetIdAreaDestinationState());
-  }
-
-  String idSourceCubit = '';
-  String nameSourceCubit = '';
-  void getIdSource({required String value, required String name}) {
-    idSourceCubit = value;
-    nameSourceCubit = name;
-    emit(GetIdAreaSourceState());
-  }
-
-  String sourceStreetCubit = '';
-  void getSourceStreet({required String value}) {
-    sourceStreetCubit = value;
-    emit(GetSourceStreetState());
-  }
-
-  String destinationStreetCubit = '';
-  void getDestinationStreet({required String value}) {
-    destinationStreetCubit = value;
-    emit(GetDestinationStreetState());
-  }
-
-  String detailsSourceCubit = '';
-  void getDetailsSource({required String value}) {
-    detailsSourceCubit = value;
-    emit(GetSourceAdditionalState());
-  }
-
-  String detailsDestinationCubit = '';
-  void getDetailsDestination({required String value}) {
-    detailsDestinationCubit = value;
-    emit(GetDestinationAdditionalState());
-  }
-
-  String noteCubit = '';
-  void getNote({required String value}) {
-    noteCubit = value;
-    emit(NoteState());
-  }
-
-  int numberCubit = 0;
-  void getNumber({required int value}) {
-    numberCubit = value;
-    emit(NoteState());
-  }
-
   void login({required String email, required String password}) async {
     emit(LoginLoadingState());
     Either<String, String> result =
@@ -101,7 +47,6 @@ class InitialCubit extends Cubit<InitialStates> {
     emit(CreateLoadingState());
 
     Either<String, String> result = await _authRepo.createUserCubit(
-      // fullName: fullName,
       email: email,
       password: password,
       fullName: fullName,
@@ -127,37 +72,6 @@ class InitialCubit extends Cubit<InitialStates> {
       emit(ProfileErrorState());
     }, (r) {
       emit(ProfileSuccessState(r as ProfileModel));
-    });
-  }
-
-  void addShoppingOrderCubit({
-    required String destinationAreaId,
-    required String destinationStreet,
-    required String destinationAdditional,
-    required String note,
-    required String sourceAreaId,
-    required String sourceStreet,
-    required String sourceAdditional,
-    required String weight,
-    // String? scheduleDate,
-    // String? shopId,
-  }) async {
-    emit(AddShoppingOrderLoadingState());
-    Either<String, String> result = await _authRepo.addShoppingOrder(
-        destinationAreaId: destinationAreaId,
-        destinationStreet: destinationStreet,
-        destinationAdditional: destinationAdditional,
-        note: note,
-        sourceAreaId: sourceAreaId,
-        sourceStreet: sourceStreet,
-        sourceAdditional: sourceAdditional,
-        weight: weight);
-    result.fold((l) {
-      emit(AddShoppingOrderErrorState());
-      //show error
-    }, (r) {
-      emit(AddShoppingOrderSuccessState());
-      //save user
     });
   }
 
@@ -248,36 +162,6 @@ class InitialCubit extends Cubit<InitialStates> {
     }, (r) {
       emit(OrderCheckSuccessState(r as OrderCheckModel));
       //save user
-    });
-  }
-
-  void orderPassengerCubit({
-    required String sourceAreaID,
-    required String destinationAreaID,
-    required String note,
-    required int numberOfPassenger,
-    required String sourceStreet,
-    required String destinationStreet,
-    required String sourceAdditional,
-    required String destinationAdditional,
-    // required String scheduleDate
-  }) async {
-    emit(OrderPassengerLoadingState());
-    Either<String, dynamic> result = await _authRepo.passengerOrder(
-      note: note,
-      numberOfPassenger: numberOfPassenger,
-      sourceStreet: sourceStreet,
-      destinationStreet: destinationStreet,
-      sourceAdditional: sourceAdditional,
-      destinationAdditional: destinationAdditional,
-      sourceAreaID: sourceAreaID,
-      destinationAreaID: destinationAreaID,
-      // scheduleDate: scheduleDate,
-    );
-    result.fold((l) {
-      emit(OrderPassengerErrorState());
-    }, (r) {
-      emit(OrderPassengerSuccessState());
     });
   }
 

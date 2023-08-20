@@ -287,7 +287,7 @@ class _StoreDetailsState extends State<StoreDetails> {
                     children: [
                       GestureDetector(
                           onTap: () {
-                            Navigator.pushNamed(context, Routes.myBasketRoute);
+                            Navigator.pushNamed(context, Routes.myCartRoute);
                           },
                           child: Image.asset(
                             ImageAssets.cart,

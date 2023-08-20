@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:stay_home/Presntation/orders/pages/ShippingDelivery/cubit/shipping_cubit.dart';
 import 'package:stay_home/Presntation/orders/store/Cubit/my_cart_cubit.dart';
 import 'package:stay_home/Presntation/resources/color_manager.dart';
 import 'package:stay_home/Presntation/resources/strings_manager.dart';
 import 'package:stay_home/core/widgets/custom_text.dart';
 
 import '../../../../core/widgets/custom_buttons.dart';
+import '../../../resources/routes_manager.dart';
 
 class MyCartPage extends StatefulWidget {
   const MyCartPage({Key? key}) : super(key: key);
@@ -16,6 +18,8 @@ class MyCartPage extends StatefulWidget {
 }
 
 class _MyCartPageState extends State<MyCartPage> {
+  int total = 0;
+  String idProduct = "";
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -101,18 +105,25 @@ class _MyCartPageState extends State<MyCartPage> {
                                         IconButton(
                                             onPressed: () {
                                               final cart = cartCubit.getCart();
-                                              print(cart);
                                               final product = ProductCart(
                                                 id: cart[index].id!,
                                                 name: cart[index].name!,
                                                 imageUrl:
                                                     "http://finalstayhome-001-site1.atempurl.com/${cart[index].imageUrl}",
                                                 cost: cart[index].cost!,
-                                                counter: 1,
+                                                counter: cart[index].counter,
                                               );
                                               cartCubit.addToCart(
                                                   cart, product);
-                                              print("${product.cost} ");
+                                              idProduct = product.id!;
+                                              total = 0;
+                                              for (var element in cart) {
+                                                var mul = element.counter! *
+                                                    element.cost!;
+                                                total += mul;
+                                                print(mul);
+                                              }
+                                              print(total);
                                             },
                                             icon: Icon(
                                               Icons.add_circle,
@@ -129,11 +140,19 @@ class _MyCartPageState extends State<MyCartPage> {
                                                 imageUrl:
                                                     "http://finalstayhome-001-site1.atempurl.com/${cart[index].imageUrl}",
                                                 cost: cart[index].cost!,
-                                                counter: 1,
+                                                counter: cart[index].counter,
                                               );
+                                              idProduct = product.id!;
                                               cartCubit.decreaseFromCart(
                                                   cart, product);
-                                              print("${product.cost} ");
+                                              total = 0;
+                                              for (var element in cart) {
+                                                var mul = element.counter! *
+                                                    element.cost!;
+                                                total += mul;
+                                                print(mul);
+                                              }
+                                              print(total);
                                             },
                                             icon: Icon(
                                               Icons.remove_circle_outlined,
@@ -162,8 +181,7 @@ class _MyCartPageState extends State<MyCartPage> {
                                   ColorManager.secondaryGrey.withOpacity(0.2),
                               spreadRadius: 5,
                               blurRadius: 7,
-                              offset: const Offset(
-                                  0, 3), // changes position of shadow
+                              offset: const Offset(0, 3),
                             ),
                           ],
                           borderRadius: BorderRadius.only(
@@ -186,10 +204,23 @@ class _MyCartPageState extends State<MyCartPage> {
                               },
                             ),
                             15.horizontalSpace,
-                            const Expanded(
-                                child: CustomText(txt: AppStrings.storePrice)),
-                            const Expanded(
+                            Expanded(child: CustomText(txt: total.toString())),
+                            Expanded(
                                 child: CustomGeneralButton(
+                              onTap: () {
+                                // ShippingCubit.get(context).getTotalPrice(value: total);
+                                // print(ShippingCubit.get(context).totalCubit);
+                                final cartCubit =
+                                    BlocProvider.of<MyCartCubit>(context);
+                                final shippingCubit =
+                                    ShippingCubit.get(context);
+                                shippingCubit.getTotalPrice(
+                                  value: total,
+                                );
+                                print(ShippingCubit.get(context).totalCubit);
+                                Navigator.pushNamed(
+                                    context, Routes.orderReviewRoute2);
+                              },
                               text: AppStrings.requestBtn,
                             )),
                           ],

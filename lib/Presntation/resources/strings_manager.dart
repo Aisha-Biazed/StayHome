@@ -102,6 +102,7 @@ class AppStrings {
   static const confBtn = "تأكيد الطلب";
   static const direction = "أختر وجهة الإنطلاق التي سيبدأ منها طلبك";
   static const numberOfPassenger = "عدد الأشخاص";
+  static const weightOfPassenger = "الوزن";
   static const textField1 = "تاريخ التوصيل ";
   static const textField2 = "وقت التوصيل ";
   static const costDelivery = "قيمة التوصيل ";
@@ -127,6 +128,7 @@ class AppStrings {
   static const ratingsAddComments = "أكتب ملاحظة أو تعليق";
   static const ratingsBtn = "تقييم";
   static const ratingBtnSkip = "تخطي";
+  static const selectBtn = "أضغط هنا";
   static const elements = "العناصر:5";
   static const order = "الطلب";
   static const priceRating = "السعر:5367ل.س";

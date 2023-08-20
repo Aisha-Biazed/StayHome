@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import '../../../../core/widgets/custom_confirmation.dart';
-import '../../../resources/strings_manager.dart';
+import '../../../../../core/widgets/custom_confirmation.dart';
+import '../../../../resources/strings_manager.dart';
 
 class ConfirmationForPassengerPage extends StatelessWidget {
   const ConfirmationForPassengerPage({Key? key}) : super(key: key);

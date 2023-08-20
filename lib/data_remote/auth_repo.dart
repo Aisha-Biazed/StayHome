@@ -70,7 +70,7 @@ class AuthRepo {
     }
   }
 
-  Future<Either<String, String>> addShoppingOrder({
+  Future<Either<String, dynamic>> shippingOrder({
     required String destinationAreaId,
     required String destinationStreet,
     required String destinationAdditional,
@@ -78,14 +78,58 @@ class AuthRepo {
     required String sourceAreaId,
     required String sourceStreet,
     required String sourceAdditional,
-    required String? weight,
+    required double weight,
+    // String? shopId
     // String? scheduleDate,
-    // String? shopId,
   }) async {
     try {
       final result = await _dio.post(
-          'Mobile/Order/AddShippingOrder?Destination.AreaId=528de862-161a-417b-93c5-a196983cb8b8&Destination.Street=%D8%B4%D8%A7%D8%B1%D8%B9%20%D8%AC%D8%A7%D9%85%D8%B9%20%D8%A7%D9%84%D8%B1%D9%88%D8%B6%D8%A9&Destination.Additional=%D8%A8%D8%AC%D8%A7%D9%86%D8%A8%20%D8%A7%D9%84%D8%AC%D8%A7%D9%85%D8%B9&Note=%D8%A7%D9%84%D8%B1%D8%AC%D8%A7%D8%A1%20%D8%B9%D8%AF%D9%85%20%D9%82%D8%B1%D8%B9%20%D8%A7%D9%84%D8%AC%D8%B1%D8%B3&Source.AreaId=5c8c8814-75d7-47wQbNPTDJp9hMYdvogK2hAUiHsGeiybwaWe36bwtRQ3UTpYV7YuZ8FV5j9nauFCWwcjM6dTzpL5s2N79Rp5unwdMvc8ZKUD9%82&Source.Additional=%D8%A3%D9%85%D8%A7%D9%85%20%D8%A7%D9%84%D9%81%D9%86%D8%AF%D9%82%20%D8%A7%D9%84%D8%AF%D9%8A%D8%AF%D9%85%D8%A7%D9%86&Weight=250');
-      print("SuccessfulAddShoppingOrder");
+          'Mobile/Order/AddShippingOrder?Destination.AreaId=$destinationAreaId&Destination.Street=$destinationStreet&Destination.Additional=$destinationAdditional&Note=$note&Source.Street=$sourceStreet&Source.AreaId=$sourceAreaId&Source.Additional=$sourceAdditional&Weight=$weight');
+      //&ShopId=$shopId
+      print("SuccessfulAddShippingOrder");
+      return Right(result.data["response"]);
+    } catch (error) {
+      print("error =$error");
+      return Left(ExceptionHandler.handle(error as Exception));
+    }
+  }
+
+  Future<Either<String, dynamic>> shippingShop(
+      {required String destinationAreaId,
+      required String destinationStreet,
+      required String destinationAdditional,
+      required String note,
+      required String shopId
+      // String? scheduleDate,
+      }) async {
+    try {
+      final result = await _dio.post(
+          'Mobile/Order/AddShippingOrder?Destination.AreaId=$destinationAreaId&Destination.Street=$destinationStreet&Destination.Additional=$destinationAdditional&Note=$note&ShopId=$shopId&Cart=%7B%0A%20%20%22productId%22%3A%20%223fa85f64-5717-4562-b3fc-2c963f66afa6%22%2C%0A%20%20%22quantity%22%3A%203%0A%7D');
+      //&ShopId=$shopId
+      print("SuccessfulAddShopping");
+      return Right(result.data["response"]);
+    } catch (error) {
+      print("error =$error");
+      return Left(ExceptionHandler.handle(error as Exception));
+    }
+  }
+
+  Future<Either<String, dynamic>> passengerOrder({
+    required String sourceAreaID,
+    required String destinationAreaID,
+    required String note,
+    required int numberOfPassenger,
+    required String sourceStreet,
+    required String destinationStreet,
+    required String sourceAdditional,
+    required String destinationAdditional,
+  }) async {
+    try {
+      final result = await _dio.post(
+          'Mobile/Order/AddPassengerOrder?Note=$note&Source.AreaId=$sourceAreaID&Source.Street=$sourceStreet&Source.Additional=$sourceAdditional&Destination.AreaId=$destinationAreaID&Destination.Street=$destinationStreet&Destination.Additional=$destinationAdditional&NumberOfPassenger=$numberOfPassenger');
+      //&ScheduleDate=$scheduleDate
+      print("SuccessfulDataOrderPassenger");
+      print(result.data["response"]);
       return Right(result.data["response"]);
     } catch (error) {
       print("error =$error");
@@ -202,30 +246,6 @@ class AuthRepo {
       );
       print("SuccessfulOrderCheck");
       return Right(OrderCheckModel.fromJson(result.data["response"]));
-    } catch (error) {
-      print("error =$error");
-      return Left(ExceptionHandler.handle(error as Exception));
-    }
-  }
-
-  Future<Either<String, dynamic>> passengerOrder({
-    required String sourceAreaID,
-    required String destinationAreaID,
-    required String note,
-    required int numberOfPassenger,
-    required String sourceStreet,
-    required String destinationStreet,
-    required String sourceAdditional,
-    required String destinationAdditional,
-    // required String scheduleDate
-  }) async {
-    try {
-      final result = await _dio.post(
-          'Mobile/Order/AddPassengerOrder?Note=$note&Source.AreaId=$sourceAreaID&Source.Street=$sourceStreet&Source.Additional=$sourceAdditional&Destination.AreaId=$destinationAreaID&Destination.Street=$destinationStreet&Destination.Additional=$destinationAdditional&NumberOfPassenger=$numberOfPassenger');
-      //&ScheduleDate=$scheduleDate
-      print("SuccessfulDataOrderPassenger");
-      print(result.data["response"]);
-      return Right(result.data["response"]);
     } catch (error) {
       print("error =$error");
       return Left(ExceptionHandler.handle(error as Exception));

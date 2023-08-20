@@ -3,40 +3,37 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:stay_home/Presntation/login/cubit/cubit.dart';
-import 'package:stay_home/Presntation/orders/pages/passenger/order_review_passenger_page_2.dart';
+import 'package:stay_home/Presntation/orders/pages/passenger/cubit/passenger_cubit.dart';
 
-import '../../../../core/utils/theme_helper.dart';
-import '../../../../core/widgets/custom_buttons.dart';
-import '../../../../core/widgets/custom_text.dart';
-import '../../../login/cubit/states.dart';
-import '../../../resources/color_manager.dart';
-import '../../../resources/routes_manager.dart';
-import '../../../resources/strings_manager.dart';
+import '../../../../../core/utils/theme_helper.dart';
+import '../../../../../core/widgets/custom_buttons.dart';
+import '../../../../../core/widgets/custom_text.dart';
+import '../../../../login/cubit/states.dart';
+import '../../../../resources/color_manager.dart';
+import '../../../../resources/strings_manager.dart';
 
-class AddAddressDestinationPassengerPage extends StatefulWidget {
-  const AddAddressDestinationPassengerPage({Key? key}) : super(key: key);
+class AddAddressSourcePassengerPage extends StatefulWidget {
+  const AddAddressSourcePassengerPage({Key? key}) : super(key: key);
 
   @override
-  State<AddAddressDestinationPassengerPage> createState() =>
-      _AddAddressDestinationPassengerPageState();
+  State<AddAddressSourcePassengerPage> createState() =>
+      _AddAddressSourcePassengerPageState();
 }
 
-class _AddAddressDestinationPassengerPageState
-    extends State<AddAddressDestinationPassengerPage> {
+class _AddAddressSourcePassengerPageState
+    extends State<AddAddressSourcePassengerPage> {
   final _formKey = GlobalKey<FormState>();
   bool checkedValue = false;
   bool checkboxValue = false;
   String dropdownValue = 'add';
   late SingleValueDropDownController _cnt;
-  late SingleValueDropDownController _area;
   late MultiValueDropDownController _cntMulti;
-  var destinationId;
-  var destinationName;
+  var areaId;
+  var areaName;
 
   @override
   void initState() {
     _cnt = SingleValueDropDownController();
-    _area = SingleValueDropDownController();
     _cntMulti = MultiValueDropDownController();
     super.initState();
   }
@@ -44,17 +41,18 @@ class _AddAddressDestinationPassengerPageState
   @override
   void dispose() {
     _cnt.dispose();
-    _area.dispose();
     _cntMulti.dispose();
+
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    TextEditingController streetDestinationController =
+    TextEditingController streetSourceController =
         TextEditingController(text: "");
-    TextEditingController detailsDestinationController =
+    TextEditingController detailsSourceController =
         TextEditingController(text: "");
+
     InitialCubit.get(context).getAllAreasCubit();
     return Directionality(
         textDirection: TextDirection.rtl,
@@ -81,26 +79,26 @@ class _AddAddressDestinationPassengerPageState
                                     top: 0, start: 10, end: 0, bottom: 0),
                                 alignment: Alignment.center,
                                 child: CustomText(
-                                  txt: AppStrings.addNewAddressDestination,
+                                  txt: AppStrings.addNewAddressSource,
                                   fontSize: 25,
                                   txtColor: ColorManager.primary,
                                   fontWeight: FontWeight.w600,
                                 )),
-                            30.verticalSpace,
+                            20.verticalSpace,
                             RSizedBox(
                               height: 75,
-                              child: BlocBuilder<InitialCubit, InitialStates>(
-                                builder: (context, state) {
-                                  if (state is GetAllAreasSuccessState) {
-                                    final areaList = state.result;
-                                    return ListView.separated(
-                                      itemCount: 1,
-                                      itemBuilder:
-                                          (BuildContext context, int index) {
-                                        return Container(
-                                          decoration: ThemeHelper()
-                                              .inputBoxDecorationShadow(),
-                                          child: DropDownTextField(
+                              child: Container(
+                                decoration:
+                                    ThemeHelper().inputBoxDecorationShadow(),
+                                child: BlocBuilder<InitialCubit, InitialStates>(
+                                  builder: (context, state) {
+                                    if (state is GetAllAreasSuccessState) {
+                                      final areaList = state.result;
+                                      return ListView.builder(
+                                        itemCount: 1,
+                                        itemBuilder:
+                                            (BuildContext context, int index) {
+                                          return DropDownTextField(
                                             controller: _cnt,
                                             searchDecoration:
                                                 const InputDecoration(),
@@ -126,24 +124,22 @@ class _AddAddressDestinationPassengerPageState
                                             ],
                                             onChanged: (val) {
                                               setState(() {
-                                                destinationId = val.value;
-                                                destinationName = val.name;
+                                                areaId = val.value;
+                                                areaName = val.name;
                                               });
                                             },
-                                          ),
-                                        );
-                                      },
-                                      separatorBuilder:
-                                          (BuildContext context, int index) {
-                                        return 20.verticalSpace;
-                                      },
-                                    );
-                                  } else {
-                                    return CircularProgressIndicator(
-                                      color: ColorManager.primary,
-                                    );
-                                  }
-                                },
+                                          );
+                                        },
+                                      );
+                                    } else {
+                                      return Center(
+                                        child: CircularProgressIndicator(
+                                          color: ColorManager.primary,
+                                        ),
+                                      );
+                                    }
+                                  },
+                                ),
                               ),
                             ),
                             30.verticalSpace,
@@ -151,7 +147,7 @@ class _AddAddressDestinationPassengerPageState
                               decoration:
                                   ThemeHelper().inputBoxDecorationShadow(),
                               child: TextFormField(
-                                controller: streetDestinationController,
+                                controller: streetSourceController,
                                 decoration: ThemeHelper().textInputDecoration(
                                   AppStrings.theStreet,
                                 ),
@@ -162,42 +158,47 @@ class _AddAddressDestinationPassengerPageState
                               decoration:
                                   ThemeHelper().inputBoxDecorationShadow(),
                               child: TextFormField(
-                                controller: detailsDestinationController,
+                                controller: detailsSourceController,
                                 decoration: ThemeHelper().textInputDecoration(
                                   AppStrings.addDetails,
                                 ),
                               ),
                             ),
                             Container(
-                                margin: REdgeInsetsDirectional.only(
-                                    end: 25, start: 25, top: 210),
-                                padding: REdgeInsetsDirectional.only(
-                                  end: 10,
-                                  start: 10,
-                                ),
-                                decoration:
-                                    ThemeHelper().buttonBoxDecoration(context),
-                                child: CustomGeneralButton(
-                                  text: AppStrings.save,
-                                  onTap: () {
-                                    print(destinationId);
-                                    InitialCubit.get(context).getIdDestination(
-                                        value: destinationId.toString(),
-                                        name: destinationName.toString());
-                                    InitialCubit.get(context)
-                                        .getDestinationStreet(
-                                            value: streetDestinationController
-                                                .text
-                                                .toString());
-                                    InitialCubit.get(context)
-                                        .getDetailsDestination(
-                                            value: detailsDestinationController
-                                                .text
-                                                .toString());
-                                    Navigator.pop(context,
-                                        Routes.orderReview1PassengerRoute);
-                                  },
-                                )),
+                              margin: REdgeInsetsDirectional.only(
+                                  end: 25, start: 25, top: 210),
+                              padding: REdgeInsetsDirectional.only(
+                                end: 10,
+                                start: 10,
+                              ),
+                              decoration:
+                                  ThemeHelper().buttonBoxDecoration(context),
+                              child: CustomGeneralButton(
+                                text: AppStrings.save,
+                                onTap: () {
+                                  print(areaId);
+                                  // print(
+                                  //     InitialCubit.get(context).listOrders?[1]
+                                  // );
+                                  PassengerCubit.get(context).getIdSource(
+                                      value: areaId.toString(),
+                                      name: areaName.toString());
+                                  PassengerCubit.get(context).getSourceStreet(
+                                      value: streetSourceController.text
+                                          .toString());
+                                  PassengerCubit.get(context).getDetailsSource(
+                                      value: detailsSourceController.text
+                                          .toString());
+                                  // InitialCubit.get(context).orderPassengerCubit(
+                                  //   note: InitialCubit.get(context)
+                                  //       .listOrders?[0],
+                                  //   numberOfPassenger: InitialCubit.get(context)
+                                  //       .listOrders?[1] as int,
+                                  // );
+                                  Navigator.pop(context);
+                                },
+                              ),
+                            ),
                           ],
                         ),
                       ),

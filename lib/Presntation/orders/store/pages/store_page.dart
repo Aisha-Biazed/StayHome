@@ -4,6 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:intl/intl.dart';
 import 'package:stay_home/Presntation/login/cubit/cubit.dart';
 import 'package:stay_home/Presntation/login/cubit/states.dart';
+import 'package:stay_home/Presntation/orders/pages/ShippingDelivery/cubit/shipping_cubit.dart';
 import 'package:stay_home/Presntation/orders/store/pages/store_detailes.dart';
 import 'package:stay_home/Presntation/resources/assets_manager.dart';
 import 'package:stay_home/core/widgets/custom_text.dart';
@@ -22,9 +23,7 @@ class StorePage extends StatefulWidget {
 }
 
 class _StorePageState extends State<StorePage> {
-  int _selectedItemIndex = 0;
   late PageController _pageController;
-  int _currentPageIndex = 0;
 
   @override
   void initState() {
@@ -189,6 +188,11 @@ class _StorePageState extends State<StorePage> {
                                           ),
                                         ),
                                         onTap: () {
+                                          ShippingCubit.get(context).getShopId(
+                                              value: items.id!,
+                                              name: items.name!);
+                                          print(items.name);
+                                          print(items.id);
                                           Navigator.push(
                                               context,
                                               MaterialPageRoute(

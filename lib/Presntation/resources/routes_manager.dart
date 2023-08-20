@@ -1,22 +1,24 @@
 import 'package:flutter/material.dart';
 import 'package:stay_home/Presntation/home/pages/home_view.dart';
 import 'package:stay_home/Presntation/home/pages/service_page.dart';
-import 'package:stay_home/Presntation/orders/pages/passenger/order_review_passenger_page_1.dart';
+import 'package:stay_home/Presntation/orders/pages/ShippingDelivery/pages/add_address_source_shipping_page.dart';
+import 'package:stay_home/Presntation/orders/pages/passenger/pages/order_review_passenger_page_1.dart';
 import 'package:stay_home/Presntation/resources/strings_manager.dart';
 import '../login/pages/login_view.dart';
 import '../onboarding/presentaion/pages/on_boarding_view.dart';
-import '../orders/pages/delivery/order_review_deliver_page_1.dart';
-import '../orders/pages/delivery/order_review_deliver_page_2.dart';
-import '../orders/pages/passenger/add_address_destinationpage_passenger_page.dart';
-import '../orders/pages/passenger/add_address_source_passenger_page.dart';
-import '../orders/pages/passenger/confirmation_for_passenger_page.dart';
-import '../orders/pages/passenger/order_review_passenger_page_2.dart';
-import '../orders/pages/shopping/add_address_destinationpage.dart';
-import '../orders/pages/shopping/add_address_source_page.dart';
-import '../orders/pages/shopping/confirmation_page.dart';
-import '../orders/pages/shopping/order_review_page_1.dart';
-import '../orders/pages/shopping/order_review_page_2.dart';
-import '../orders/pages/shopping/order_review_page_3.dart';
+import '../orders/pages/DeliveryOrder/add_address_destinationpage.dart';
+import '../orders/pages/DeliveryOrder/add_address_source_page.dart';
+import '../orders/pages/DeliveryOrder/confirmation_page.dart';
+import '../orders/pages/DeliveryOrder/order_review_page_1.dart';
+import '../orders/pages/ShippingDelivery/pages/order_review_page_2.dart';
+import '../orders/pages/ShippingDelivery/pages/order_review_page_3.dart';
+import '../orders/pages/ShippingDelivery/pages/add_address_destination_shipping_page.dart';
+import '../orders/pages/ShippingDelivery/pages/order_review_shipping_page_1.dart';
+import '../orders/pages/ShippingDelivery/pages/order_review_shipping_page_2.dart';
+import '../orders/pages/passenger/pages/add_address_destinationpage_passenger_page.dart';
+import '../orders/pages/passenger/pages/add_address_source_passenger_page.dart';
+import '../orders/pages/passenger/pages/confirmation_for_passenger_page.dart';
+import '../orders/pages/passenger/pages/order_review_passenger_page_2.dart';
 import '../orders/store/pages/my_cart_page.dart';
 import '../login/pages/registartion_page.dart';
 import '../login/pages/profile_page.dart';
@@ -33,12 +35,15 @@ class Routes {
   static const String profilesRoute = "/profile";
   static const String addressDestinationRoute = "/destination";
   static const String addressDestinationPassengerRoute = "/destination_pass";
-  static const String reviewDelivery_1Route = "/delivery_1";
-  static const String reviewDelivery_2Route = "/delivery_2";
+  static const String reviewShippingRoute_1 = "/shipping_1";
+  static const String reviewShippingRoute_2 = "/shipping_2";
+  static const String shippingAddressDestinationRoute = "/destination_shipping";
+  static const String shippingAddressSourceRoute = "/source_shipping";
   static const String addressSourceRoute = "/source";
   static const String addressSourcePassengerRoute = "/source_pass";
   static const String orderReview1PassengerRoute = "/order_review_1";
   static const String orderReviewPassengerRoute2 = "/order_review_2";
+
   static const String homesRoute = "/home";
   static const String serviceRoute = "/service";
   static const String storeRoute = "/store";
@@ -48,7 +53,7 @@ class Routes {
   static const String orderReviewRoute3 = "/goods3";
   static const String confirmationRoute = "/confirmation";
   static const String confirmationPassengerRoute = "/confirmation_passenger";
-  static const String myBasketRoute = "/basket";
+  static const String myCartRoute = "/basket";
   static const String showpicker = "/showpicker";
   static const String ratingRoute = "/rating";
 }
@@ -92,32 +97,43 @@ class RouteGenerator {
       // case Routes.storeDetailsRoute:
       //   return MaterialPageRoute(
       //       builder: (_) =>  const StoreDetails());
-      case Routes.orderReview1Route:
-        return MaterialPageRoute(builder: (_) => const OrderReviewPage1());
+      // case Routes.orderReview1Route:
+      //   return MaterialPageRoute(builder: (_) => const OrderReviewPage1());
+
+      //Shipping Pages
+      case Routes.reviewShippingRoute_1:
+        return MaterialPageRoute(
+            builder: (_) => const OrderReviewShippingPage1());
+      case Routes.reviewShippingRoute_2:
+        return MaterialPageRoute(
+            builder: (_) => const OrderReviewShippingPage2());
+      case Routes.shippingAddressSourceRoute:
+        return MaterialPageRoute(
+            builder: (_) => const AddAddressSourceShippingPage());
+      case Routes.shippingAddressDestinationRoute:
+        return MaterialPageRoute(
+            builder: (_) => const AddAddressDestinationShippingPage());
+      // Passenger Pages
       case Routes.orderReview1PassengerRoute:
         return MaterialPageRoute(
             builder: (_) => const OrderReviewPassengerPage1());
-      case Routes.reviewDelivery_1Route:
-        return MaterialPageRoute(
-            builder: (_) => const OrderReviewDeliveryPage1());
-      case Routes.reviewDelivery_2Route:
-        return MaterialPageRoute(
-            builder: (_) => const OrderReviewDeliveryPage2());
       case Routes.orderReviewPassengerRoute2:
         return MaterialPageRoute(
             builder: (_) => const OrderReviewPassengerPage2());
       case Routes.orderReviewRoute2:
-        return MaterialPageRoute(builder: (_) => const OrderReviewPage2());
+        return MaterialPageRoute(
+            builder: (_) => const OrderReviewForShopPage1());
       case Routes.showpicker:
         return MaterialPageRoute(builder: (_) => const ShowPickerPage());
       case Routes.orderReviewRoute3:
-        return MaterialPageRoute(builder: (_) => const OrderReviewPage3());
+        return MaterialPageRoute(
+            builder: (_) => const OrderReviewForShopPage2());
       case Routes.confirmationRoute:
         return MaterialPageRoute(builder: (_) => const ConfirmationPage());
       case Routes.confirmationPassengerRoute:
         return MaterialPageRoute(
             builder: (_) => const ConfirmationForPassengerPage());
-      case Routes.myBasketRoute:
+      case Routes.myCartRoute:
         return MaterialPageRoute(builder: (_) => const MyCartPage());
       case Routes.ratingRoute:
         return MaterialPageRoute(builder: (_) => const RatingsPage());
