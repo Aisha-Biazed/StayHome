@@ -1,15 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:stay_home/core/widgets/custom_buttons.dart';
 import 'package:stay_home/core/widgets/custom_text.dart';
 
 import '../../Presntation/resources/assets_manager.dart';
 
 class CustomConfirmationPage extends StatelessWidget {
-  const CustomConfirmationPage(
-      {Key? key, required this.titleText, required this.subTitleText})
-      : super(key: key);
+  const CustomConfirmationPage({
+    Key? key,
+    required this.titleText,
+    required this.subTitleText,
+    this.onTap,
+  }) : super(key: key);
   final String titleText;
   final String subTitleText;
+  final VoidCallback? onTap;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -36,6 +42,12 @@ class CustomConfirmationPage extends StatelessWidget {
               fontWeight: FontWeight.w700,
               fontSize: 20.sp,
             ),
+            40.verticalSpace,
+            if(onTap!=null)
+            CustomGeneralButton(
+              text: 'العودة للرئيسية',
+              onTap: onTap,
+            )
           ],
         ),
       ),

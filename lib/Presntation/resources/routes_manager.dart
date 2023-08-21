@@ -6,10 +6,9 @@ import 'package:stay_home/Presntation/orders/pages/passenger/pages/order_review_
 import 'package:stay_home/Presntation/resources/strings_manager.dart';
 import '../login/pages/login_view.dart';
 import '../onboarding/presentaion/pages/on_boarding_view.dart';
-import '../orders/pages/DeliveryOrder/add_address_destinationpage.dart';
-import '../orders/pages/DeliveryOrder/add_address_source_page.dart';
-import '../orders/pages/DeliveryOrder/confirmation_page.dart';
-import '../orders/pages/DeliveryOrder/order_review_page_1.dart';
+import '../orders/pages/DeliveryOrder/pages/add_address_destination_delivery_page.dart';
+import '../orders/pages/DeliveryOrder/pages/confirmation_page.dart';
+import '../orders/pages/DeliveryOrder/pages/order_review_delivery_page_1.dart';
 import '../orders/pages/ShippingDelivery/pages/order_review_page_2.dart';
 import '../orders/pages/ShippingDelivery/pages/order_review_page_3.dart';
 import '../orders/pages/ShippingDelivery/pages/add_address_destination_shipping_page.dart';
@@ -71,14 +70,12 @@ class RouteGenerator {
         return MaterialPageRoute(builder: (_) => RegisterationPage());
       case Routes.profilesRoute:
         return MaterialPageRoute(builder: (_) => const ProfilePage());
-      case Routes.addressDestinationRoute:
-        return MaterialPageRoute(
-            builder: (_) => const AddAddressDestinationPage());
+      // case Routes.addressDestinationRoute:
+      //   return MaterialPageRoute(
+      //       builder: (_) => const AddAddressDestinationPage());
       case Routes.addressDestinationPassengerRoute:
         return MaterialPageRoute(
             builder: (_) => const AddAddressDestinationPassengerPage());
-      case Routes.addressSourceRoute:
-        return MaterialPageRoute(builder: (_) => const AddAddressSourcePage());
       case Routes.addressSourcePassengerRoute:
         return MaterialPageRoute(
             builder: (_) => const AddAddressSourcePassengerPage());

@@ -26,8 +26,8 @@ class DetailsShopModel {
       imageUrl: json["imageUrl"],
       address: json["address"],
       startTime:
-          json["startTime"] != null ? DateTime.parse(json["startTime"]) : null,
-      endTime: json["endTime"] != null ? DateTime.parse(json["endTime"]) : null,
+          json["startTime"] != null ? DateTime.tryParse(json["startTime"]) : null,
+      endTime: json["endTime"] != null ? DateTime.tryParse(json["endTime"]) : null,
       isOnline: json["isOnline"],
       products: json["products"] == null
           ? []

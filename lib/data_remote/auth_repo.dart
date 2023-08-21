@@ -30,7 +30,11 @@ class AuthRepo {
       return Right(result.data["response"]["accessToken"]);
     } catch (error) {
       print("error =$error");
-      return Left(ExceptionHandler.handle(error as Exception));
+      if(((error as DioError).response?.data['message']as String).contains('User Not Found')){
+        return Left('هذا الحساب غير موجود، تحقق من المعلومات المدخلة');
+      }else {
+        return Left(ExceptionHandler.handle(error as Exception));
+      }
     }
   }
 
@@ -71,6 +75,30 @@ class AuthRepo {
   }
 
   Future<Either<String, dynamic>> shippingOrder({
+    required String destinationAreaId,
+    required String destinationStreet,
+    required String destinationAdditional,
+    required String note,
+    required String sourceAreaId,
+    required String sourceStreet,
+    required String sourceAdditional,
+    required double weight,
+    // String? shopId
+    // String? scheduleDate,
+  }) async {
+    try {
+      final result = await _dio.post(
+          'Mobile/Order/AddShippingOrder?Destination.AreaId=$destinationAreaId&Destination.Street=$destinationStreet&Destination.Additional=$destinationAdditional&Note=$note&Source.Street=$sourceStreet&Source.AreaId=$sourceAreaId&Source.Additional=$sourceAdditional&Weight=$weight');
+      //&ShopId=$shopId
+      print("SuccessfulAddShippingOrder");
+      return Right(result.data["response"]);
+    } catch (error) {
+      print("error =$error");
+      return Left(ExceptionHandler.handle(error as Exception));
+    }
+  }
+
+  Future<Either<String, dynamic>> deliveryOrder({
     required String destinationAreaId,
     required String destinationStreet,
     required String destinationAdditional,

@@ -15,6 +15,11 @@ class ProductCart {
     required this.counter,
   });
 
+  @override
+  String toString() {
+    return 'ProductCart{id: $id, name: $name, imageUrl: $imageUrl, cost: $cost, counter: $counter}';
+  }
+
   final String? id;
   final String? name;
   final String? imageUrl;

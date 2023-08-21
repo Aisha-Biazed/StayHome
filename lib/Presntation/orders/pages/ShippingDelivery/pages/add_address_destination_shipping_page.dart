@@ -2,8 +2,10 @@ import 'package:dropdown_textfield/dropdown_textfield.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get_navigation/src/root/parse_route.dart';
 import 'package:stay_home/Presntation/login/cubit/cubit.dart';
 import 'package:stay_home/Presntation/orders/pages/ShippingDelivery/cubit/shipping_cubit.dart';
+import 'package:stay_home/Presntation/orders/pages/ShippingDelivery/pages/order_review_shipping_page_2.dart';
 
 import '../../../../../core/utils/theme_helper.dart';
 import '../../../../../core/widgets/custom_buttons.dart';
@@ -17,29 +19,25 @@ class AddAddressDestinationShippingPage extends StatefulWidget {
   const AddAddressDestinationShippingPage({Key? key}) : super(key: key);
 
   @override
-  State<AddAddressDestinationShippingPage> createState() =>
-      _AddAddressDestinationShippingPageState();
+  State<AddAddressDestinationShippingPage> createState() => _AddAddressDestinationShippingPageState();
 }
 
-class _AddAddressDestinationShippingPageState
-    extends State<AddAddressDestinationShippingPage> {
+class _AddAddressDestinationShippingPageState extends State<AddAddressDestinationShippingPage> {
   final _formKey = GlobalKey<FormState>();
-  bool checkedValue = false;
-  bool checkboxValue = false;
-  String dropdownValue = 'add';
   late SingleValueDropDownController _cnt;
   late SingleValueDropDownController _area;
-  late MultiValueDropDownController _cntMulti;
-  var cityId;
-  var areaId;
-  var destinationId;
-  var destinationName;
+  String? areaId;
+  String? areaName;
+  String? cityName;
+  String? cityId;
+
 
   @override
   void initState() {
+    InitialCubit.get(context).getAllCitiesWithAreasCubit();
     _cnt = SingleValueDropDownController();
     _area = SingleValueDropDownController();
-    _cntMulti = MultiValueDropDownController();
+
     super.initState();
   }
 
@@ -47,17 +45,13 @@ class _AddAddressDestinationShippingPageState
   void dispose() {
     _cnt.dispose();
     _area.dispose();
-    _cntMulti.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    TextEditingController streetDestinationController =
-        TextEditingController(text: "");
-    TextEditingController detailsDestinationController =
-        TextEditingController(text: "");
-    InitialCubit.get(context).getAllCitiesWithAreasCubit();
+    TextEditingController streetDestinationController = TextEditingController(text: "");
+    TextEditingController detailsDestinationController = TextEditingController(text: "");
     return Directionality(
         textDirection: TextDirection.rtl,
         child: Scaffold(
@@ -77,10 +71,8 @@ class _AddAddressDestinationShippingPageState
                         child: Column(
                           children: [
                             Container(
-                                margin: REdgeInsetsDirectional.only(
-                                    top: 100, start: 0, end: 10, bottom: 10),
-                                padding: REdgeInsetsDirectional.only(
-                                    top: 0, start: 10, end: 0, bottom: 0),
+                                margin: REdgeInsetsDirectional.only(top: 100, start: 0, end: 10, bottom: 10),
+                                padding: REdgeInsetsDirectional.only(top: 0, start: 10, end: 0, bottom: 0),
                                 alignment: Alignment.center,
                                 child: CustomText(
                                   txt: AppStrings.addNewAddressDestination,
@@ -91,18 +83,21 @@ class _AddAddressDestinationShippingPageState
                             20.verticalSpace,
                             BlocBuilder<InitialCubit, InitialStates>(
                               builder: (context, state) {
-                                if (state
-                                    is GetAllCitiesWithAllCitiesSuccessState) {
+                                if (state is GetAllCitiesWithAllCitiesSuccessState) {
                                   final cityList = state.result;
+                                  cityId = cityId ?? cityList.first.id;
+                                  cityName = cityName ?? cityList.first.name;
                                   return Container(
-                                    decoration: ThemeHelper()
-                                        .inputBoxDecorationShadow(),
+                                    decoration: ThemeHelper().inputBoxDecorationShadow(),
                                     child: DropDownTextField(
-                                      controller: _area,
+                                      controller: _area
+                                        ..setDropDown(DropDownValueModel(
+                                          name: cityName ?? cityList.first.name!,
+                                          value: cityId ?? cityList.first.id,
+                                          toolTipMsg: "${cityId ?? cityList.first.id}",
+                                        )),
                                       searchDecoration: const InputDecoration(),
-                                      textFieldDecoration: ThemeHelper()
-                                          .textInputDecoration(
-                                              AppStrings.theTown),
+                                      textFieldDecoration: ThemeHelper().textInputDecoration(AppStrings.theTown),
                                       clearOption: true,
                                       validator: (value) {
                                         if (value == null) {
@@ -121,8 +116,10 @@ class _AddAddressDestinationShippingPageState
                                           ),
                                       ],
                                       onChanged: (val) {
-                                        setState(() {});
-                                        cityId = val.value;
+                                        setState(() {
+                                          cityId = val.value;
+                                          cityName = val.name;
+                                        });
                                       },
                                     ),
                                   );
@@ -136,25 +133,25 @@ class _AddAddressDestinationShippingPageState
                             20.verticalSpace,
                             BlocBuilder<InitialCubit, InitialStates>(
                               builder: (context, state) {
-                                if (state
-                                    is GetAllCitiesWithAllCitiesSuccessState) {
+                                if (state is GetAllCitiesWithAllCitiesSuccessState) {
                                   final cityList = state.result;
                                   if (cityId == null) {
                                     return const SizedBox.shrink();
                                   } else {
-                                    final selectedCity = cityList.firstWhere(
-                                        (city) => city.id == cityId);
-                                    final filteredAreas = selectedCity.areas;
+                                    final selectedCity = cityList.firstWhereOrNull((city) => city.id == cityId);
+                                    final filteredAreas = selectedCity?.areas;
+                                    areaId = areaId?? filteredAreas!.first.id;
+                                    areaName = areaName?? filteredAreas!.first.name;
                                     return Container(
-                                      decoration: ThemeHelper()
-                                          .inputBoxDecorationShadow(),
+                                      decoration: ThemeHelper().inputBoxDecorationShadow(),
                                       child: DropDownTextField(
-                                        controller: _cnt,
-                                        searchDecoration:
-                                            const InputDecoration(),
-                                        textFieldDecoration: ThemeHelper()
-                                            .textInputDecoration(
-                                                AppStrings.theArea),
+                                        controller: _cnt
+                                          ..setDropDown(DropDownValueModel(
+                                            name: filteredAreas!.first.name!,
+                                            value: filteredAreas.first.id,
+                                          )),
+                                        searchDecoration: const InputDecoration(),
+                                        textFieldDecoration: ThemeHelper().textInputDecoration(AppStrings.theArea),
                                         clearOption: true,
                                         validator: (value) {
                                           if (value == null) {
@@ -172,9 +169,11 @@ class _AddAddressDestinationShippingPageState
                                             ),
                                         ],
                                         onChanged: (val) {
-                                          cityId = val.value;
-                                          destinationId = val.value;
-                                          destinationName = val.name;
+                                          setState(() {
+                                            areaId = val.value;
+                                            areaName = val.Name;
+                                          });
+
                                         },
                                       ),
                                     );
@@ -188,8 +187,7 @@ class _AddAddressDestinationShippingPageState
                             ),
                             30.verticalSpace,
                             Container(
-                              decoration:
-                                  ThemeHelper().inputBoxDecorationShadow(),
+                              decoration: ThemeHelper().inputBoxDecorationShadow(),
                               child: TextFormField(
                                 controller: streetDestinationController,
                                 decoration: ThemeHelper().textInputDecoration(
@@ -199,8 +197,7 @@ class _AddAddressDestinationShippingPageState
                             ),
                             30.verticalSpace,
                             Container(
-                              decoration:
-                                  ThemeHelper().inputBoxDecorationShadow(),
+                              decoration: ThemeHelper().inputBoxDecorationShadow(),
                               child: TextFormField(
                                 controller: detailsDestinationController,
                                 decoration: ThemeHelper().textInputDecoration(
@@ -209,33 +206,24 @@ class _AddAddressDestinationShippingPageState
                               ),
                             ),
                             Container(
-                                margin: REdgeInsetsDirectional.only(
-                                    end: 25, start: 25, top: 210),
+                                margin: REdgeInsetsDirectional.only(end: 25, start: 25, top: 210),
                                 padding: REdgeInsetsDirectional.only(
                                   end: 10,
                                   start: 10,
                                 ),
-                                decoration:
-                                    ThemeHelper().buttonBoxDecoration(context),
+                                decoration: ThemeHelper().buttonBoxDecoration(context),
                                 child: CustomGeneralButton(
                                   text: AppStrings.save,
                                   onTap: () {
-                                    print(destinationId);
-                                    ShippingCubit.get(context).getIdDestination(
-                                        value: destinationId.toString(),
-                                        name: destinationName.toString());
-                                    ShippingCubit.get(context)
-                                        .getDestinationStreet(
-                                            value: streetDestinationController
-                                                .text
-                                                .toString());
-                                    ShippingCubit.get(context)
-                                        .getDetailsDestination(
-                                            value: detailsDestinationController
-                                                .text
-                                                .toString());
-                                    Navigator.pop(
-                                        context, Routes.reviewShippingRoute_1);
+                                    print(areaId);
+                                    ShippingCubit.get(context).setIdDestination(value: areaId.toString(), name: areaName.toString());
+                                    ShippingCubit.get(context).setDestinationStreet(value: streetDestinationController.text.toString());
+                                    ShippingCubit.get(context).setDetailsDestination(value: detailsDestinationController.text.toString());
+                                    if (_formKey.currentState!.validate()) {
+                                      Navigator.pop(context);
+                                      Navigator.pop(context);
+                                      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => const OrderReviewShippingPage2()));
+                                    }
                                   },
                                 )),
                           ],

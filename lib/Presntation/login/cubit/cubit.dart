@@ -1,3 +1,4 @@
+import 'package:bot_toast/bot_toast.dart';
 import 'package:dartz/dartz.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -26,6 +27,7 @@ class InitialCubit extends Cubit<InitialStates> {
     Either<String, String> result =
         await _authRepo.loginUser(email: email, password: password);
     result.fold((l) {
+      BotToast.showText(text: l);
       emit(LoginErrorState());
       //show error
     }, (r) {

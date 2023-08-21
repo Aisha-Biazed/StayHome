@@ -1,10 +1,11 @@
+import 'package:bot_toast/bot_toast.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:intl/intl.dart';
 import 'package:stay_home/Presntation/login/cubit/cubit.dart';
 import 'package:stay_home/Presntation/login/cubit/states.dart';
-import 'package:stay_home/Presntation/resources/assets_manager.dart';
 import 'package:stay_home/Presntation/resources/color_manager.dart';
 import 'package:stay_home/Presntation/resources/strings_manager.dart';
 import 'package:stay_home/core/widgets/custom_buttons.dart';
@@ -134,94 +135,93 @@ class _OrderReviewPassengerPage2State extends State<OrderReviewPassengerPage2> {
                     ],
                   ),
                   20.verticalSpace,
-                  Visibility(
-                    visible: timeSelected == options[1],
-                    child: Container(
-                      margin: REdgeInsetsDirectional.only(start: 21, end: 21),
-                      decoration: ThemeHelper().inputBoxDecorationShadow(),
-                      child: CustomTextFormField(
-                        controller: dateinput,
-                        onTap: () async {
-                          DateTime? pickedDate = await showDatePicker(
-                              context: context,
-                              initialDate: DateTime.now(),
-                              firstDate: DateTime.now(),
-                              lastDate: DateTime(2101));
+                  if(timeSelected == options[1])
+                  Column(
+                    children: [
+                      Container(
+                        margin: REdgeInsetsDirectional.only(start: 21, end: 21),
+                        decoration: ThemeHelper().inputBoxDecorationShadow(),
+                        child: CustomTextFormField(
+                          controller: dateinput,
+                          onTap: () async {
+                            DateTime? pickedDate = await showDatePicker(
+                                context: context,
+                                initialDate: DateTime.now(),
+                                firstDate: DateTime.now(),
+                                lastDate: DateTime(2101));
 
-                          if (pickedDate != null) {
-                            print(
-                                pickedDate); //pickedDate output format => 2021-03-10 00:00:00.000
-                            String formattedDate =
-                                DateFormat('yyyy-MM-dd').format(pickedDate);
-                            print(
-                                formattedDate); //formatted date output using intl package =>  2021-03-16
-                            //you can implement different kind of Date Format here according to your requirement
-                            setState(() {
-                              dateinput.text =
-                                  formattedDate; //set output date to TextField value.
-                            });
-                          } else {
-                            print("Date is not selected");
-                          }
-                        },
-                        suffexIcon: Icon(
-                          Icons.date_range,
-                          color: ColorManager.primary,
-                        ),
-                        lableText: AppStrings.textField1,
-                        color: ColorManager.secondaryGrey,
-                        readOnly: true,
-                      ),
-                    ),
-                  ),
-                  20.verticalSpace,
-                  Visibility(
-                    visible: timeSelected == options[1],
-                    child: Container(
-                      margin: REdgeInsetsDirectional.only(start: 21, end: 21),
-                      decoration: ThemeHelper().inputBoxDecorationShadow(),
-                      child: CustomTextFormField(
-                        controller: timeinput,
-                        readOnly: true,
-                        // onTap: () async {
-                        //   TimeOfDay now = TimeOfDay.now();
-                        //   TimeOfDay? pickedTime = await showTimePicker(
-                        //     context: context,
-                        //     initialTime: now,
-                        //   );
-                        //   if (pickedTime != null) {
-                        //     print(pickedTime.format(context)); //output 10:51 PM
-                        //     DateTime parsedTime = DateFormat.jm()
-                        //         .parse(pickedTime.format(context).toString());
-                        //     //converting to DateTime so that we can further format on different pattern.
-                        //     print(parsedTime); //output 1970-01-01 22:53:00.000
-                        //     String formattedTime =
-                        //         DateFormat('HH:mm:ss').format(parsedTime);
-                        //     print(formattedTime); //output 14:59:00
-                        //     //DateFormat() is from intl package, you can format the time on any pattern you need.
-                        //     setState(() {
-                        //       timeinput.text =
-                        //           formattedTime; //set the value of text field.
-                        //     });
-                        //   } else {
-                        //     print("Time is not selected");
-                        //   }
-                        // },
-                        lableText: AppStrings.textField2,
-                        color: ColorManager.secondaryGrey,
-                        suffexIcon: GestureDetector(
-                          onTap: () {
-                            Navigator.pushNamed(context, Routes.showpicker);
+                            if (pickedDate != null) {
+                              print(
+                                  pickedDate); //pickedDate output format => 2021-03-10 00:00:00.000
+                              String formattedDate =
+                              DateFormat('yyyy-MM-dd').format(pickedDate);
+                              print(
+                                  formattedDate); //formatted date output using intl package =>  2021-03-16
+                              //you can implement different kind of Date Format here according to your requirement
+                              setState(() {
+                                dateinput.text =
+                                    formattedDate; //set output date to TextField value.
+                              });
+                            } else {
+                              print("Date is not selected");
+                            }
                           },
-                          child: Icon(
-                            Icons.access_time_rounded,
+                          suffexIcon: Icon(
+                            Icons.date_range,
                             color: ColorManager.primary,
+                          ),
+                          lableText: AppStrings.textField1,
+                          color: ColorManager.secondaryGrey,
+                          readOnly: true,
+                        ),
+                      ),
+                      20.verticalSpace,
+                      Container(
+                        margin: REdgeInsetsDirectional.only(start: 21, end: 21),
+                        decoration: ThemeHelper().inputBoxDecorationShadow(),
+                        child: CustomTextFormField(
+                          controller: timeinput,
+                          readOnly: true,
+                          // onTap: () async {
+                          //   TimeOfDay now = TimeOfDay.now();
+                          //   TimeOfDay? pickedTime = await showTimePicker(
+                          //     context: context,
+                          //     initialTime: now,
+                          //   );
+                          //   if (pickedTime != null) {
+                          //     print(pickedTime.format(context)); //output 10:51 PM
+                          //     DateTime parsedTime = DateFormat.jm()
+                          //         .parse(pickedTime.format(context).toString());
+                          //     //converting to DateTime so that we can further format on different pattern.
+                          //     print(parsedTime); //output 1970-01-01 22:53:00.000
+                          //     String formattedTime =
+                          //         DateFormat('HH:mm:ss').format(parsedTime);
+                          //     print(formattedTime); //output 14:59:00
+                          //     //DateFormat() is from intl package, you can format the time on any pattern you need.
+                          //     setState(() {
+                          //       timeinput.text =
+                          //           formattedTime; //set the value of text field.
+                          //     });
+                          //   } else {
+                          //     print("Time is not selected");
+                          //   }
+                          // },
+                          lableText: AppStrings.textField2,
+                          color: ColorManager.secondaryGrey,
+                          suffexIcon: GestureDetector(
+                            onTap: () {
+                              Navigator.pushNamed(context, Routes.showpicker);
+                            },
+                            child: Icon(
+                              Icons.access_time_rounded,
+                              color: ColorManager.primary,
+                            ),
                           ),
                         ),
                       ),
-                    ),
-                  ),
-                  20.verticalSpace,
+                      20.verticalSpace,
+                    ],
+                  ).animate().fadeIn(),
                   CustomText(
                       txt: AppStrings.numberOfPassenger,
                       fontSize: 20.sp,
@@ -257,6 +257,7 @@ class _OrderReviewPassengerPage2State extends State<OrderReviewPassengerPage2> {
                           )),
                     ],
                   ),
+                  30.verticalSpace,
                   Container(
                     margin: REdgeInsetsDirectional.only(start: 21, end: 21),
                     decoration: ThemeHelper().inputBoxDecorationShadow(),
@@ -310,9 +311,14 @@ class _OrderReviewPassengerPage2State extends State<OrderReviewPassengerPage2> {
                     15.horizontalSpace,
                     Expanded(
                         child: CustomGeneralButton(
-                      onTap: () {
-                        Navigator.pushNamed(
+                      onTap: () async {
+                        final val  = await PassengerCubit.get(context).orderPassengerCubit();
+                        if(val) {
+                          Navigator.pushNamed(
                             context, Routes.confirmationPassengerRoute);
+                        } else {
+                          BotToast.showText(text: 'حدث خطأ ما!');
+                        }
                       },
                       text: AppStrings.confBtn,
                     )),

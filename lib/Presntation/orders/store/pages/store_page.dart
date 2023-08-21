@@ -43,8 +43,7 @@ class _StorePageState extends State<StorePage> {
     return Directionality(
       textDirection: ui.TextDirection.rtl,
       child: Scaffold(
-        body:
-            BlocBuilder<InitialCubit, InitialStates>(builder: (context, state) {
+        body: BlocBuilder<InitialCubit, InitialStates>(builder: (context, state) {
           if (state is ShopSuccessState) {
             return Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -73,15 +72,13 @@ class _StorePageState extends State<StorePage> {
                             );
                           },
                           child: Container(
-                            padding:
-                                REdgeInsetsDirectional.only(top: 0, bottom: 5),
+                            padding: REdgeInsetsDirectional.only(top: 0, bottom: 5),
                             width: 120.w,
                             height: 100.h,
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(16),
                               border: Border.all(
-                                color:
-                                    ColorManager.secondaryGrey.withOpacity(0.3),
+                                color: ColorManager.secondaryGrey.withOpacity(0.3),
                                 width: 1,
                               ),
                             ),
@@ -89,9 +86,7 @@ class _StorePageState extends State<StorePage> {
                               children: [
                                 Expanded(
                                   child: ClipRRect(
-                                    borderRadius: const BorderRadius.only(
-                                        topRight: Radius.circular(16),
-                                        topLeft: Radius.circular(16)),
+                                    borderRadius: const BorderRadius.only(topRight: Radius.circular(16), topLeft: Radius.circular(16)),
                                     child: Image.network(
                                       fit: BoxFit.cover,
                                       "http://finalstayhome-001-site1.atempurl.com/${item.imageUrl}",
@@ -104,8 +99,7 @@ class _StorePageState extends State<StorePage> {
                                 Center(
                                     child: Text(
                                   item.name!,
-                                  style: TextStyle(
-                                      fontSize: 16, color: ColorManager.dark),
+                                  style: TextStyle(fontSize: 16, color: ColorManager.dark),
                                 )),
                               ],
                             ),
@@ -120,8 +114,7 @@ class _StorePageState extends State<StorePage> {
                   ),
                 ),
                 Padding(
-                  padding:
-                      REdgeInsetsDirectional.only(end: 27, start: 27, top: 20),
+                  padding: REdgeInsetsDirectional.only(end: 27, start: 27, top: 20),
                   child: const CustomText(
                     txt: AppStrings.storeText,
                     fontSize: 30,
@@ -136,8 +129,7 @@ class _StorePageState extends State<StorePage> {
                         final items = state.listShop[index].shops;
                         if (items.isEmpty) {
                           return Padding(
-                            padding: REdgeInsetsDirectional.only(
-                                bottom: 100, top: 40, end: 35, start: 35),
+                            padding: REdgeInsetsDirectional.only(bottom: 100, top: 40, end: 35, start: 35),
                             child: Card(
                               color: ColorManager.purple,
                               child: const Center(
@@ -153,30 +145,24 @@ class _StorePageState extends State<StorePage> {
                             itemBuilder: (BuildContext v, int shop) {
                               final items = state.listShop[index].shops[shop];
                               return Padding(
-                                padding: REdgeInsetsDirectional.only(
-                                    start: 27, end: 28, top: 0, bottom: 0),
+                                padding: REdgeInsetsDirectional.only(start: 27, end: 28, top: 0, bottom: 0),
                                 child: Container(
-                                  margin: REdgeInsetsDirectional.only(
-                                      top: 0, bottom: 25, end: 0, start: 0),
+                                  margin: REdgeInsetsDirectional.only(top: 0, bottom: 25, end: 0, start: 0),
                                   width: 400.w,
                                   height: 280.h,
                                   decoration: BoxDecoration(
                                     borderRadius: BorderRadius.circular(16),
                                     border: Border.all(
-                                      color: ColorManager.secondaryGrey
-                                          .withOpacity(0.3),
+                                      color: ColorManager.secondaryGrey.withOpacity(0.3),
                                       width: 1.5,
                                     ),
                                   ),
                                   child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
+                                    crossAxisAlignment: CrossAxisAlignment.start,
                                     children: [
                                       GestureDetector(
                                         child: ClipRRect(
-                                          borderRadius: const BorderRadius.only(
-                                              topRight: Radius.circular(16),
-                                              topLeft: Radius.circular(16)),
+                                          borderRadius: const BorderRadius.only(topRight: Radius.circular(16), topLeft: Radius.circular(16)),
                                           child: RSizedBox(
                                             height: 190.h,
                                             width: double.infinity,
@@ -188,22 +174,14 @@ class _StorePageState extends State<StorePage> {
                                           ),
                                         ),
                                         onTap: () {
-                                          ShippingCubit.get(context).getShopId(
-                                              value: items.id!,
-                                              name: items.name!);
+                                          ShippingCubit.get(context).setShopId(value: items.id!, name: items.name!);
                                           print(items.name);
                                           print(items.id);
-                                          Navigator.push(
-                                              context,
-                                              MaterialPageRoute(
-                                                  builder: (context) =>
-                                                      StoreDetails(
-                                                          shopId: items.id!)));
+                                          Navigator.push(context, MaterialPageRoute(builder: (context) => StoreDetails(shopId: items.id!)));
                                         },
                                       ),
                                       Padding(
-                                        padding: REdgeInsetsDirectional.only(
-                                            start: 20),
+                                        padding: REdgeInsetsDirectional.only(start: 20),
                                         child: CustomText(
                                           txt: items.name!,
                                           fontWeight: FontWeight.w700,
@@ -212,77 +190,59 @@ class _StorePageState extends State<StorePage> {
                                       ),
                                       Column(
                                         children: [
-                                          Row(
-                                            children: [
-                                              10.horizontalSpace,
-                                              Icon(
-                                                Icons.circle,
-                                                color: items.isOnline!
-                                                    ? ColorManager.green
-                                                    : Colors.red,
-                                              ),
-                                              3.horizontalSpace,
-                                              CustomText(
-                                                txt: items.isOnline!
-                                                    ? AppStrings.open
-                                                    : AppStrings.close,
-                                                txtColor:
-                                                    ColorManager.secondaryGrey,
-                                              ),
-                                              3.horizontalSpace,
-                                              Icon(
-                                                Icons.location_on_outlined,
-                                                color:
-                                                    ColorManager.secondaryGrey,
-                                              ),
-                                              CustomText(
-                                                txt: items.address!,
-                                                txtColor:
-                                                    ColorManager.secondaryGrey,
-                                              ),
-                                              10.horizontalSpace,
-                                              Container(
-                                                color:
-                                                    ColorManager.secondaryGrey,
-                                                child: const VerticalDivider(
-                                                  color: Colors.black,
-                                                  width: 2,
-                                                  thickness: 1,
-                                                  indent: 10,
-                                                  endIndent: 12,
+                                          SizedBox(
+                                            width: double.infinity,
+                                            child: Row(
+                                              children: [
+                                                10.horizontalSpace,
+                                                Icon(
+                                                  Icons.circle,
+                                                  color: items.isOnline! ? ColorManager.green : Colors.red,
                                                 ),
-                                              ),
-                                              4.horizontalSpace,
-                                              Icon(
-                                                Icons.update_outlined,
-                                                color:
-                                                    ColorManager.secondaryGrey,
-                                              ),
-                                              CustomText(
-                                                txt: items.startTime
-                                                            ?.isNotEmpty ==
-                                                        true
-                                                    ? DateFormat(
-                                                            'dd/MM/yyyy HH:mm')
-                                                        .format(DateTime.parse(
-                                                            items.startTime))
-                                                    : '',
-                                                txtColor:
-                                                    ColorManager.secondaryGrey,
-                                              ),
-                                              CustomText(
-                                                txt: items.endTime
-                                                            ?.isNotEmpty ==
-                                                        true
-                                                    ? DateFormat(
-                                                            'dd/MM/yyyy HH:mm')
-                                                        .format(DateTime.parse(
-                                                            items.endTime))
-                                                    : '',
-                                                txtColor:
-                                                    ColorManager.secondaryGrey,
-                                              ),
-                                            ],
+                                                3.horizontalSpace,
+                                                CustomText(
+                                                  txt: items.isOnline! ? AppStrings.open : AppStrings.close,
+                                                  txtColor: ColorManager.secondaryGrey,
+                                                ),
+                                                3.horizontalSpace,
+                                                Icon(
+                                                  Icons.location_on_outlined,
+                                                  color: ColorManager.secondaryGrey,
+                                                ),
+                                                CustomText(
+                                                  txt: items.address!,
+                                                  txtColor: ColorManager.secondaryGrey,
+                                                ),
+                                                10.horizontalSpace,
+                                                Container(
+                                                  color: ColorManager.secondaryGrey,
+                                                  child: const VerticalDivider(
+                                                    color: Colors.black,
+                                                    width: 2,
+                                                    thickness: 1,
+                                                    indent: 10,
+                                                    endIndent: 12,
+                                                  ),
+                                                ),
+                                                4.horizontalSpace,
+                                                Icon(
+                                                  Icons.update_outlined,
+                                                  color: ColorManager.secondaryGrey,
+                                                ),
+                                                CustomText(
+                                                  txt: items.startTime?.isNotEmpty == true
+                                                      ? DateFormat('dd/MM/yyyy HH:mm').format(DateTime.tryParse(items.startTime)??DateTime.now())
+                                                      : '',
+                                                  txtColor: ColorManager.secondaryGrey,
+                                                ),
+                                                CustomText(
+                                                  txt: items.endTime?.isNotEmpty == true
+                                                      ? DateFormat('dd/MM/yyyy HH:mm').format(DateTime.tryParse(items.endTime)??DateTime.now())
+                                                      : '',
+                                                  txtColor: ColorManager.secondaryGrey,
+                                                ),
+                                              ],
+                                            ),
                                           ),
                                         ],
                                       ),

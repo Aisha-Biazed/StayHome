@@ -21,7 +21,7 @@ class CustomText extends StatelessWidget {
         style: TextStyle(
             fontSize: fontSize!,
             fontWeight: fontWeight,
-            fontFamily: "Inter",
+            fontFamily: 'dd',//"sst-arabic",
             color: txtColor));
   }
 }

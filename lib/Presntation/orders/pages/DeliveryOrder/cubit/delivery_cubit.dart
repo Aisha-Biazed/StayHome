@@ -1,36 +1,85 @@
-import 'package:bloc/bloc.dart';
 import 'package:bot_toast/bot_toast.dart';
 import 'package:dartz/dartz.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:meta/meta.dart';
 
 import '../../../../../data_remote/auth_repo.dart';
 
-part 'shipping_state.dart';
+part 'delivery_state.dart';
 
-class ShippingCubit extends Cubit<ShippingState> {
+class DeliveryCubit extends Cubit<DeliveryState> {
   late final AuthRepo _authRepo;
-  ShippingCubit() : super(ShippingInitial()) {
+
+  DeliveryCubit() : super(DeliveryInitial()) {
     _authRepo = AuthRepo();
   }
 
-  static ShippingCubit get(context) => BlocProvider.of(context);
+  static DeliveryCubit get(context) => BlocProvider.of(context);
 
-
-  String idDestinationCubit = '';
-  String nameDestinationCubit = '';
   String idSourceCubit = '';
   String nameSourceCubit = '';
   String sourceStreetCubit = '';
-  String destinationStreetCubit = '';
   String detailsSourceCubit = '';
+
+  String idDestinationCubit = '';
+  String nameDestinationCubit = '';
+  String destinationStreetCubit = '';
   String detailsDestinationCubit = '';
-  String noteCubit = '';
-  int weightCubit = 0;
+
   int totalCubit = 0;
+  String noteCubit = '';
   String shopIdCubit = "";
   String shoppNameCubit = "";
+  int weightCubit = 0;
 
+  void setIdDestination({required String value, required String name}) {
+    idDestinationCubit = value;
+    nameDestinationCubit = name;
+    emit(DeliveryIdAreaDestinationState());
+  }
+
+  void setIdSource({required String value, required String name}) {
+    idSourceCubit = value;
+    nameSourceCubit = name;
+    emit(DeliveryIdAreaSourceState());
+  }
+
+  void setSourceStreet({required String value}) {
+    sourceStreetCubit = value;
+    emit(DeliverySourceStreetState());
+  }
+
+  void setDestinationStreet({required String value}) {
+    destinationStreetCubit = value;
+    emit(DeliveryDestinationStreetState());
+  }
+
+  void setDetailsSource({required String value}) {
+    detailsSourceCubit = value;
+    emit(DeliverySourceAdditionalState());
+  }
+
+  void setDetailsDestination({required String value}) {
+    detailsDestinationCubit = value;
+    emit(DeliveryDestinationAdditionalState());
+  }
+
+  void setNote({required String value}) {
+    noteCubit = value;
+    emit(DeliveryNoteState());
+  }
+
+  void setWeight({required int value}) {
+    print('weightCubit');
+    print(weightCubit);
+    weightCubit = value;
+    emit(DeliveryWeightState());
+  }
+
+  void getTotalPrice({required int value}) {
+    totalCubit = value;
+    emit(DeliveryWeightState());
+  }
 
   void reset() {
     idSourceCubit = '';
@@ -49,64 +98,13 @@ class ShippingCubit extends Cubit<ShippingState> {
     weightCubit = 0;
   }
 
-
-
-  void setIdDestination({required String value, required String name}) {
-    idDestinationCubit = value;
-    nameDestinationCubit = name;
-    emit(ShippingIdAreaDestinationState());
-  }
-
-
-  void setIdSource({required String value, required String name}) {
-    idSourceCubit = value;
-    nameSourceCubit = name;
-    emit(ShippingIdAreaSourceState());
-  }
-
-  void setSourceStreet({required String value}) {
-    sourceStreetCubit = value;
-    emit(ShippingSourceStreetState());
-  }
-
-  void setDestinationStreet({required String value}) {
-    destinationStreetCubit = value;
-    emit(ShippingDestinationStreetState());
-  }
-
-  void setDetailsSource({required String value}) {
-    detailsSourceCubit = value;
-    emit(ShippingSourceAdditionalState());
-  }
-
-  void setDetailsDestination({required String value}) {
-    detailsDestinationCubit = value;
-    emit(ShippingDestinationAdditionalState());
-  }
-
-  void setNote({required String value}) {
-    noteCubit = value;
-    emit(ShippingNoteState());
-  }
-
-  void setWeight({required int value}) {
-    weightCubit = value;
-    emit(ShippingWeightState());
-  }
-
-  void setTotalPrice({required int value}) {
-    totalCubit = value;
-    emit(ShippingWeightState());
-  }
-
-
   void setShopId({required String value, required String name}) {
     shopIdCubit = value;
     shoppNameCubit = name;
-    emit(ShippingSopIdState());
+    emit(DeliverySopIdState());
   }
 
-  Future<bool> shippingPointCubit({
+  Future<bool> deliveryPointCubit({
     String? destinationAreaId,
     String? destinationStreet,
     String? destinationAdditional,
@@ -118,9 +116,9 @@ class ShippingCubit extends Cubit<ShippingState> {
     // String? shopId
     // String? scheduleDate,
   }) async {
-    emit(ShippingOrderLoadingState());
+    emit(DeliveryOrderLoadingState());
     BotToast.showLoading();
-    Either<String, dynamic> result = await _authRepo.shippingOrder(
+    Either<String, dynamic> result = await _authRepo.deliveryOrder(
         destinationAreaId: idDestinationCubit,
         destinationStreet: destinationStreetCubit,
         destinationAdditional: detailsDestinationCubit,
@@ -130,12 +128,12 @@ class ShippingCubit extends Cubit<ShippingState> {
         sourceAreaId: idSourceCubit,
         sourceStreet: sourceStreetCubit);
     result.fold((l) {
-      emit(ShippingOrderErrorState());
+      emit(DeliveryOrderErrorState());
       //show error
       BotToast.closeAllLoading();
       return false;
     }, (r) {
-      emit(ShippingOrderSuccessState());
+      emit(DeliveryOrderSuccessState());
       //save user
       BotToast.closeAllLoading();
       return true;
@@ -143,7 +141,7 @@ class ShippingCubit extends Cubit<ShippingState> {
     return true;
   }
 
-  void shippingShopCubit(
+  void deliveryShopCubit(
       {required String destinationAreaId,
       required String destinationStreet,
       required String destinationAdditional,
@@ -151,19 +149,22 @@ class ShippingCubit extends Cubit<ShippingState> {
       required String shopId
       // String? scheduleDate,
       }) async {
-    emit(ShippingShopLoadingState());
-    Either<String, dynamic> result = await _authRepo.shippingShop(
+    emit(DeliveryShopLoadingState());
+    Either<String, dynamic> result = await _authRepo.deliveryOrder(
       destinationAreaId: destinationAreaId,
       destinationStreet: destinationStreet,
       destinationAdditional: destinationAdditional,
       note: note,
-      shopId: shopId,
+      sourceAreaId: '',
+      sourceStreet: '',
+      sourceAdditional: '',
+      weight: 15,
     );
     result.fold((l) {
-      emit(ShippingShopErrorState());
+      emit(DeliveryShopErrorState());
       //show error
     }, (r) {
-      emit(ShippingShopSuccessState());
+      emit(DeliveryShopSuccessState());
       //save user
     });
   }

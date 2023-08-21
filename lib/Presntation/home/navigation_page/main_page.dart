@@ -29,12 +29,7 @@ class _MainPageState extends State<MainPage> {
     CardItem(urlImage: ImageAssets.homeImg1),
     CardItem(urlImage: ImageAssets.homeImg3),
   ];
-  final titles = ["List 1", "List 2", "List 3"];
-  final subtitles = [
-    "Here is list 1 subtitle",
-    "Here is list 2 subtitle",
-    "Here is list 3 subtitle"
-  ];
+
 
   // final icons = [Icons.ac_unit, Icons.access_alarm, Icons.access_time];
   @override
@@ -100,116 +95,116 @@ class _MainPageState extends State<MainPage> {
                   ],
                 ),
               ),
-              RSizedBox(
-                  height: 300,
-                  child: Padding(
-                      padding: REdgeInsetsDirectional.only(start: 44, end: 25),
-                      child: BlocBuilder<InitialCubit, InitialStates>(
-                          builder: (context, state) {
-                        if (state is HomeSuccessState) {
-                          print(state.result);
-                          return ListView.separated(
-                            itemCount: state.result.length,
-                            itemBuilder: (context, index) {
-                              final item = state.result[index];
-                              return Card(
-                                clipBehavior: Clip.antiAlias,
-                                elevation: 1.5,
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(10.0),
-                                ),
-                                color: ColorManager.white,
-                                shadowColor: Colors.grey,
-                                child: RSizedBox(
-                                    height: 110,
-                                    width: 290,
-                                    child: Row(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.center,
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      children: [
-                                        AspectRatio(
-                                          aspectRatio: 3 / 2.3,
-                                          child: Container(
-                                            height: 110.h,
-                                            margin: REdgeInsetsDirectional.only(
-                                                end: 10,
-                                                start: 20,
-                                                top: 10,
-                                                bottom: 10),
-                                            decoration: BoxDecoration(
-                                                borderRadius:
-                                                    BorderRadius.circular(18.r),
-                                                image: DecorationImage(
-                                                    fit: BoxFit.cover,
-                                                    image: NetworkImage(
-                                                        "http://finalstayhome-001-site1.atempurl.com/${item.imageUrl}"))),
-                                          ),
-                                        ),
-                                        Padding(
-                                          padding: REdgeInsetsDirectional.only(
-                                              top: 20, bottom: 10),
-                                          child: Column(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.center,
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.center,
+              Padding(
+                  padding: REdgeInsetsDirectional.only(start: 44, end: 25),
+                  child: BlocBuilder<InitialCubit, InitialStates>(
+                      builder: (context, state) {
+                    if (state is HomeSuccessState) {
+                      print(state.result);
+                      return ListView.separated(
+                        shrinkWrap: true,
+                        physics: const NeverScrollableScrollPhysics(),
+                        itemCount: state.result.length,
+                        itemBuilder: (context, index) {
+                          final item = state.result[index];
+                          return Card(
+                            clipBehavior: Clip.antiAlias,
+                            elevation: 1.5,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(10.0),
+                            ),
+                            color: ColorManager.white,
+                            shadowColor: Colors.grey,
+                            child: RSizedBox(
+                                height: 110,
+                                width: 290,
+                                child: Row(
+                                  crossAxisAlignment:
+                                      CrossAxisAlignment.center,
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.center,
+                                  children: [
+                                    AspectRatio(
+                                      aspectRatio: 3 / 2.3,
+                                      child: Container(
+                                        height: 110.h,
+                                        margin: REdgeInsetsDirectional.only(
+                                            end: 10,
+                                            start: 20,
+                                            top: 10,
+                                            bottom: 10),
+                                        decoration: BoxDecoration(
+                                            borderRadius:
+                                                BorderRadius.circular(18.r),
+                                            image: DecorationImage(
+                                                fit: BoxFit.cover,
+                                                image: NetworkImage(
+                                                    "http://finalstayhome-001-site1.atempurl.com/${item.imageUrl}"))),
+                                      ),
+                                    ),
+                                    Padding(
+                                      padding: REdgeInsetsDirectional.only(
+                                          top: 20, bottom: 10),
+                                      child: Column(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.center,
+                                        children: [
+                                          CustomText(txt: item.name),
+                                          const Spacer(),
+                                          Row(
                                             children: [
-                                              CustomText(txt: item.name),
-                                              const Spacer(),
-                                              Row(
-                                                children: [
-                                                  Icon(
-                                                    Icons.circle,
-                                                    color: item.isOnline
-                                                        ? ColorManager.green
-                                                        : Colors.red,
-                                                  ),
-                                                  6.horizontalSpace,
-                                                  CustomText(
-                                                    txt: item.isOnline
-                                                        ? AppStrings.open
-                                                        : AppStrings.close,
-                                                    txtColor: ColorManager
-                                                        .secondaryGrey,
-                                                  ),
-                                                  10.horizontalSpace,
-                                                  Icon(
-                                                    Icons.location_on_outlined,
-                                                    color: ColorManager
-                                                        .secondaryGrey,
-                                                  ),
-                                                  CustomText(
-                                                    txt: item.area,
-                                                    txtColor: ColorManager
-                                                        .secondaryGrey,
-                                                  ),
-                                                ],
+                                              Icon(
+                                                Icons.circle,
+                                                color: item.isOnline
+                                                    ? ColorManager.green
+                                                    : Colors.red,
+                                              ),
+                                              6.horizontalSpace,
+                                              CustomText(
+                                                txt: item.isOnline
+                                                    ? AppStrings.open
+                                                    : AppStrings.close,
+                                                txtColor: ColorManager
+                                                    .secondaryGrey,
+                                              ),
+                                              10.horizontalSpace,
+                                              Icon(
+                                                Icons.location_on_outlined,
+                                                color: ColorManager
+                                                    .secondaryGrey,
+                                              ),
+                                              CustomText(
+                                                txt: item.area,
+                                                txtColor: ColorManager
+                                                    .secondaryGrey,
                                               ),
                                             ],
                                           ),
-                                        ),
-                                        Spacer(),
-                                      ],
-                                    )),
-                              );
-                            },
-                            separatorBuilder:
-                                (BuildContext context, int index) {
-                              return const RSizedBox(
-                                height: 20,
-                              );
-                            },
+                                        ],
+                                      ),
+                                    ),
+                                    Spacer(),
+                                  ],
+                                )),
                           );
-                        } else {
-                          return Center(
-                              child: CircularProgressIndicator(
-                            valueColor: AlwaysStoppedAnimation<Color>(
-                                ColorManager.primary),
-                          ));
-                        }
-                      })))
+                        },
+                        separatorBuilder:
+                            (BuildContext context, int index) {
+                          return const RSizedBox(
+                            height: 20,
+                          );
+                        },
+                      );
+                    } else {
+                      return Center(
+                          child: CircularProgressIndicator(
+                        valueColor: AlwaysStoppedAnimation<Color>(
+                            ColorManager.primary),
+                      ));
+                    }
+                  }))
 
               // ListView(
               //   children: const <Widget>[

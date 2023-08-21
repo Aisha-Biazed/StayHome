@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:stay_home/Presntation/onBoarding/presentaion/widgets/page_view_item.dart';
+import 'package:stay_home/Presntation/onboarding/presentaion/widgets/page_view_item.dart';
 import 'package:stay_home/Presntation/resources/assets_manager.dart';
 
 import '../../../resources/strings_manager.dart';

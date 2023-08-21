@@ -129,14 +129,14 @@ class _StoreDetailsState extends State<StoreDetails> {
                                 CustomText(
                                   txt: details.startTime?.isNotEmpty == true
                                       ? DateFormat('dd/MM/yyyy HH:mm').format(
-                                          DateTime.parse(details.startTime))
+                                          DateTime.tryParse(details.startTime)??DateTime.now())
                                       : ' ',
                                   txtColor: ColorManager.secondaryGrey,
                                 ),
                                 CustomText(
                                   txt: details.endTime?.isNotEmpty == true
                                       ? DateFormat('dd/MM/yyyy HH:mm').format(
-                                          DateTime.parse(details.endTime))
+                                          DateTime.tryParse(details.endTime)??DateTime.now())
                                       : ' ',
                                   txtColor: ColorManager.secondaryGrey,
                                 ),

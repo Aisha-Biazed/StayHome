@@ -5,6 +5,7 @@ import 'package:stay_home/Presntation/resources/assets_manager.dart';
 import 'package:stay_home/Presntation/resources/color_manager.dart';
 import 'package:stay_home/core/widgets/custom_text.dart';
 import '../../../core/widgets/custom_buttons.dart';
+import '../../orders/pages/DeliveryOrder/pages/order_review_delivery_page_1.dart';
 import '../../orders/store/pages/store_page.dart';
 import '../../resources/routes_manager.dart';
 import '../../resources/strings_manager.dart';
@@ -25,16 +26,13 @@ class ServicePage extends StatelessWidget {
                 Container(
                   decoration: BoxDecoration(
                       color: ColorManager.primary,
-                      borderRadius: BorderRadius.only(
-                          bottomRight: Radius.circular(200.r),
-                          bottomLeft: Radius.circular(200.r))),
+                      borderRadius: BorderRadius.only(bottomRight: Radius.circular(200.r), bottomLeft: Radius.circular(200.r))),
                   child: Image.asset(
                     ImageAssets.servicesImg,
                   ),
                 ),
                 Padding(
-                  padding:
-                      REdgeInsetsDirectional.only(start: 127, end: 30, top: 65),
+                  padding: REdgeInsetsDirectional.only(start: 127, end: 30, top: 65),
                   child: CustomText(
                     txt: AppStrings.service,
                     txtColor: ColorManager.white,
@@ -52,14 +50,11 @@ class ServicePage extends StatelessWidget {
                       GestureDetector(
                         onTap: () {
                           showModalBottomSheet(
-                            shape: const RoundedRectangleBorder(
-                                borderRadius: BorderRadius.vertical(
-                                    top: Radius.circular(30))),
+                            shape: const RoundedRectangleBorder(borderRadius: BorderRadius.vertical(top: Radius.circular(30))),
                             context: context,
                             builder: (BuildContext context) {
                               return Container(
-                                padding: REdgeInsetsDirectional.only(
-                                    top: 20, end: 30, start: 30),
+                                padding: REdgeInsetsDirectional.only(top: 20, end: 30, start: 30),
                                 height: 200.0,
                                 child: Column(
                                   children: [
@@ -74,19 +69,19 @@ class ServicePage extends StatelessWidget {
                                     CustomGeneralButton(
                                       text: AppStrings.point,
                                       onTap: () {
-                                        Navigator.pushNamed(
-                                            context, Routes.orderReview1Route);
+                                        Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                            builder: (context) => const OrderReviewDeliveryPage1(),
+                                          ),
+                                        );
                                       },
                                     ),
                                     20.verticalSpace,
                                     CustomGeneralButton(
                                       text: AppStrings.dept,
                                       onTap: () {
-                                        Navigator.push(
-                                            context,
-                                            MaterialPageRoute(
-                                                builder: (context) =>
-                                                    StorePage()));
+                                        Navigator.push(context, MaterialPageRoute(builder: (context) => StorePage()));
                                       },
                                     )
                                   ],
@@ -102,8 +97,7 @@ class ServicePage extends StatelessWidget {
                       ),
                       GestureDetector(
                         onTap: () {
-                          Navigator.pushNamed(
-                              context, Routes.orderReview1PassengerRoute);
+                          Navigator.pushNamed(context, Routes.orderReview1PassengerRoute);
                         },
                         child: const CardItem2(
                           title: AppStrings.serviceText2,
@@ -112,20 +106,16 @@ class ServicePage extends StatelessWidget {
                       ),
                       GestureDetector(
                         onTap: () {
-                          Navigator.pushNamed(
-                              context, Routes.orderReview1Route);
+                          Navigator.pushNamed(context, Routes.orderReview1Route);
                         },
                         child: GestureDetector(
                           onTap: () {
                             showModalBottomSheet(
-                              shape: const RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.vertical(
-                                      top: Radius.circular(30))),
+                              shape: const RoundedRectangleBorder(borderRadius: BorderRadius.vertical(top: Radius.circular(30))),
                               context: context,
                               builder: (BuildContext context) {
                                 return Container(
-                                  padding: REdgeInsetsDirectional.only(
-                                      top: 20, end: 30, start: 30),
+                                  padding: REdgeInsetsDirectional.only(top: 20, end: 30, start: 30),
                                   height: 200.0,
                                   child: Column(
                                     children: [
@@ -140,19 +130,14 @@ class ServicePage extends StatelessWidget {
                                       CustomGeneralButton(
                                         text: AppStrings.point,
                                         onTap: () {
-                                          Navigator.pushNamed(context,
-                                              Routes.reviewShippingRoute_1);
+                                          Navigator.pushNamed(context, Routes.reviewShippingRoute_1);
                                         },
                                       ),
                                       20.verticalSpace,
                                       CustomGeneralButton(
                                         text: AppStrings.dept,
                                         onTap: () {
-                                          Navigator.push(
-                                              context,
-                                              MaterialPageRoute(
-                                                  builder: (context) =>
-                                                      const StorePage()));
+                                          Navigator.push(context, MaterialPageRoute(builder: (context) => const StorePage()));
                                         },
                                       )
                                     ],

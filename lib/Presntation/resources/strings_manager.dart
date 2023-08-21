@@ -115,8 +115,8 @@ class AppStrings {
   static const labelSource = "الوجهة التي أنطلق منها طلبك ";
   static const textField1_2 = "2/6/2023 ";
   static const textField2_2 = "02:00 pm";
-  static const sourceText = "وجهة الهدف: ";
-  static const destinationText = "وجهة الإنطلاق: ";
+  static const sourceText = "وجهة الإنطلاق: ";
+  static const destinationText = "وجهة الهدف: ";
   //Request Received
   static const requestReceived1 = "تم استلام طلبك بنجاح ";
   static const requestReceived2 = "يرجى تتبع الطلب لمعرفة التفاصيل";

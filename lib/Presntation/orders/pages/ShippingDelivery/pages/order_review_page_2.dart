@@ -244,7 +244,7 @@ class _OrderReviewForShopPage1State extends State<OrderReviewForShopPage1> {
                     child: CustomTextFormField(
                       onTap: () {
                         ShippingCubit.get(context)
-                            .getNote(value: noteController.text.toString());
+                            .setNote(value: noteController.text.toString());
                       },
                       controller: noteController,
                       readOnly: false,

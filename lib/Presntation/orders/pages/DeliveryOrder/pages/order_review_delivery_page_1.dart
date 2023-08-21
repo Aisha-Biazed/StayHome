@@ -10,22 +10,20 @@ import 'dart:ui' as ui;
 import '../../../../../core/utils/theme_helper.dart';
 import '../../../../../core/widgets/custom_text.dart';
 import '../../../../../core/widgets/custom_text_field.dart';
-import '../../../../resources/routes_manager.dart';
-import '../cubit/shipping_cubit.dart';
-import 'add_address_destination_shipping_page.dart';
-import 'add_address_source_shipping_page.dart';
+import '../cubit/delivery_cubit.dart';
+import 'add_address_source_delivery_page.dart';
 
-class OrderReviewShippingPage1 extends StatefulWidget {
-  const OrderReviewShippingPage1({Key? key}) : super(key: key);
+class OrderReviewDeliveryPage1 extends StatefulWidget {
+  const OrderReviewDeliveryPage1({Key? key}) : super(key: key);
 
   @override
-  State<OrderReviewShippingPage1> createState() => _OrderReviewShippingPage1State();
+  State<OrderReviewDeliveryPage1> createState() => _OrderReviewDeliveryPage1State();
 }
 
 List<String> options = ['fastTime', 'selectTime'];
 List<String> choices = ['point', 'store'];
 
-class _OrderReviewShippingPage1State extends State<OrderReviewShippingPage1> {
+class _OrderReviewDeliveryPage1State extends State<OrderReviewDeliveryPage1> {
   String timeSelected = options[0];
   String destination = choices[0];
   bool? check1 = false, check2 = true, check3 = false, check4 = false;
@@ -47,24 +45,24 @@ class _OrderReviewShippingPage1State extends State<OrderReviewShippingPage1> {
   void initState() {
     dateinput.text = "";
     timeinput.text = ""; //set the initial value of text field
-    ShippingCubit.get(context).reset();
+    DeliveryCubit.get(context).reset();
     super.initState(); //set the initial value of text field
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    var destinationController = TextEditingController(text: '${AppStrings.destinationText}${ShippingCubit.get(context).nameDestinationCubit}');
-    var sourceController = TextEditingController(text: '${AppStrings.sourceText}${ShippingCubit.get(context).nameSourceCubit}');
-    var noteController = TextEditingController(text: ShippingCubit.get(context).noteCubit);
+    var destinationController = TextEditingController(text: '${AppStrings.destinationText}${DeliveryCubit.get(context).nameDestinationCubit}');
+    var sourceController = TextEditingController(text: '${AppStrings.sourceText}${DeliveryCubit.get(context).nameSourceCubit}');
+    var noteController = TextEditingController(text: DeliveryCubit.get(context).noteCubit);
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      body: BlocBuilder<ShippingCubit, ShippingState>(
+      body: BlocBuilder<DeliveryCubit, DeliveryState>(
         builder: (context, state) {
-          return BlocListener<ShippingCubit, ShippingState>(
+          return BlocListener<DeliveryCubit, DeliveryState>(
             listener: (context, state) {
-              // if (state is OrderShippingSuccessState) {
-              //   Navigator.pushNamed(context, Routes.orderReviewShippingRoute2);
+              // if (state is OrderDeliverySuccessState) {
+              //   Navigator.pushNamed(context, Routes.orderReviewDeliveryRoute2);
               // }
             },
             child: Directionality(
@@ -234,13 +232,13 @@ class _OrderReviewShippingPage1State extends State<OrderReviewShippingPage1> {
                       child: CustomTextFormField(
                         controller: sourceController,
                         onTap: () {
-                          ShippingCubit.get(context).setNote(value: noteController.text.toString());
-                          ShippingCubit.get(context).setWeight(value: weight);
-                          Navigator.push(context, MaterialPageRoute(builder: (context) => const AddAddressSourceShippingPage()));
+                          DeliveryCubit.get(context).setNote(value: noteController.text.toString());
+                          DeliveryCubit.get(context).setWeight(value: weight);
+                          Navigator.push(context, MaterialPageRoute(builder: (context) => const AddAddressSourceDeliveryPage()));
                         },
                         readOnly: true,
                         hintText:
-                            ShippingCubit.get(context).nameSourceCubit == '' ? AppStrings.textField3 : ShippingCubit.get(context).nameSourceCubit,
+                            DeliveryCubit.get(context).nameSourceCubit == '' ? AppStrings.textField3 : DeliveryCubit.get(context).nameSourceCubit,
                         color: ColorManager.secondaryGrey,
                         lableText: AppStrings.textField3,
                       ),
@@ -252,12 +250,13 @@ class _OrderReviewShippingPage1State extends State<OrderReviewShippingPage1> {
                       child: CustomTextFormField(
                         controller: destinationController,
                         onTap: () {
-                          Navigator.push(context, MaterialPageRoute(builder: (context) => const AddAddressDestinationShippingPage()));
+                          // Navigator.pushNamed(
+                          //     context, Routes.addressDestinationDeliveryRoute);
                         },
-                        readOnly: true,
-                        hintText: ShippingCubit.get(context).nameDestinationCubit == ''
+                        readOnly: false,
+                        hintText: DeliveryCubit.get(context).nameDestinationCubit == ''
                             ? AppStrings.textField3
-                            : ShippingCubit.get(context).nameDestinationCubit,
+                            : DeliveryCubit.get(context).nameDestinationCubit,
                         lableText: AppStrings.textField4,
                         color: ColorManager.secondaryGrey,
                       ),
@@ -268,7 +267,7 @@ class _OrderReviewShippingPage1State extends State<OrderReviewShippingPage1> {
                       decoration: ThemeHelper().inputBoxDecorationShadow(),
                       child: CustomTextFormField(
                         onTap: () {
-                          ShippingCubit.get(context).setNote(value: noteController.text.toString());
+                          DeliveryCubit.get(context).setNote(value: noteController.text.toString());
                         },
                         controller: noteController,
                         readOnly: false,
@@ -277,6 +276,41 @@ class _OrderReviewShippingPage1State extends State<OrderReviewShippingPage1> {
                       ),
                     ),
                     30.verticalSpace,
+                    // Container(
+                    //   margin: REdgeInsetsDirectional.only(start: 40, end: 40),
+                    //   child: CustomGeneralButton(
+                    //     text: AppStrings.requestBtn,
+                    //     onTap: () {
+                    //       print(DeliveryCubit.get(context).sourceStreetCubit);
+                    //       print(DeliveryCubit.get(context).detailsSourceCubit);
+                    //       print(DeliveryCubit.get(context).idSourceCubit);
+                    //       print(DeliveryCubit.get(context).destinationStreetCubit);
+                    //       print(DeliveryCubit.get(context).detailsDestinationCubit);
+                    //       print(DeliveryCubit.get(context).idDestinationCubit);
+                    //       // DeliveryCubit.get(context).getNumber(value: number);
+                    //
+                    //       // Navigator.pushNamed(context, Routes.orderReviewDeliveryRoute2);
+                    //       // DeliveryCubit.get(context).orderDeliveryCubit(
+                    //       //   sourceAreaID:
+                    //       //       DeliveryCubit.get(context).idSourceCubit,
+                    //       //   destinationAreaID:
+                    //       //       DeliveryCubit.get(context).idDestinationCubit,
+                    //       //   note: DeliveryCubit.get(context).noteCubit,
+                    //       //   numberOfDelivery:
+                    //       //       DeliveryCubit.get(context).numberCubit,
+                    //       //   sourceStreet:
+                    //       //       DeliveryCubit.get(context).sourceStreetCubit,
+                    //       //   destinationStreet: DeliveryCubit.get(context)
+                    //       //       .destinationStreetCubit,
+                    //       //   sourceAdditional:
+                    //       //       DeliveryCubit.get(context).detailsSourceCubit,
+                    //       //   destinationAdditional: DeliveryCubit.get(context)
+                    //       //       .detailsDestinationCubit,
+                    //       //   // scheduleDate: ,
+                    //       // );
+                    //     },
+                    //   ),
+                    // ),
                   ],
                 ),
               ),

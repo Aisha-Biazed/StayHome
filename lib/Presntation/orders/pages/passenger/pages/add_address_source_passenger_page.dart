@@ -16,12 +16,10 @@ class AddAddressSourcePassengerPage extends StatefulWidget {
   const AddAddressSourcePassengerPage({Key? key}) : super(key: key);
 
   @override
-  State<AddAddressSourcePassengerPage> createState() =>
-      _AddAddressSourcePassengerPageState();
+  State<AddAddressSourcePassengerPage> createState() => _AddAddressSourcePassengerPageState();
 }
 
-class _AddAddressSourcePassengerPageState
-    extends State<AddAddressSourcePassengerPage> {
+class _AddAddressSourcePassengerPageState extends State<AddAddressSourcePassengerPage> {
   final _formKey = GlobalKey<FormState>();
   bool checkedValue = false;
   bool checkboxValue = false;
@@ -48,10 +46,8 @@ class _AddAddressSourcePassengerPageState
 
   @override
   Widget build(BuildContext context) {
-    TextEditingController streetSourceController =
-        TextEditingController(text: "");
-    TextEditingController detailsSourceController =
-        TextEditingController(text: "");
+    TextEditingController streetSourceController = TextEditingController(text: "");
+    TextEditingController detailsSourceController = TextEditingController(text: "");
 
     InitialCubit.get(context).getAllAreasCubit();
     return Directionality(
@@ -73,10 +69,8 @@ class _AddAddressSourcePassengerPageState
                         child: Column(
                           children: [
                             Container(
-                                margin: REdgeInsetsDirectional.only(
-                                    top: 100, start: 0, end: 10, bottom: 10),
-                                padding: REdgeInsetsDirectional.only(
-                                    top: 0, start: 10, end: 0, bottom: 0),
+                                margin: REdgeInsetsDirectional.only(top: 100, start: 0, end: 10, bottom: 10),
+                                padding: REdgeInsetsDirectional.only(top: 0, start: 10, end: 0, bottom: 0),
                                 alignment: Alignment.center,
                                 child: CustomText(
                                   txt: AppStrings.addNewAddressSource,
@@ -88,23 +82,18 @@ class _AddAddressSourcePassengerPageState
                             RSizedBox(
                               height: 75,
                               child: Container(
-                                decoration:
-                                    ThemeHelper().inputBoxDecorationShadow(),
+                                decoration: ThemeHelper().inputBoxDecorationShadow(),
                                 child: BlocBuilder<InitialCubit, InitialStates>(
                                   builder: (context, state) {
                                     if (state is GetAllAreasSuccessState) {
                                       final areaList = state.result;
                                       return ListView.builder(
                                         itemCount: 1,
-                                        itemBuilder:
-                                            (BuildContext context, int index) {
+                                        itemBuilder: (BuildContext context, int index) {
                                           return DropDownTextField(
                                             controller: _cnt,
-                                            searchDecoration:
-                                                const InputDecoration(),
-                                            textFieldDecoration: ThemeHelper()
-                                                .textInputDecoration(
-                                                    AppStrings.theArea),
+                                            searchDecoration: const InputDecoration(),
+                                            textFieldDecoration: ThemeHelper().textInputDecoration(AppStrings.theArea),
                                             clearOption: true,
                                             validator: (value) {
                                               if (value == null) {
@@ -144,8 +133,7 @@ class _AddAddressSourcePassengerPageState
                             ),
                             30.verticalSpace,
                             Container(
-                              decoration:
-                                  ThemeHelper().inputBoxDecorationShadow(),
+                              decoration: ThemeHelper().inputBoxDecorationShadow(),
                               child: TextFormField(
                                 controller: streetSourceController,
                                 decoration: ThemeHelper().textInputDecoration(
@@ -155,8 +143,7 @@ class _AddAddressSourcePassengerPageState
                             ),
                             30.verticalSpace,
                             Container(
-                              decoration:
-                                  ThemeHelper().inputBoxDecorationShadow(),
+                              decoration: ThemeHelper().inputBoxDecorationShadow(),
                               child: TextFormField(
                                 controller: detailsSourceController,
                                 decoration: ThemeHelper().textInputDecoration(
@@ -165,14 +152,12 @@ class _AddAddressSourcePassengerPageState
                               ),
                             ),
                             Container(
-                              margin: REdgeInsetsDirectional.only(
-                                  end: 25, start: 25, top: 210),
+                              margin: REdgeInsetsDirectional.only(end: 25, start: 25, top: 210),
                               padding: REdgeInsetsDirectional.only(
                                 end: 10,
                                 start: 10,
                               ),
-                              decoration:
-                                  ThemeHelper().buttonBoxDecoration(context),
+                              decoration: ThemeHelper().buttonBoxDecoration(context),
                               child: CustomGeneralButton(
                                 text: AppStrings.save,
                                 onTap: () {
@@ -180,15 +165,9 @@ class _AddAddressSourcePassengerPageState
                                   // print(
                                   //     InitialCubit.get(context).listOrders?[1]
                                   // );
-                                  PassengerCubit.get(context).getIdSource(
-                                      value: areaId.toString(),
-                                      name: areaName.toString());
-                                  PassengerCubit.get(context).getSourceStreet(
-                                      value: streetSourceController.text
-                                          .toString());
-                                  PassengerCubit.get(context).getDetailsSource(
-                                      value: detailsSourceController.text
-                                          .toString());
+                                  PassengerCubit.get(context).getIdSource(value: areaId.toString(), name: areaName.toString());
+                                  PassengerCubit.get(context).getSourceStreet(value: streetSourceController.text.toString());
+                                  PassengerCubit.get(context).getDetailsSource(value: detailsSourceController.text.toString());
                                   // InitialCubit.get(context).orderPassengerCubit(
                                   //   note: InitialCubit.get(context)
                                   //       .listOrders?[0],

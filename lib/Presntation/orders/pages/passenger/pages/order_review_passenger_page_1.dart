@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:intl/intl.dart';
@@ -38,6 +39,8 @@ class _OrderReviewPassengerPage1State extends State<OrderReviewPassengerPage1> {
   void initState() {
     dateinput.text = "";
     timeinput.text = ""; //set the initial value of text field
+    sourceController.text = PassengerCubit.get(context).nameSourceCubit;
+    destinationController.text = PassengerCubit.get(context).nameDestinationCubit;
     super.initState(); //set the initial value of text field
     super.initState();
   }
@@ -61,9 +64,9 @@ class _OrderReviewPassengerPage1State extends State<OrderReviewPassengerPage1> {
         builder: (context, state) {
           return BlocListener<PassengerCubit, PassengerState>(
             listener: (context, state) {
-              if (state is OrderPassengerSuccessState) {
-                Navigator.pushNamed(context, Routes.orderReviewPassengerRoute2);
-              }
+              // if (state is OrderPassengerSuccessState) {
+              //   Navigator.pushNamed(context, Routes.orderReviewPassengerRoute2);
+              // }
             },
             child: Directionality(
               textDirection: ui.TextDirection.rtl,
@@ -128,109 +131,85 @@ class _OrderReviewPassengerPage1State extends State<OrderReviewPassengerPage1> {
                       ],
                     ),
                     20.verticalSpace,
-                    Visibility(
-                      visible: timeSelected == options[1],
-                      child: Container(
-                        margin: REdgeInsetsDirectional.only(start: 21, end: 21),
-                        decoration: ThemeHelper().inputBoxDecorationShadow(),
-                        child: CustomTextFormField(
-                          controller: dateinput,
-                          onTap: () async {
-                            DateTime? pickedDate = await showDatePicker(
-                                context: context,
-                                initialDate: DateTime.now(),
-                                firstDate: DateTime.now(),
-                                lastDate: DateTime(2101));
+                    if(timeSelected == options[1])
+                    Column(
+                      children: [
+                        Container(
+                          margin: REdgeInsetsDirectional.only(start: 21, end: 21),
+                          decoration: ThemeHelper().inputBoxDecorationShadow(),
+                          child: CustomTextFormField(
+                            controller: dateinput,
+                            onTap: () async {
+                              DateTime? pickedDate = await showDatePicker(
+                                  context: context,
+                                  initialDate: DateTime.now(),
+                                  firstDate: DateTime.now(),
+                                  lastDate: DateTime(2101));
 
-                            if (pickedDate != null) {
-                              print(
-                                  pickedDate); //pickedDate output format => 2021-03-10 00:00:00.000
-                              String formattedDate =
-                                  DateFormat('yyyy-MM-dd').format(pickedDate);
-                              print(
-                                  formattedDate); //formatted date output using intl package =>  2021-03-16
-                              //you can implement different kind of Date Format here according to your requirement
-                              setState(() {
-                                dateinput.text =
-                                    formattedDate; //set output date to TextField value.
-                              });
-                            } else {
-                              print("Date is not selected");
-                            }
-                          },
-                          suffexIcon: Icon(
-                            Icons.date_range,
-                            color: ColorManager.primary,
+                              if (pickedDate != null) {
+                                print(
+                                    pickedDate); //pickedDate output format => 2021-03-10 00:00:00.000
+                                String formattedDate =
+                                DateFormat('yyyy-MM-dd').format(pickedDate);
+                                print(
+                                    formattedDate); //formatted date output using intl package =>  2021-03-16
+                                //you can implement different kind of Date Format here according to your requirement
+                                setState(() {
+                                  dateinput.text =
+                                      formattedDate; //set output date to TextField value.
+                                });
+                              } else {
+                                print("Date is not selected");
+                              }
+                            },
+                            suffexIcon: Icon(
+                              Icons.date_range,
+                              color: ColorManager.primary,
+                            ),
+                            lableText: AppStrings.textField1,
+                            color: ColorManager.secondaryGrey,
+                            readOnly: true,
                           ),
-                          lableText: AppStrings.textField1,
-                          color: ColorManager.secondaryGrey,
-                          readOnly: true,
                         ),
-                      ),
-                    ),
-                    20.verticalSpace,
-                    Visibility(
-                      visible: timeSelected == options[1],
-                      child: Container(
-                        margin: REdgeInsetsDirectional.only(start: 21, end: 21),
-                        decoration: ThemeHelper().inputBoxDecorationShadow(),
-                        child: CustomTextFormField(
-                          controller: timeinput,
-                          readOnly: false,
-                          onTap: () async {
-                            TimeOfDay now = TimeOfDay.now();
-                            TimeOfDay? pickedTime = await showTimePicker(
-                              context: context,
-                              initialTime: now,
-                            );
-                            if (pickedTime != null) {
-                              String formattedTime =
-                                  DateFormat('h:mm a').format(
-                                DateTime(2023, 1, 1, pickedTime.hour,
-                                    pickedTime.minute),
+                        20.verticalSpace,
+                        Container(
+                          margin: REdgeInsetsDirectional.only(start: 21, end: 21),
+                          decoration: ThemeHelper().inputBoxDecorationShadow(),
+                          child: CustomTextFormField(
+                            controller: timeinput,
+                            readOnly: false,
+                            onTap: () async {
+                              TimeOfDay now = TimeOfDay.now();
+                              TimeOfDay? pickedTime = await showTimePicker(
+                                context: context,
+                                initialTime: now,
                               );
-                              setState(() {
-                                selectedTime = formattedTime;
-                                timeinput.text = formattedTime;
-                              });
-                            } else {
-                              print("Time is not selected");
-                            }
-                          },
-                          lableText: AppStrings.textField2,
-                          color: ColorManager.secondaryGrey,
-                          suffexIcon: Icon(
-                            Icons.access_time_rounded,
-                            color: ColorManager.primary,
+                              if (pickedTime != null) {
+                                String formattedTime =
+                                DateFormat('h:mm a').format(
+                                  DateTime(2023, 1, 1, pickedTime.hour,
+                                      pickedTime.minute),
+                                );
+                                setState(() {
+                                  selectedTime = formattedTime;
+                                  timeinput.text = formattedTime;
+                                });
+                              } else {
+                                print("Time is not selected");
+                              }
+                            },
+                            lableText: AppStrings.textField2,
+                            color: ColorManager.secondaryGrey,
+                            suffexIcon: Icon(
+                              Icons.access_time_rounded,
+                              color: ColorManager.primary,
+                            ),
                           ),
                         ),
-                      ),
-                    ),
-                    // Visibility(
-                    //   visible: timeSelected == options[1],
-                    //   child: Container(
-                    //     margin: REdgeInsetsDirectional.only(start: 21, end: 21),
-                    //     decoration: ThemeHelper().inputBoxDecorationShadow(),
-                    //     child: CustomTextFormField(
-                    //       initialValue: selectedTime,
-                    //       inputType: TextInputType.datetime,
-                    //       controller: timeinput,
-                    //       readOnly: false,
-                    //       lableText: AppStrings.textField2,
-                    //       color: ColorManager.secondaryGrey,
-                    //       suffexIcon: GestureDetector(
-                    //         onTap: () {
-                    //           Navigator.pushNamed(context, Routes.showpicker);
-                    //         },
-                    //         child: Icon(
-                    //           Icons.access_time_rounded,
-                    //           color: ColorManager.primary,
-                    //         ),
-                    //       ),
-                    //     ),
-                    //   ),
-                    // ),
-                    20.verticalSpace,
+                        20.verticalSpace,
+                      ],
+                    ).animate().fadeIn(),
+
                     CustomText(
                         txt: AppStrings.numberOfPassenger,
                         fontSize: 20.sp,
@@ -334,24 +313,25 @@ class _OrderReviewPassengerPage1State extends State<OrderReviewPassengerPage1> {
                           PassengerCubit.get(context).getNumber(value: number);
                           PassengerCubit.get(context)
                               .getNote(value: noteController.text.toString());
-                          PassengerCubit.get(context).orderPassengerCubit(
-                            sourceAreaID:
-                                PassengerCubit.get(context).idSourceCubit,
-                            destinationAreaID:
-                                PassengerCubit.get(context).idDestinationCubit,
-                            note: PassengerCubit.get(context).noteCubit,
-                            numberOfPassenger:
-                                PassengerCubit.get(context).numberCubit,
-                            sourceStreet:
-                                PassengerCubit.get(context).sourceStreetCubit,
-                            destinationStreet: PassengerCubit.get(context)
-                                .destinationStreetCubit,
-                            sourceAdditional:
-                                PassengerCubit.get(context).detailsSourceCubit,
-                            destinationAdditional: PassengerCubit.get(context)
-                                .detailsDestinationCubit,
-                            // scheduleDate: ,
-                          );
+                          Navigator.pushNamed(context, Routes.orderReviewPassengerRoute2);
+                          // PassengerCubit.get(context).orderPassengerCubit(
+                          //   sourceAreaID:
+                          //       PassengerCubit.get(context).idSourceCubit,
+                          //   destinationAreaID:
+                          //       PassengerCubit.get(context).idDestinationCubit,
+                          //   note: PassengerCubit.get(context).noteCubit,
+                          //   numberOfPassenger:
+                          //       PassengerCubit.get(context).numberCubit,
+                          //   sourceStreet:
+                          //       PassengerCubit.get(context).sourceStreetCubit,
+                          //   destinationStreet: PassengerCubit.get(context)
+                          //       .destinationStreetCubit,
+                          //   sourceAdditional:
+                          //       PassengerCubit.get(context).detailsSourceCubit,
+                          //   destinationAdditional: PassengerCubit.get(context)
+                          //       .detailsDestinationCubit,
+                          //   // scheduleDate: ,
+                          // );
                         },
                       ),
                     ),

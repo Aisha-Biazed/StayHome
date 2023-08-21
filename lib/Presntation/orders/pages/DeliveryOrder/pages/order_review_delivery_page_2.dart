@@ -16,19 +16,19 @@ import '../../../../../core/utils/theme_helper.dart';
 import '../../../../../core/widgets/custom_text.dart';
 import '../../../../../core/widgets/custom_text_field.dart';
 import '../../../../resources/routes_manager.dart';
-import '../cubit/shipping_cubit.dart';
+import '../cubit/delivery_cubit.dart';
 
-class OrderReviewShippingPage2 extends StatefulWidget {
-  const OrderReviewShippingPage2({Key? key}) : super(key: key);
+class OrderReviewDeliveryPage2 extends StatefulWidget {
+  const OrderReviewDeliveryPage2({Key? key}) : super(key: key);
 
   @override
-  State<OrderReviewShippingPage2> createState() => _OrderReviewShippingPage2State();
+  State<OrderReviewDeliveryPage2> createState() => _OrderReviewDeliveryPage2State();
 }
 
 List<String> options = ['fastTime', 'selectTime'];
 List<String> choices = ['point', 'store'];
 
-class _OrderReviewShippingPage2State extends State<OrderReviewShippingPage2> {
+class _OrderReviewDeliveryPage2State extends State<OrderReviewDeliveryPage2> {
   String timeSelected = options[0];
   String destination = choices[0];
   bool? check1 = false, check2 = true, check3 = false, check4 = false;
@@ -45,11 +45,11 @@ class _OrderReviewShippingPage2State extends State<OrderReviewShippingPage2> {
   void initState() {
     dateinput.text = "";
     timeinput.text = "";
-    InitialCubit.get(context).orderCheckCubit(ShippingCubit.get(context).idDestinationCubit, ShippingCubit.get(context).idSourceCubit);
-    destinationController = TextEditingController(text: '${AppStrings.destinationText}${ShippingCubit.get(context).nameDestinationCubit}');
-    sourceController = TextEditingController(text: '${AppStrings.sourceText}${ShippingCubit.get(context).nameSourceCubit}');
-    noteController = TextEditingController(text: ShippingCubit.get(context).noteCubit);
-    weight = ShippingCubit.get(context).weightCubit;
+    InitialCubit.get(context).orderCheckCubit(DeliveryCubit.get(context).idDestinationCubit, DeliveryCubit.get(context).idSourceCubit);
+    destinationController = TextEditingController(text: '${AppStrings.destinationText}${DeliveryCubit.get(context).nameDestinationCubit}');
+    sourceController = TextEditingController(text: '${AppStrings.sourceText}${DeliveryCubit.get(context).nameSourceCubit}');
+    noteController = TextEditingController(text: DeliveryCubit.get(context).noteCubit);
+    weight = DeliveryCubit.get(context).weightCubit;
     super.initState(); //set the initial value of text field
     super.initState();
   }
@@ -223,7 +223,7 @@ class _OrderReviewShippingPage2State extends State<OrderReviewShippingPage2> {
                             Icons.add_circle,
                             color: ColorManager.primary,
                           )),
-                      CustomText(txt: ShippingCubit.get(context).weightCubit.toString()),
+                      CustomText(txt: DeliveryCubit.get(context).weightCubit.toString()),
                       IconButton(
                           onPressed: () {
                             if (weight != 0) {
@@ -292,17 +292,17 @@ class _OrderReviewShippingPage2State extends State<OrderReviewShippingPage2> {
                     15.horizontalSpace,
                     Expanded(
                         child: CustomGeneralButton(
-                          onTap: () async {
-                            final val  = await ShippingCubit.get(context).shippingPointCubit();
-                            if(val) {
-                              Navigator.pushNamed(
-                                  context, Routes.confirmationPassengerRoute);
-                            } else {
-                              BotToast.showText(text: 'حدث خطأ ما!');
-                            }
-                          },
-                          text: AppStrings.confBtn,
-                        )),
+                      onTap: () async {
+                        final val  = await DeliveryCubit.get(context).deliveryPointCubit();
+                        if(val) {
+                          Navigator.pushNamed(
+                              context, Routes.confirmationPassengerRoute);
+                        } else {
+                          BotToast.showText(text: 'حدث خطأ ما!');
+                        }
+                      },
+                      text: AppStrings.confBtn,
+                    )),
                     const Spacer(),
                     Expanded(child: BlocBuilder<InitialCubit, InitialStates>(builder: (context, state) {
                       if (state is OrderCheckSuccessState) {

@@ -4,52 +4,49 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:stay_home/Presntation/login/cubit/cubit.dart';
 
-import '../../../../core/utils/theme_helper.dart';
-import '../../../../core/widgets/custom_buttons.dart';
-import '../../../../core/widgets/custom_text.dart';
-import '../../../login/cubit/states.dart';
-import '../../../resources/color_manager.dart';
-import '../../../resources/routes_manager.dart';
-import '../../../resources/strings_manager.dart';
+import '../../../../../core/utils/theme_helper.dart';
+import '../../../../../core/widgets/custom_buttons.dart';
+import '../../../../../core/widgets/custom_text.dart';
+import '../../../../login/cubit/states.dart';
+import '../../../../resources/color_manager.dart';
+  import '../../../../resources/strings_manager.dart';
+import '../cubit/delivery_cubit.dart';
+import 'order_review_delivery_page_1.dart';
+import 'order_review_delivery_page_2.dart';
 
-class AddAddressDestinationPage extends StatefulWidget {
-  const AddAddressDestinationPage({Key? key}) : super(key: key);
+class AddAddressDestinationDeliveryPage extends StatefulWidget {
+  const AddAddressDestinationDeliveryPage({Key? key}) : super(key: key);
 
   @override
-  State<AddAddressDestinationPage> createState() =>
-      _AddAddressDestinationPageState();
+  State<AddAddressDestinationDeliveryPage> createState() =>
+      _AddAddressDestinationDeliveryPageState();
 }
 
-class _AddAddressDestinationPageState extends State<AddAddressDestinationPage> {
+class _AddAddressDestinationDeliveryPageState extends State<AddAddressDestinationDeliveryPage> {
   final _formKey = GlobalKey<FormState>();
-  bool checkedValue = false;
-  bool checkboxValue = false;
+  TextEditingController streetDestinationController = TextEditingController(text: "");
+  TextEditingController detailsDestinationController = TextEditingController(text: "");
   String dropdownValue = 'add';
   late SingleValueDropDownController _cnt;
-  late SingleValueDropDownController _area;
-  late MultiValueDropDownController _cntMulti;
   var cityId;
   var areaId;
 
   @override
   void initState() {
+    InitialCubit.get(context).getAllAreasCubit();
     _cnt = SingleValueDropDownController();
-    _area = SingleValueDropDownController();
-    _cntMulti = MultiValueDropDownController();
     super.initState();
   }
 
   @override
   void dispose() {
     _cnt.dispose();
-    _area.dispose();
-    _cntMulti.dispose();
+
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    InitialCubit.get(context).getAllCitiesWithAreasCubit();
     return Directionality(
         textDirection: TextDirection.rtl,
         child: Scaffold(
@@ -83,96 +80,47 @@ class _AddAddressDestinationPageState extends State<AddAddressDestinationPage> {
                             20.verticalSpace,
                             BlocBuilder<InitialCubit, InitialStates>(
                               builder: (context, state) {
-                                if (state
-                                    is GetAllCitiesWithAllCitiesSuccessState) {
-                                  final cityList = state.result;
+                                if (state is GetAllAreasSuccessState) {
+                                  final areaList = state.result;
                                   return Container(
-                                    decoration: ThemeHelper()
-                                        .inputBoxDecorationShadow(),
+                                    decoration: ThemeHelper().inputBoxDecorationShadow(),
                                     child: DropDownTextField(
-                                      controller: _area,
+                                      controller: _cnt
+                                        ..setDropDown(DropDownValueModel(
+                                          name: areaList[0].name!,
+                                          value: areaList[0].id,
+                                          toolTipMsg: "${areaList[0].id}",
+                                        )),
                                       searchDecoration: const InputDecoration(),
-                                      textFieldDecoration: ThemeHelper()
-                                          .textInputDecoration(
-                                              AppStrings.theTown),
+                                      textFieldDecoration: ThemeHelper().textInputDecoration(AppStrings.theArea),
                                       clearOption: true,
+                                      autovalidateMode: AutovalidateMode.onUserInteraction,
                                       validator: (value) {
                                         if (value == null) {
-                                          return "Required field";
+                                          return "هذا الحقل مطلوب";
                                         } else {
                                           return null;
                                         }
                                       },
-                                      dropDownItemCount: cityList.length,
+                                      dropDownItemCount: areaList.length,
                                       dropDownList: [
-                                        for (final city in cityList)
+                                        for (final area in areaList)
                                           DropDownValueModel(
-                                            name: city.name!,
-                                            value: city.id,
-                                            toolTipMsg: "${city.id}",
+                                            name: area.name!,
+                                            value: area.id,
+                                            toolTipMsg: "${area.id}",
                                           ),
                                       ],
                                       onChanged: (val) {
-                                        setState(() {});
-                                        cityId = val
-                                            .value; // تخزين قيمة المدينة المختارة في المتغير
+                                        areaId = val.value; // تخزين قيمة المدينة المختارة في المتغير
                                       },
                                     ),
                                   );
                                 } else {
-                                  return CircularProgressIndicator(
-                                    color: ColorManager.primary,
-                                  );
-                                }
-                              },
-                            ),
-                            20.verticalSpace,
-                            BlocBuilder<InitialCubit, InitialStates>(
-                              builder: (context, state) {
-                                if (state
-                                    is GetAllCitiesWithAllCitiesSuccessState) {
-                                  final cityList = state.result;
-                                  if (cityId == null) {
-                                    return const SizedBox.shrink();
-                                  } else {
-                                    final selectedCity = cityList.firstWhere(
-                                        (city) => city.id == cityId);
-                                    final filteredAreas = selectedCity.areas;
-                                    return Container(
-                                      decoration: ThemeHelper()
-                                          .inputBoxDecorationShadow(),
-                                      child: DropDownTextField(
-                                        controller: _cnt,
-                                        searchDecoration:
-                                            const InputDecoration(),
-                                        textFieldDecoration: ThemeHelper()
-                                            .textInputDecoration(
-                                                AppStrings.theArea),
-                                        clearOption: true,
-                                        validator: (value) {
-                                          if (value == null) {
-                                            return "Required field";
-                                          } else {
-                                            return null;
-                                          }
-                                        },
-                                        dropDownItemCount: filteredAreas.length,
-                                        dropDownList: [
-                                          for (final area in filteredAreas)
-                                            DropDownValueModel(
-                                              name: area.name!,
-                                              value: area.id,
-                                            ),
-                                        ],
-                                        onChanged: (val) {
-                                          cityId = val.value;
-                                        },
-                                      ),
-                                    );
-                                  }
-                                } else {
-                                  return CircularProgressIndicator(
-                                    color: ColorManager.primary,
+                                  return Center(
+                                    child: CircularProgressIndicator(
+                                      color: ColorManager.primary,
+                                    ),
                                   );
                                 }
                               },
@@ -182,9 +130,17 @@ class _AddAddressDestinationPageState extends State<AddAddressDestinationPage> {
                               decoration:
                                   ThemeHelper().inputBoxDecorationShadow(),
                               child: TextFormField(
+                                controller: streetDestinationController,
                                 decoration: ThemeHelper().textInputDecoration(
                                   AppStrings.theStreet,
                                 ),
+                                autovalidateMode: AutovalidateMode.onUserInteraction,
+                                validator: (val) {
+                                  if (val!.isEmpty) {
+                                    return "هذا الحقل مطلوب";
+                                  }
+                                  return null;
+                                },
                               ),
                             ),
                             30.verticalSpace,
@@ -192,13 +148,14 @@ class _AddAddressDestinationPageState extends State<AddAddressDestinationPage> {
                               decoration:
                                   ThemeHelper().inputBoxDecorationShadow(),
                               child: TextFormField(
-                                obscureText: true,
+                                controller: detailsDestinationController,
                                 decoration: ThemeHelper().textInputDecoration(
                                   AppStrings.addDetails,
                                 ),
+                                autovalidateMode: AutovalidateMode.onUserInteraction,
                                 validator: (val) {
                                   if (val!.isEmpty) {
-                                    return "Please enter your password";
+                                    return "هذا الحقل مطلوب";
                                   }
                                   return null;
                                 },
@@ -217,8 +174,18 @@ class _AddAddressDestinationPageState extends State<AddAddressDestinationPage> {
                               child: CustomGeneralButton(
                                 text: AppStrings.save,
                                 onTap: () {
-                                  Navigator.pushNamed(
-                                      context, Routes.addressSourceRoute);
+                                  print(_formKey.currentState?.validate());
+                                  DeliveryCubit.get(context).setIdDestination(value: _cnt.dropDownValue?.value, name: _cnt.dropDownValue!.name);
+                                  DeliveryCubit.get(context).setDestinationStreet(value: streetDestinationController.text);
+                                  DeliveryCubit.get(context).setDetailsDestination(value: detailsDestinationController.text);
+                                  if(_formKey.currentState!.validate()) {
+                                    Navigator.pop(context);
+                                    Navigator.pop(context);
+                                    Navigator.pushReplacement(
+                                        context, MaterialPageRoute(builder: (context) => const OrderReviewDeliveryPage2()));
+                                  }
+                                  // Navigator.pushNamed(
+                                  //     context, Routes.addressSourceRoute);
                                 },
                               ),
                             ),

@@ -1,3 +1,4 @@
+import 'package:bot_toast/bot_toast.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -7,6 +8,7 @@ import 'package:hexcolor/hexcolor.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:stay_home/Presntation/home/pages/home_view.dart';
 import 'package:stay_home/Presntation/login/cubit/cubit.dart';
+import 'package:stay_home/Presntation/orders/pages/DeliveryOrder/cubit/delivery_cubit.dart';
 import 'package:stay_home/Presntation/orders/pages/ShippingDelivery/cubit/shipping_cubit.dart';
 import 'package:stay_home/Presntation/orders/pages/passenger/cubit/passenger_cubit.dart';
 import 'package:stay_home/Presntation/orders/store/Cubit/my_cart_cubit.dart';
@@ -42,6 +44,9 @@ class MyApp extends StatelessWidget {
             BlocProvider(
               create: (context) => ShippingCubit(),
             ),
+            BlocProvider(
+              create: (context) => DeliveryCubit(),
+            ),
           ],
           child: BlocProvider(
             create: (context) => MyCartCubit(),
@@ -49,6 +54,7 @@ class MyApp extends StatelessWidget {
               create: (context) => InitialCubit(),
               child: GetMaterialApp(
                   title: 'Localizations Sample App',
+                  builder: BotToastInit(),
                   localizationsDelegates: const [
                     GlobalMaterialLocalizations.delegate,
                     GlobalWidgetsLocalizations.delegate,
