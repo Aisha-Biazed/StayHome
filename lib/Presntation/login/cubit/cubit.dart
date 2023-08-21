@@ -8,6 +8,7 @@ import 'package:stay_home/data_remote/auth_repo.dart';
 import 'package:stay_home/model/all_cities_with_area_model.dart';
 import 'package:stay_home/model/check_order_model.dart';
 import 'package:stay_home/model/details_shop_model.dart';
+import 'package:stay_home/model/order_tracking_model.dart';
 import 'package:stay_home/model/shope_model.dart';
 import '../../../model/all_areas_model.dart';
 import '../../../model/all_cities_model.dart';
@@ -85,6 +86,19 @@ class InitialCubit extends Cubit<InitialStates> {
       //show error
     }, (r) {
       emit(HomeSuccessState(r as List<HomeModel>));
+      //save user
+    });
+  }
+
+  void orderTrackingCubit() async {
+    emit(OrderTrackingLoadingState());
+    Either<String, List<OrderTrackingModel>> result =
+        await _authRepo.orderTracking();
+    result.fold((l) {
+      emit(OrderTrackingErrorState());
+      //show error
+    }, (r) {
+      emit(OrderTrackingSuccessState(r as List<OrderTrackingModel>));
       //save user
     });
   }

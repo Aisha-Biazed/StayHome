@@ -11,6 +11,7 @@ import '../model/all_areas_model.dart';
 import '../model/all_cities_model.dart';
 import '../model/all_cities_with_area_model.dart';
 import '../model/check_order_model.dart';
+import '../model/order_tracking_model.dart';
 
 class AuthRepo {
   late final Dio _dio;
@@ -174,6 +175,22 @@ class AuthRepo {
       print("SuccessfulDataHome");
       return Right((result.data["response"] as List).map((e) {
         return HomeModel.fromJson(e);
+      }).toList());
+    } catch (error) {
+      print("error =$error");
+      return Left(ExceptionHandler.handle(error as Exception));
+    }
+  }
+
+  Future<Either<String, List<OrderTrackingModel>>> orderTracking() async {
+    try {
+      final result = await _dio.get('Mobile/Order/GetAll');
+      (result.data["response"] as List).map((e) {
+        return OrderTrackingModel.fromJson(e);
+      }).toList();
+      print("SuccessfulOrderTracking");
+      return Right((result.data["response"] as List).map((e) {
+        return OrderTrackingModel.fromJson(e);
       }).toList());
     } catch (error) {
       print("error =$error");
