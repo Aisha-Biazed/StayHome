@@ -98,7 +98,7 @@ class AppStrings {
   static const dept = "متجر";
   static const point = "نقطة ";
   static const requestBtn = "متابعة الطلب ";
-  static const basketBtn = "مراجعة السلة";
+  static const cartBtn = "مراجعة السلة";
   static const confBtn = "تأكيد الطلب";
   static const direction = "أختر وجهة الإنطلاق التي سيبدأ منها طلبك";
   static const numberOfPassenger = "عدد الأشخاص";
