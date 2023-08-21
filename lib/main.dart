@@ -11,7 +11,6 @@ import 'package:stay_home/Presntation/orders/pages/ShippingDelivery/cubit/shippi
 import 'package:stay_home/Presntation/orders/pages/passenger/cubit/passenger_cubit.dart';
 import 'package:stay_home/Presntation/orders/store/Cubit/my_cart_cubit.dart';
 import 'package:stay_home/Presntation/splash/pages/splash_view.dart';
-import 'Presntation/login/pages/registartion_page.dart';
 import 'Presntation/resources/routes_manager.dart';
 import 'data_remote/cash_helper.dart';
 

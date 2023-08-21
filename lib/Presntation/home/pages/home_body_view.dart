@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:stay_home/Presntation/home/pages/service_page.dart';
+import 'package:stay_home/Presntation/ratings/pages/rating_page.dart';
 import 'package:stay_home/Presntation/resources/color_manager.dart';
 import '../../login/pages/profile_page.dart';
 import '../../orders/store/pages/store_page.dart';
+import '../../ratings/pages/delivery_rating_page.dart';
 import '../../resources/strings_manager.dart';
 import '../navigation_page/main_page.dart';
 
@@ -18,10 +20,10 @@ class _HomeBodyViewState extends State<HomeBodyView> {
   int selectedPageIndex = 0;
   int pageIndex = 0;
   int _currentIndex = 0;
-  List<Widget> _widgetOptions = <Widget>[
+  final List<Widget> _widgetOptions = const <Widget>[
     MainPage(),
     StorePage(),
-    ServicePage(),
+    DeliveryRatingPage(),
     ProfilePage(),
   ];
   @override
@@ -48,7 +50,7 @@ class _HomeBodyViewState extends State<HomeBodyView> {
               label: AppStrings.homeNavLabel_2,
             ),
             BottomNavigationBarItem(
-                icon: Icon(Icons.shopping_cart),
+                icon: Icon(Icons.star_rate_rounded),
                 label: AppStrings.homeNavLabel_3),
             BottomNavigationBarItem(
               icon: Icon(Icons.person),

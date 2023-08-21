@@ -1,6 +1,7 @@
 import 'package:stay_home/model/all_cities_model.dart';
 import 'package:stay_home/model/all_cities_with_area_model.dart';
 import 'package:stay_home/model/check_order_model.dart';
+import 'package:stay_home/model/order_tracking_model.dart';
 
 import '../../../model/all_areas_model.dart';
 import '../../../model/details_shop_model.dart';
@@ -41,6 +42,15 @@ class HomeSuccessState extends InitialStates {
 }
 
 class HomeErrorState extends InitialStates {}
+
+class OrderTrackingLoadingState extends InitialStates {}
+
+class OrderTrackingSuccessState extends InitialStates {
+  List<OrderTrackingModel> result;
+  OrderTrackingSuccessState(this.result);
+}
+
+class OrderTrackingErrorState extends InitialStates {}
 
 class GetAllCitiesLoadingState extends InitialStates {}
 

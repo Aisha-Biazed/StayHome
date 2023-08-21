@@ -2,7 +2,6 @@ import 'package:conditional_builder_null_safety/conditional_builder_null_safety.
 import 'package:dropdown_textfield/dropdown_textfield.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/scheduler.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:stay_home/Presntation/login/cubit/cubit.dart';
@@ -36,7 +35,7 @@ class _RegisterationPageState extends State<RegisterationPage> {
   var birthdateController = TextEditingController(text: "");
   var deviceTokenController = TextEditingController(text: "");
   var cityIdController = TextEditingController(text: "");
-  final PhoneNumberFoucs = FocusNode();
+  final phoneNumberFocus = FocusNode();
   var cityId;
 
   late SingleValueDropDownController _cnt;
@@ -212,13 +211,14 @@ class _RegisterationPageState extends State<RegisterationPage> {
                               decoration:
                                   ThemeHelper().inputBoxDecorationShadow(),
                               child: TextFormField(
+                                keyboardType: TextInputType.name,
                                 controller: fullNameController,
                                 decoration: ThemeHelper().textInputDecoration(
                                   AppStrings.firstname,
                                 ),
                                 validator: (val) {
                                   if (val!.isEmpty) {
-                                    return AppStrings.validatePhone;
+                                    return AppStrings.validateName;
                                   }
                                   return null;
                                 },
@@ -229,7 +229,7 @@ class _RegisterationPageState extends State<RegisterationPage> {
                               decoration:
                                   ThemeHelper().inputBoxDecorationShadow(),
                               child: TextFormField(
-                                keyboardType: TextInputType.phone,
+                                keyboardType: TextInputType.text,
                                 controller: birthdateController,
                                 decoration: ThemeHelper().textInputDecoration(
                                   AppStrings.birthDate,
@@ -253,10 +253,11 @@ class _RegisterationPageState extends State<RegisterationPage> {
                                 ),
                                 keyboardType: TextInputType.emailAddress,
                                 validator: (val) {
-                                  if (!(val!.isEmpty) &&
+                                  if ((val!.isEmpty) &&
                                       !RegExp(r"^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,253}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,253}[a-zA-Z0-9])?)*$")
-                                          .hasMatch(val)) {}
-                                  return AppStrings.validateEmail;
+                                          .hasMatch(val)) {
+                                    return AppStrings.validateEmail;
+                                  }
                                 },
                               ),
                             ),
@@ -265,18 +266,19 @@ class _RegisterationPageState extends State<RegisterationPage> {
                               decoration:
                                   ThemeHelper().inputBoxDecorationShadow(),
                               child: TextFormField(
-                                controller: phoneNumberController,
-                                obscureText: true,
-                                decoration: ThemeHelper().textInputDecoration(
-                                    AppStrings.mobileNumber,
-                                    AppStrings.mobileNumber),
-                                keyboardType: TextInputType.phone,
-                                validator: (val) {
-                                  if ((val!.isEmpty) &&
-                                      !RegExp(r"^(\d+)*$").hasMatch(val)) {}
-                                  return AppStrings.validatePhone;
-                                },
-                              ),
+                                  controller: phoneNumberController,
+                                  obscureText: true,
+                                  maxLength: 10,
+                                  decoration: ThemeHelper().textInputDecoration(
+                                      AppStrings.mobileNumber,
+                                      AppStrings.mobileNumber),
+                                  keyboardType: TextInputType.phone,
+                                  validator: (val) {
+                                    if (val!.isEmpty) {
+                                      return AppStrings.validatePhone;
+                                    }
+                                    return null;
+                                  }),
                             ),
                             15.verticalSpace,
                             Container(

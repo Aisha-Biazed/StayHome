@@ -4,6 +4,7 @@ import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:stay_home/Presntation/login/cubit/cubit.dart';
 import 'package:stay_home/Presntation/login/cubit/states.dart';
+import 'package:stay_home/Presntation/ratings/pages/delivery_rating_page.dart';
 import 'package:stay_home/Presntation/resources/color_manager.dart';
 import 'package:stay_home/Presntation/resources/strings_manager.dart';
 import 'package:stay_home/core/widgets/custom_text.dart';
@@ -106,6 +107,7 @@ class _RatingsPageState extends State<RatingsPage> {
                         10.horizontalSpace,
                         Expanded(
                           child: CustomButtons(
+                            onPressed: () {},
                             text: AppStrings.ratingBtnSkip,
                             colorText: ColorManager.primary,
                           ),

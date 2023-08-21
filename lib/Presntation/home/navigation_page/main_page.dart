@@ -162,6 +162,7 @@ class _MainPageState extends State<MainPage> {
                                                 children: [
                                                   Icon(
                                                     Icons.circle,
+                                                    size: 15,
                                                     color: item.isOnline
                                                         ? ColorManager.green
                                                         : Colors.red,

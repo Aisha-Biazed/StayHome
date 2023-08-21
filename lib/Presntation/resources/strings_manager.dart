@@ -21,8 +21,8 @@ class AppStrings {
   static const login = "ليس لديك حساب ؟";
   static const forgetPassword = "انشئ الآن";
   static const validatePassword = "يرجى إدخال كلمة المرور ";
-  static const validateName = "يرجى إدخال كلمة المرور ";
-  static const validateCity = "يرجى إدخال كلمة المرور ";
+  static const validateName = "يرجى إدخال الاسم الكامل ";
+  static const validateCity = "يرجى إختيار المدينة ";
   static const validateBirthdate = "يرجى إدخال تاريخ الميلاد ";
   static const validateEmail = "يرجى إدخال البريد الإلكتروني";
   static const validatePhone = "يرجى إدخال رقم الموبايل";
@@ -64,7 +64,7 @@ class AppStrings {
   // home
   static const homeNavLabel_1 = "الرئيسية";
   static const homeNavLabel_2 = "المتاجر";
-  static const homeNavLabel_3 = "الطلبات";
+  static const homeNavLabel_3 = "التقييمات";
   static const homeNavLabel_4 = "البروفايل";
   static const store = "أطلب الآن";
   static const service = "خدماتنا";
@@ -131,10 +131,10 @@ class AppStrings {
   static const selectBtn = "أضغط هنا";
   static const elements = "العناصر:5";
   static const order = "الطلب";
-  static const priceRating = "السعر:5367ل.س";
+  static const priceRating = "السعر:";
   static const ratingBtnDelivery = "تقييم التوصيل";
-  static const inPreparation = "قيد التحضير";
-  static const deliveryIsUnderway = "قيد التوصيل";
+  static const inPreparation = "قبول الطلب";
+  static const deliveryIsUnderway = "في الطريق";
   static const delivered = "تم التوصيل";
   static const kg = "كغ";
   static const numberOfProducts = "عدد المنتجات";

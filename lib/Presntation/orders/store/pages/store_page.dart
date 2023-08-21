@@ -262,8 +262,7 @@ class _StorePageState extends State<StorePage> {
                                                 txt: items.startTime
                                                             ?.isNotEmpty ==
                                                         true
-                                                    ? DateFormat(
-                                                            'dd/MM/yyyy HH:mm')
+                                                    ? DateFormat('dd/MM/yyyy')
                                                         .format(DateTime.parse(
                                                             items.startTime))
                                                     : '',
@@ -274,8 +273,7 @@ class _StorePageState extends State<StorePage> {
                                                 txt: items.endTime
                                                             ?.isNotEmpty ==
                                                         true
-                                                    ? DateFormat(
-                                                            'dd/MM/yyyy HH:mm')
+                                                    ? DateFormat('dd/MM/yyyy ')
                                                         .format(DateTime.parse(
                                                             items.endTime))
                                                     : '',

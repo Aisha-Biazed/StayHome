@@ -17,7 +17,6 @@ class CustomButtons extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return RSizedBox(
-      width: double.infinity,
       height: 50,
       child: OutlinedButton(
           style: OutlinedButton.styleFrom(
