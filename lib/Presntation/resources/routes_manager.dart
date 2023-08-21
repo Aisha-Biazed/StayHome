@@ -9,11 +9,7 @@ import '../onboarding/presentaion/pages/on_boarding_view.dart';
 import '../orders/pages/DeliveryOrder/pages/add_address_destination_delivery_page.dart';
 import '../orders/pages/DeliveryOrder/pages/confirmation_page.dart';
 import '../orders/pages/DeliveryOrder/pages/order_review_delivery_page_1.dart';
-import '../orders/pages/ShippingDelivery/pages/order_review_page_2.dart';
-import '../orders/pages/ShippingDelivery/pages/order_review_page_3.dart';
-import '../orders/pages/DeliveryOrder/add_address_destinationpage.dart';
-import '../orders/pages/DeliveryOrder/add_address_source_page.dart';
-import '../orders/pages/DeliveryOrder/confirmation_page.dart';
+
 import '../orders/pages/ShippingDelivery/pages/order_review_for_shop_page_1.dart';
 import '../orders/pages/ShippingDelivery/pages/order_review_for_shop_page_2.dart';
 import '../orders/pages/ShippingDelivery/pages/add_address_destination_shipping_page.dart';

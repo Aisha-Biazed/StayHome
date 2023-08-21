@@ -196,7 +196,7 @@ class _OrderReviewDeliveryPage2State extends State<OrderReviewDeliveryPage2> {
                             color: ColorManager.secondaryGrey,
                             suffexIcon: GestureDetector(
                               onTap: () {
-                                Navigator.pushNamed(context, Routes.showpicker);
+                                Navigator.pushNamed(context, Routes.showPicker);
                               },
                               child: Icon(
                                 Icons.access_time_rounded,
