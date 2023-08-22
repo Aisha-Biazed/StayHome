@@ -252,7 +252,7 @@ class _OrderReviewShippingPage1State extends State<OrderReviewShippingPage1> {
                       child: CustomTextFormField(
                         controller: destinationController,
                         onTap: () {
-                          Navigator.push(context, MaterialPageRoute(builder: (context) => const AddAddressDestinationShippingPage()));
+                          Navigator.push(context, MaterialPageRoute(builder: (context) => const AddAddressDestinationShippingPage(fromShop: false,)));
                         },
                         readOnly: true,
                         hintText: ShippingCubit.get(context).nameDestinationCubit == ''

@@ -1,4 +1,5 @@
 import 'package:bloc/bloc.dart';
+import 'package:bot_toast/bot_toast.dart';
 import 'package:dartz/dartz.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:meta/meta.dart';
@@ -75,20 +76,19 @@ class PassengerCubit extends Cubit<PassengerState> {
     emit(NoteState());
   }
 
-  Future<bool> orderPassengerCubit(
-      {
-     String? sourceAreaID,
-     String? destinationAreaID,
-     String? note,
-     int? numberOfPassenger,
-     String? sourceStreet,
-     String? destinationStreet,
-     String? sourceAdditional,
-     String? destinationAdditional,
+  Future<bool> orderPassengerCubit({
+    String? sourceAreaID,
+    String? destinationAreaID,
+    String? note,
+    int? numberOfPassenger,
+    String? sourceStreet,
+    String? destinationStreet,
+    String? sourceAdditional,
+    String? destinationAdditional,
     // required String scheduleDate
-  }
-      ) async {
+  }) async {
     emit(OrderPassengerLoadingState());
+    BotToast.showLoading();
     Either<String, dynamic> result = await _authRepo.passengerOrder(
       note: noteCubit,
       numberOfPassenger: numberCubit,
@@ -100,15 +100,15 @@ class PassengerCubit extends Cubit<PassengerState> {
       destinationAreaID: idDestinationCubit,
       // scheduleDate: scheduleDate,
     );
-    result.fold((l) {
+    final val = result.fold((l) {
       emit(OrderPassengerErrorState());
-
+      BotToast.closeAllLoading();
       return false;
     }, (r) {
       emit(OrderPassengerSuccessState());
-
+      BotToast.closeAllLoading();
       return true;
     });
-    return true;
+    return val;
   }
 }

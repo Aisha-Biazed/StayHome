@@ -81,7 +81,7 @@ class ServicePage extends StatelessWidget {
                                     CustomGeneralButton(
                                       text: AppStrings.dept,
                                       onTap: () {
-                                        Navigator.push(context, MaterialPageRoute(builder: (context) => StorePage()));
+                                        Navigator.push(context, MaterialPageRoute(builder: (context) => const StorePage(dest: true,)));
                                       },
                                     )
                                   ],
@@ -137,7 +137,7 @@ class ServicePage extends StatelessWidget {
                                       CustomGeneralButton(
                                         text: AppStrings.dept,
                                         onTap: () {
-                                          Navigator.push(context, MaterialPageRoute(builder: (context) => const StorePage()));
+                                          Navigator.push(context, MaterialPageRoute(builder: (context) => const StorePage(dest: false,)));
                                         },
                                       )
                                     ],

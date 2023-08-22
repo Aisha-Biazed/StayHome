@@ -12,10 +12,16 @@ import 'dart:ui' as ui;
 
 import '../../../resources/color_manager.dart';
 import '../../../resources/strings_manager.dart';
+import '../../pages/DeliveryOrder/cubit/delivery_cubit.dart';
 
 class StorePage extends StatefulWidget {
+  // true => go to delivery
+  // false => go to shipping
+  // null => go to nav page
+  final bool? dest;
   const StorePage({
     Key? key,
+    this.dest,
   }) : super(key: key);
 
   @override
@@ -29,6 +35,8 @@ class _StorePageState extends State<StorePage> {
   void initState() {
     super.initState();
     _pageController = PageController(initialPage: 0);
+    InitialCubit.get(context).shopCubit();
+
   }
 
   @override
@@ -39,7 +47,6 @@ class _StorePageState extends State<StorePage> {
 
   @override
   Widget build(BuildContext context) {
-    InitialCubit.get(context).shopCubit();
     return Directionality(
       textDirection: ui.TextDirection.rtl,
       child: Scaffold(
@@ -174,10 +181,14 @@ class _StorePageState extends State<StorePage> {
                                           ),
                                         ),
                                         onTap: () {
-                                          ShippingCubit.get(context).setShopId(value: items.id!, name: items.name!);
+                                          if(widget.dest!){
+                                            DeliveryCubit.get(context).setShopId(value: items.id!, name: items.name!);
+                                          }else {
+                                            ShippingCubit.get(context).setShopId(value: items.id!, name: items.name!);
+                                          }
                                           print(items.name);
                                           print(items.id);
-                                          Navigator.push(context, MaterialPageRoute(builder: (context) => StoreDetails(shopId: items.id!)));
+                                          Navigator.push(context, MaterialPageRoute(builder: (context) => StoreDetails(shopId: items.id!,dest: widget.dest,)));
                                         },
                                       ),
                                       Padding(

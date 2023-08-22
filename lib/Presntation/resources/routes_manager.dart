@@ -10,8 +10,8 @@ import '../orders/pages/DeliveryOrder/pages/add_address_destination_delivery_pag
 import '../orders/pages/DeliveryOrder/pages/confirmation_page.dart';
 import '../orders/pages/DeliveryOrder/pages/order_review_delivery_page_1.dart';
 
-import '../orders/pages/ShippingDelivery/pages/order_review_for_shop_page_1.dart';
-import '../orders/pages/ShippingDelivery/pages/order_review_for_shop_page_2.dart';
+import '../orders/pages/ShippingDelivery/pages/order_review_shipping_shop_page_1.dart';
+import '../orders/pages/ShippingDelivery/pages/order_review_shipping_shop_page_2.dart';
 import '../orders/pages/ShippingDelivery/pages/add_address_destination_shipping_page.dart';
 import '../orders/pages/ShippingDelivery/pages/order_review_shipping_page_1.dart';
 import '../orders/pages/ShippingDelivery/pages/order_review_shipping_page_2.dart';
@@ -110,7 +110,7 @@ class RouteGenerator {
             builder: (_) => const AddAddressSourceShippingPage());
       case Routes.shippingAddressDestinationRoute:
         return MaterialPageRoute(
-            builder: (_) => const AddAddressDestinationShippingPage());
+            builder: (_) => const AddAddressDestinationShippingPage(fromShop: false,));
       // Passenger Pages
       case Routes.orderReview1PassengerRoute:
         return MaterialPageRoute(
@@ -120,19 +120,19 @@ class RouteGenerator {
             builder: (_) => const OrderReviewPassengerPage2());
       case Routes.orderReviewRoute2:
         return MaterialPageRoute(
-            builder: (_) => const OrderReviewForShopPage1());
+            builder: (_) => const OrderReviewShippingShopPage1());
       case Routes.showPicker:
         return MaterialPageRoute(builder: (_) => const ShowPickerPage());
       case Routes.orderReviewRoute3:
         return MaterialPageRoute(
-            builder: (_) => const OrderReviewForShopPage2());
+            builder: (_) => const OrderReviewShippingShopPage2());
       case Routes.confirmationRoute:
         return MaterialPageRoute(builder: (_) => const ConfirmationPage());
       case Routes.confirmationPassengerRoute:
         return MaterialPageRoute(
             builder: (_) => const ConfirmationForPassengerPage());
       case Routes.myCartRoute:
-        return MaterialPageRoute(builder: (_) => const MyCartPage());
+        return MaterialPageRoute(builder: (_) => const MyCartPage(isReview: false ,));
       case Routes.ratingRoute:
         return MaterialPageRoute(builder: (_) => const RatingsPage());
       default:

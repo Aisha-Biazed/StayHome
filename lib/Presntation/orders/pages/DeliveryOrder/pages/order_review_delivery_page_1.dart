@@ -1,3 +1,5 @@
+import 'package:day_night_time_picker/day_night_time_picker.dart';
+import 'package:day_night_time_picker/lib/daynight_timepicker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -20,17 +22,7 @@ class OrderReviewDeliveryPage1 extends StatefulWidget {
   State<OrderReviewDeliveryPage1> createState() => _OrderReviewDeliveryPage1State();
 }
 
-List<String> options = ['fastTime', 'selectTime'];
-List<String> choices = ['point', 'store'];
-
 class _OrderReviewDeliveryPage1State extends State<OrderReviewDeliveryPage1> {
-  String timeSelected = options[0];
-  String destination = choices[0];
-  bool? check1 = false, check2 = true, check3 = false, check4 = false;
-  bool checkedValue = false;
-  bool checkboxValue = false;
-  TextEditingController dateinput = TextEditingController();
-  TextEditingController timeinput = TextEditingController();
   TextEditingController shopIdController = TextEditingController(text: "");
   TextEditingController destinationController = TextEditingController(text: "");
   var destinationAreaIdController = TextEditingController(text: "");
@@ -39,12 +31,8 @@ class _OrderReviewDeliveryPage1State extends State<OrderReviewDeliveryPage1> {
   var noteController = TextEditingController(text: "");
   int weight = 0;
 
-  //text editing controller for text field
-
   @override
   void initState() {
-    dateinput.text = "";
-    timeinput.text = ""; //set the initial value of text field
     DeliveryCubit.get(context).reset();
     super.initState(); //set the initial value of text field
     super.initState();
@@ -60,11 +48,7 @@ class _OrderReviewDeliveryPage1State extends State<OrderReviewDeliveryPage1> {
       body: BlocBuilder<DeliveryCubit, DeliveryState>(
         builder: (context, state) {
           return BlocListener<DeliveryCubit, DeliveryState>(
-            listener: (context, state) {
-              // if (state is OrderDeliverySuccessState) {
-              //   Navigator.pushNamed(context, Routes.orderReviewDeliveryRoute2);
-              // }
-            },
+            listener: (context, state) {},
             child: Directionality(
               textDirection: ui.TextDirection.rtl,
               child: Padding(
@@ -83,118 +67,7 @@ class _OrderReviewDeliveryPage1State extends State<OrderReviewDeliveryPage1> {
                       fontWeight: FontWeight.w700,
                     ),
                     20.verticalSpace,
-                    CustomText(txt: AppStrings.chooseTheTime, fontSize: 20.sp, txtColor: ColorManager.dark, fontWeight: FontWeight.w400),
-                    10.verticalSpace,
-                    Row(
-                      children: [
-                        Expanded(
-                          child: RadioListTile(
-                            activeColor: ColorManager.primary,
-                            title: CustomText(
-                              txt: AppStrings.fastTime,
-                              txtColor: ColorManager.dark,
-                              fontSize: 17,
-                            ),
-                            value: options[0],
-                            groupValue: timeSelected,
-                            onChanged: (value) {
-                              setState(() {
-                                timeSelected = value.toString();
-                              });
-                            },
-                          ),
-                        ),
-                        Expanded(
-                          child: RadioListTile(
-                            activeColor: ColorManager.primary,
-                            title: CustomText(
-                              txt: AppStrings.selectTime,
-                              txtColor: ColorManager.dark,
-                              fontSize: 17,
-                            ),
-                            value: options[1],
-                            groupValue: timeSelected,
-                            onChanged: (value) {
-                              setState(() {
-                                timeSelected = value.toString();
-                              });
-                            },
-                          ),
-                        ),
-                      ],
-                    ),
-                    20.verticalSpace,
-                    if (timeSelected == options[1])
-                      Column(
-                        children: [
-                          Container(
-                            margin: REdgeInsetsDirectional.only(start: 21, end: 21),
-                            decoration: ThemeHelper().inputBoxDecorationShadow(),
-                            child: CustomTextFormField(
-                              controller: dateinput,
-                              onTap: () async {
-                                DateTime? pickedDate = await showDatePicker(
-                                    context: context, initialDate: DateTime.now(), firstDate: DateTime.now(), lastDate: DateTime(2101));
-
-                                if (pickedDate != null) {
-                                  print(pickedDate); //pickedDate output format => 2021-03-10 00:00:00.000
-                                  String formattedDate = DateFormat('yyyy-MM-dd').format(pickedDate);
-                                  print(formattedDate); //formatted date output using intl package =>  2021-03-16
-                                  //you can implement different kind of Date Format here according to your requirement
-                                  setState(() {
-                                    dateinput.text = formattedDate; //set output date to TextField value.
-                                  });
-                                } else {
-                                  print("Date is not selected");
-                                }
-                              },
-                              suffexIcon: Icon(
-                                Icons.date_range,
-                                color: ColorManager.primary,
-                              ),
-                              lableText: AppStrings.textField1,
-                              color: ColorManager.secondaryGrey,
-                              readOnly: true,
-                            ),
-                          ),
-                          20.verticalSpace,
-                          Container(
-                            margin: REdgeInsetsDirectional.only(start: 21, end: 21),
-                            decoration: ThemeHelper().inputBoxDecorationShadow(),
-                            child: CustomTextFormField(
-                              controller: timeinput,
-                              readOnly: false,
-                              onTap: () async {
-                                // TimeOfDay now = TimeOfDay.now();
-                                // TimeOfDay? pickedTime = await showTimePicker(
-                                //   context: context,
-                                //   initialTime: now,
-                                // );
-                                // if (pickedTime != null) {
-                                //   String formattedTime =
-                                //   DateFormat('h:mm a').format(
-                                //     DateTime(2023, 1, 1, pickedTime.hour,
-                                //         pickedTime.minute),
-                                //   );
-                                //   setState(() {
-                                //     selectedTime = formattedTime;
-                                //     timeinput.text = formattedTime;
-                                //   });
-                                // } else {
-                                //   print("Time is not selected");
-                                // }
-                              },
-                              lableText: AppStrings.textField2,
-                              color: ColorManager.secondaryGrey,
-                              suffexIcon: Icon(
-                                Icons.access_time_rounded,
-                                color: ColorManager.primary,
-                              ),
-                            ),
-                          ),
-                          20.verticalSpace,
-                        ],
-                      ).animate().fadeIn(),
+                    OrderDateTime(),
                     CustomText(txt: AppStrings.weightOfPassenger, fontSize: 20.sp, txtColor: ColorManager.dark, fontWeight: FontWeight.w400),
                     5.verticalSpace,
                     Row(
@@ -318,6 +191,155 @@ class _OrderReviewDeliveryPage1State extends State<OrderReviewDeliveryPage1> {
           );
         },
       ),
+    );
+  }
+}
+
+class OrderDateTime extends StatefulWidget {
+  const OrderDateTime({Key? key}) : super(key: key);
+
+  @override
+  State<OrderDateTime> createState() => _OrderDateTimeState();
+}
+
+class _OrderDateTimeState extends State<OrderDateTime> {
+  List<String> options = ['fastTime', 'selectTime'];
+
+  TextEditingController dateinput = TextEditingController();
+
+  TextEditingController timeinput = TextEditingController();
+
+  late String timeSelected;
+  Time val = Time(hour: TimeOfDay.now().hour, minute: TimeOfDay.now().minute);
+
+  @override
+  void initState() {
+    dateinput.text = "";
+    timeinput.text = DateFormat('HH:mm a').format(
+      DateTime(2023, 1, 1, val.hour, val.minute),
+    );
+    timeSelected = options[0];
+
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        CustomText(txt: AppStrings.chooseTheTime, fontSize: 20.sp, txtColor: ColorManager.dark, fontWeight: FontWeight.w400),
+        10.verticalSpace,
+        Row(
+          children: [
+            Expanded(
+              child: RadioListTile(
+                activeColor: ColorManager.primary,
+                title: CustomText(
+                  txt: AppStrings.fastTime,
+                  txtColor: ColorManager.dark,
+                  fontSize: 17,
+                ),
+                value: options[0],
+                groupValue: timeSelected,
+                onChanged: (value) {
+                  setState(() {
+                    timeSelected = value.toString();
+                  });
+                },
+              ),
+            ),
+            Expanded(
+              child: RadioListTile(
+                activeColor: ColorManager.primary,
+                title: CustomText(
+                  txt: AppStrings.selectTime,
+                  txtColor: ColorManager.dark,
+                  fontSize: 17,
+                ),
+                value: options[1],
+                groupValue: timeSelected,
+                onChanged: (value) {
+                  setState(() {
+                    timeSelected = value.toString();
+                  });
+                },
+              ),
+            ),
+          ],
+        ),
+        20.verticalSpace,
+        if (timeSelected == options[1])
+          Column(
+            children: [
+              Container(
+                margin: REdgeInsetsDirectional.only(start: 21, end: 21),
+                decoration: ThemeHelper().inputBoxDecorationShadow(),
+                child: CustomTextFormField(
+                  controller: dateinput,
+                  onTap: () async {
+                    DateTime? pickedDate =
+                        await showDatePicker(context: context, initialDate: DateTime.now(), firstDate: DateTime.now(), lastDate: DateTime(2101));
+                    if (pickedDate != null) {
+                      String formattedDate = DateFormat('yyyy-MM-dd').format(pickedDate);
+                      setState(() {
+                        dateinput.text = formattedDate;
+                      });
+                    } else {
+                      print("Date is not selected");
+                    }
+                  },
+                  suffexIcon: Icon(
+                    Icons.date_range,
+                    color: ColorManager.primary,
+                  ),
+                  lableText: AppStrings.textField1,
+                  color: ColorManager.secondaryGrey,
+                  readOnly: true,
+                ),
+              ),
+              20.verticalSpace,
+              Container(
+                margin: REdgeInsetsDirectional.only(start: 21, end: 21),
+                decoration: ThemeHelper().inputBoxDecorationShadow(),
+                child: CustomTextFormField(
+                  controller: timeinput,
+                  readOnly: true,
+                  onTap: () async {
+                    Navigator.of(context).push(await showPicker(
+                      context: context,
+                      value: val ,
+                      onChange: (time) {
+                        setState(() {
+                          val = time;
+                        });
+                        print('valval');
+                        print(val);
+                        final pickedTime = val;
+                        String formattedTime = DateFormat('HH:mm a').format(
+                          DateTime(2023, 1, 1, pickedTime.hour, pickedTime.minute),
+                        );
+                        setState(() {
+                          timeinput.text = formattedTime;
+                        });
+                        setState(() {
+
+                        });
+                      },
+                    ));
+
+                  },
+                  lableText: AppStrings.textField2,
+                  color: ColorManager.secondaryGrey,
+                  suffexIcon: Icon(
+                    Icons.access_time_rounded,
+                    color: ColorManager.primary,
+                  ),
+                ),
+              ),
+              20.verticalSpace,
+            ],
+          ).animate().fadeIn(),
+      ],
     );
   }
 }

@@ -5,17 +5,18 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:meta/meta.dart';
 
 import '../../../../../data_remote/auth_repo.dart';
+import '../../../store/Cubit/my_cart_cubit.dart';
 
 part 'shipping_state.dart';
 
 class ShippingCubit extends Cubit<ShippingState> {
   late final AuthRepo _authRepo;
+
   ShippingCubit() : super(ShippingInitial()) {
     _authRepo = AuthRepo();
   }
 
   static ShippingCubit get(context) => BlocProvider.of(context);
-
 
   String idDestinationCubit = '';
   String nameDestinationCubit = '';
@@ -30,7 +31,6 @@ class ShippingCubit extends Cubit<ShippingState> {
   int totalCubit = 0;
   String shopIdCubit = "";
   String shoppNameCubit = "";
-
 
   void reset() {
     idSourceCubit = '';
@@ -49,14 +49,11 @@ class ShippingCubit extends Cubit<ShippingState> {
     weightCubit = 0;
   }
 
-
-
   void setIdDestination({required String value, required String name}) {
     idDestinationCubit = value;
     nameDestinationCubit = name;
     emit(ShippingIdAreaDestinationState());
   }
-
 
   void setIdSource({required String value, required String name}) {
     idSourceCubit = value;
@@ -99,7 +96,6 @@ class ShippingCubit extends Cubit<ShippingState> {
     emit(ShippingWeightState());
   }
 
-
   void setShopId({required String value, required String name}) {
     shopIdCubit = value;
     shoppNameCubit = name;
@@ -121,15 +117,16 @@ class ShippingCubit extends Cubit<ShippingState> {
     emit(ShippingOrderLoadingState());
     BotToast.showLoading();
     Either<String, dynamic> result = await _authRepo.shippingOrder(
-        destinationAreaId: idDestinationCubit,
-        destinationStreet: destinationStreetCubit,
-        destinationAdditional: detailsDestinationCubit,
-        note: noteCubit,
-        weight: weightCubit.toDouble(),
-        sourceAdditional: detailsSourceCubit,
-        sourceAreaId: idSourceCubit,
-        sourceStreet: sourceStreetCubit);
-    result.fold((l) {
+      destinationAreaId: idDestinationCubit,
+      destinationStreet: destinationStreetCubit,
+      destinationAdditional: detailsDestinationCubit,
+      note: noteCubit,
+      weight: weightCubit.toDouble(),
+      sourceAdditional: detailsSourceCubit,
+      sourceAreaId: idSourceCubit,
+      sourceStreet: sourceStreetCubit,
+    );
+    final val = result.fold((l) {
       emit(ShippingOrderErrorState());
       //show error
       BotToast.closeAllLoading();
@@ -140,31 +137,38 @@ class ShippingCubit extends Cubit<ShippingState> {
       BotToast.closeAllLoading();
       return true;
     });
-    return true;
+    return val;
   }
 
-  void shippingShopCubit(
-      {required String destinationAreaId,
-      required String destinationStreet,
-      required String destinationAdditional,
-      required String note,
-      required String shopId
-      // String? scheduleDate,
-      }) async {
+  Future<bool> shippingShopCubit({
+    String? destinationAreaId,
+    String? destinationStreet,
+    String? destinationAdditional,
+    String? note,
+    String? shopId,
+    required List<ProductCart> cart,
+    // String? scheduleDate,
+  }) async {
     emit(ShippingShopLoadingState());
     Either<String, dynamic> result = await _authRepo.shippingShop(
-      destinationAreaId: destinationAreaId,
-      destinationStreet: destinationStreet,
-      destinationAdditional: destinationAdditional,
-      note: note,
-      shopId: shopId,
+      destinationAreaId: idDestinationCubit,
+      destinationStreet: destinationStreetCubit,
+      destinationAdditional: detailsDestinationCubit,
+      note: noteCubit,
+      shopId: shopIdCubit,
+      cart: cart,
     );
-    result.fold((l) {
+    final val = result.fold((l) {
       emit(ShippingShopErrorState());
       //show error
+      BotToast.closeAllLoading();
+      return false;
     }, (r) {
       emit(ShippingShopSuccessState());
       //save user
+      BotToast.closeAllLoading();
+      return true;
     });
+    return val;
   }
 }

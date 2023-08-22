@@ -218,7 +218,7 @@ class _AddAddressSourceShippingPageState extends State<AddAddressSourceShippingP
                                   ShippingCubit.get(context).setIdSource(value: areaId.toString(), name: areaName.toString());
                                   ShippingCubit.get(context).setSourceStreet(value: streetSourceController.text.toString());
                                   ShippingCubit.get(context).setDetailsSource(value: detailsSourceController.text.toString());
-                                  Navigator.push(context, MaterialPageRoute(builder: (context) => const AddAddressDestinationShippingPage()));
+                                  Navigator.push(context, MaterialPageRoute(builder: (context) => const AddAddressDestinationShippingPage(fromShop: false,)));
                                 },
                               ),
                             ),

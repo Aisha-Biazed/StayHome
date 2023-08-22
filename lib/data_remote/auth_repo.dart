@@ -1,6 +1,7 @@
 import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:stay_home/Presntation/orders/store/Cubit/my_cart_cubit.dart';
 import 'package:stay_home/core/network/dio_factory.dart';
 import 'package:stay_home/model/details_shop_model.dart';
 import 'package:stay_home/model/home_model.dart';
@@ -15,15 +16,14 @@ import '../model/order_tracking_model.dart';
 
 class AuthRepo {
   late final Dio _dio;
+
   AuthRepo() {
     _dio = DioFactory.instance.get();
   }
 
-  Future<Either<String, String>> loginUser(
-      {required String email, required String password}) async {
+  Future<Either<String, String>> loginUser({required String email, required String password}) async {
     try {
-      final result = await _dio
-          .post('Mobile/Customer/LogIn?Email=$email&password=$password');
+      final result = await _dio.post('Mobile/Customer/LogIn?Email=$email&password=$password');
       final SharedPreferences prefs = await SharedPreferences.getInstance();
       await prefs.setString('token', result.data["response"]["accessToken"]);
       print("SuccessfulData");
@@ -31,9 +31,9 @@ class AuthRepo {
       return Right(result.data["response"]["accessToken"]);
     } catch (error) {
       print("error =$error");
-      if(((error as DioError).response?.data['message']as String).contains('User Not Found')){
+      if (((error as DioError).response?.data['message'] as String).contains('User Not Found')) {
         return Left('هذا الحساب غير موجود، تحقق من المعلومات المدخلة');
-      }else {
+      } else {
         return Left(ExceptionHandler.handle(error as Exception));
       }
     }
@@ -108,8 +108,6 @@ class AuthRepo {
     required String sourceStreet,
     required String sourceAdditional,
     required double weight,
-    // String? shopId
-    // String? scheduleDate,
   }) async {
     try {
       final result = await _dio.post(
@@ -123,18 +121,52 @@ class AuthRepo {
     }
   }
 
-  Future<Either<String, dynamic>> shippingShop(
-      {required String destinationAreaId,
-      required String destinationStreet,
-      required String destinationAdditional,
-      required String note,
-      required String shopId
-      // String? scheduleDate,
-      }) async {
+  Future<Either<String, dynamic>> deliveryShop({
+    required String destinationAreaId,
+    required String destinationStreet,
+    required String destinationAdditional,
+    required String note,
+    required String shopId,
+    required List<ProductCart> cart,
+  }) async {
     try {
       final result = await _dio.post(
-          'Mobile/Order/AddShippingOrder?Destination.AreaId=$destinationAreaId&Destination.Street=$destinationStreet&Destination.Additional=$destinationAdditional&Note=$note&ShopId=$shopId&Cart=%7B%0A%20%20%22productId%22%3A%20%223fa85f64-5717-4562-b3fc-2c963f66afa6%22%2C%0A%20%20%22quantity%22%3A%203%0A%7D');
-      //&ShopId=$shopId
+          'Mobile/Order/AddShippingOrder?Destination.AreaId=$destinationAreaId&Destination.Street=$destinationStreet&Destination.Additional=$destinationAdditional&Note=$note&ShopId=$shopId',
+          queryParameters: listToQuery(cart),
+    );
+      print("SuccessfulAddShippingOrder");
+      return Right(result.data["response"]);
+    } catch (error) {
+      print("error =$error");
+      return Left(ExceptionHandler.handle(error as Exception));
+    }
+  }
+
+  Map<String, dynamic> listToQuery(List<ProductCart> cart) {
+    Map<String, dynamic> map = Map();
+    for (int i = 0; i < cart.length; i++) {
+      map.addAll({
+        'Cart[$i].productId': cart[i].id,
+        'Cart[$i].quantity': cart[i].counter,
+      });
+    }
+    return map;
+  }
+
+  Future<Either<String, dynamic>> shippingShop({
+    required String destinationAreaId,
+    required String destinationStreet,
+    required String destinationAdditional,
+    required String note,
+    required String shopId,
+    required List<ProductCart> cart,
+    // String? scheduleDate,
+  }) async {
+    try {
+      final result = await _dio.post(
+        'Mobile/Order/AddShippingOrder?Destination.AreaId=$destinationAreaId&Destination.Street=$destinationStreet&Destination.Additional=$destinationAdditional&Note=$note&ShopId=$shopId',
+        queryParameters: listToQuery(cart),
+      );
       print("SuccessfulAddShopping");
       return Right(result.data["response"]);
     } catch (error) {
@@ -230,8 +262,7 @@ class AuthRepo {
     }
   }
 
-  Future<Either<String, List<GetAllCitiesWithAreasModel>>>
-      getAllCitiesWithAreas() async {
+  Future<Either<String, List<GetAllCitiesWithAreasModel>>> getAllCitiesWithAreas() async {
     try {
       final result = await _dio.get('Mobile/Setting/GetAllCitiesWithAreas');
       (result.data["response"] as List).map((e) {
@@ -277,17 +308,13 @@ class AuthRepo {
     }
   }
 
-  Future<Either<String, OrderCheckModel>> orderCheck(
-      String destinationAreaId, String sourceAreaId) async {
+  Future<Either<String, OrderCheckModel>> orderCheck(String destinationAreaId, String sourceAreaId) async {
     try {
       final result = await _dio.get(
         'Mobile/Order/Check',
         // '?SourceAreaId=dda57d62-b1c0-46bd-a3f3-490210dea637',
         // 'dda57d62-b1c0-46bd-a3f3-490210dea637',
-        queryParameters: {
-          'DestinationAreaId': destinationAreaId,
-          'SourceAreaId': sourceAreaId
-        },
+        queryParameters: {'DestinationAreaId': destinationAreaId, 'SourceAreaId': sourceAreaId},
       );
       print("SuccessfulOrderCheck");
       return Right(OrderCheckModel.fromJson(result.data["response"]));
@@ -297,11 +324,25 @@ class AuthRepo {
     }
   }
 
-  Future<Either<String, Null>> rate(
-      {required int star, required String comment}) async {
+  Future<Either<String, OrderCheckModel>> orderCheckShop(String destinationAreaId, String sourceAreaId) async {
     try {
-      final result = await _dio.post(
-          'Mobile/Order/Rate?Id=4a4c2eea-ea10-4b08-9cc7-7422230dcde7&Star=$star&Comment=$comment');
+      final result = await _dio.get(
+        'Mobile/Order/Check',
+        // '?SourceAreaId=dda57d62-b1c0-46bd-a3f3-490210dea637',
+        // 'dda57d62-b1c0-46bd-a3f3-490210dea637',
+        queryParameters: {'DestinationAreaId': destinationAreaId, 'ShopId': sourceAreaId},
+      );
+      print("SuccessfulOrderCheck");
+      return Right(OrderCheckModel.fromJson(result.data["response"]));
+    } catch (error) {
+      print("error =$error");
+      return Left(ExceptionHandler.handle(error as Exception));
+    }
+  }
+
+  Future<Either<String, Null>> rate({required int star, required String comment}) async {
+    try {
+      final result = await _dio.post('Mobile/Order/Rate?Id=4a4c2eea-ea10-4b08-9cc7-7422230dcde7&Star=$star&Comment=$comment');
       print("SuccessfulDataRate");
       print(result.data["response"]);
       return Right(result.data["response"]);

@@ -9,24 +9,20 @@ import '../../../../../core/widgets/custom_buttons.dart';
 import '../../../../../core/widgets/custom_text.dart';
 import '../../../../login/cubit/states.dart';
 import '../../../../resources/color_manager.dart';
-import '../../../../resources/strings_manager.dart';
+  import '../../../../resources/strings_manager.dart';
 import '../cubit/delivery_cubit.dart';
+import 'order_review_delivery_page_1.dart';
 import 'order_review_delivery_page_2.dart';
-import 'order_review_delivery_shop_page_2.dart';
 
-class AddAddressDestinationDeliveryPage extends StatefulWidget {
-  final bool fromShop;
-
-  const AddAddressDestinationDeliveryPage({
-    Key? key,
-    required this.fromShop,
-  }) : super(key: key);
+class AddAddressDestinationShopDeliveryPage extends StatefulWidget {
+  const AddAddressDestinationShopDeliveryPage({Key? key}) : super(key: key);
 
   @override
-  State<AddAddressDestinationDeliveryPage> createState() => _AddAddressDestinationDeliveryPageState();
+  State<AddAddressDestinationShopDeliveryPage> createState() =>
+      _AddAddressDestinationShopDeliveryPageState();
 }
 
-class _AddAddressDestinationDeliveryPageState extends State<AddAddressDestinationDeliveryPage> {
+class _AddAddressDestinationShopDeliveryPageState extends State<AddAddressDestinationShopDeliveryPage> {
   final _formKey = GlobalKey<FormState>();
   TextEditingController streetDestinationController = TextEditingController(text: "");
   TextEditingController detailsDestinationController = TextEditingController(text: "");
@@ -70,8 +66,10 @@ class _AddAddressDestinationDeliveryPageState extends State<AddAddressDestinatio
                         child: Column(
                           children: [
                             Container(
-                                margin: REdgeInsetsDirectional.only(top: 100, start: 0, end: 10, bottom: 10),
-                                padding: REdgeInsetsDirectional.only(top: 0, start: 10, end: 0, bottom: 0),
+                                margin: REdgeInsetsDirectional.only(
+                                    top: 100, start: 0, end: 10, bottom: 10),
+                                padding: REdgeInsetsDirectional.only(
+                                    top: 0, start: 10, end: 0, bottom: 0),
                                 alignment: Alignment.center,
                                 child: CustomText(
                                   txt: AppStrings.addNewAddressDestination,
@@ -129,7 +127,8 @@ class _AddAddressDestinationDeliveryPageState extends State<AddAddressDestinatio
                             ),
                             30.verticalSpace,
                             Container(
-                              decoration: ThemeHelper().inputBoxDecorationShadow(),
+                              decoration:
+                                  ThemeHelper().inputBoxDecorationShadow(),
                               child: TextFormField(
                                 controller: streetDestinationController,
                                 decoration: ThemeHelper().textInputDecoration(
@@ -146,7 +145,8 @@ class _AddAddressDestinationDeliveryPageState extends State<AddAddressDestinatio
                             ),
                             30.verticalSpace,
                             Container(
-                              decoration: ThemeHelper().inputBoxDecorationShadow(),
+                              decoration:
+                                  ThemeHelper().inputBoxDecorationShadow(),
                               child: TextFormField(
                                 controller: detailsDestinationController,
                                 decoration: ThemeHelper().textInputDecoration(
@@ -167,8 +167,10 @@ class _AddAddressDestinationDeliveryPageState extends State<AddAddressDestinatio
                                 top: 230,
                                 start: 25,
                               ),
-                              padding: REdgeInsetsDirectional.only(end: 10, top: 0, start: 10, bottom: 0),
-                              decoration: ThemeHelper().buttonBoxDecoration(context),
+                              padding: REdgeInsetsDirectional.only(
+                                  end: 10, top: 0, start: 10, bottom: 0),
+                              decoration:
+                                  ThemeHelper().buttonBoxDecoration(context),
                               child: CustomGeneralButton(
                                 text: AppStrings.save,
                                 onTap: () {
@@ -176,15 +178,11 @@ class _AddAddressDestinationDeliveryPageState extends State<AddAddressDestinatio
                                   DeliveryCubit.get(context).setIdDestination(value: _cnt.dropDownValue?.value, name: _cnt.dropDownValue!.name);
                                   DeliveryCubit.get(context).setDestinationStreet(value: streetDestinationController.text);
                                   DeliveryCubit.get(context).setDetailsDestination(value: detailsDestinationController.text);
-                                  if (_formKey.currentState!.validate()) {
+                                  if(_formKey.currentState!.validate()) {
                                     Navigator.pop(context);
                                     Navigator.pop(context);
-                                    if(widget.fromShop) {
-                                      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => const OrderReviewDeliveryShopPage2()));
-                                    }else{
-                                      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => const OrderReviewDeliveryPage2()));
-
-                                    }
+                                    Navigator.pushReplacement(
+                                        context, MaterialPageRoute(builder: (context) => const OrderReviewDeliveryPage2()));
                                   }
                                   // Navigator.pushNamed(
                                   //     context, Routes.addressSourceRoute);

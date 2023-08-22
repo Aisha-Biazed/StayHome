@@ -6,17 +6,22 @@ import 'package:get/get_navigation/src/root/parse_route.dart';
 import 'package:stay_home/Presntation/login/cubit/cubit.dart';
 import 'package:stay_home/Presntation/orders/pages/ShippingDelivery/cubit/shipping_cubit.dart';
 import 'package:stay_home/Presntation/orders/pages/ShippingDelivery/pages/order_review_shipping_page_2.dart';
+import 'package:stay_home/Presntation/orders/pages/ShippingDelivery/pages/order_review_shipping_shop_page_2.dart';
 
 import '../../../../../core/utils/theme_helper.dart';
 import '../../../../../core/widgets/custom_buttons.dart';
 import '../../../../../core/widgets/custom_text.dart';
 import '../../../../login/cubit/states.dart';
 import '../../../../resources/color_manager.dart';
-import '../../../../resources/routes_manager.dart';
 import '../../../../resources/strings_manager.dart';
 
 class AddAddressDestinationShippingPage extends StatefulWidget {
-  const AddAddressDestinationShippingPage({Key? key}) : super(key: key);
+  final bool fromShop;
+
+  const AddAddressDestinationShippingPage({
+    Key? key,
+    required this.fromShop,
+  }) : super(key: key);
 
   @override
   State<AddAddressDestinationShippingPage> createState() => _AddAddressDestinationShippingPageState();
@@ -30,7 +35,6 @@ class _AddAddressDestinationShippingPageState extends State<AddAddressDestinatio
   String? areaName;
   String? cityName;
   String? cityId;
-
 
   @override
   void initState() {
@@ -140,8 +144,8 @@ class _AddAddressDestinationShippingPageState extends State<AddAddressDestinatio
                                   } else {
                                     final selectedCity = cityList.firstWhereOrNull((city) => city.id == cityId);
                                     final filteredAreas = selectedCity?.areas;
-                                    areaId = areaId?? filteredAreas!.first.id;
-                                    areaName = areaName?? filteredAreas!.first.name;
+                                    areaId = areaId ?? filteredAreas!.first.id;
+                                    areaName = areaName ?? filteredAreas!.first.name;
                                     return Container(
                                       decoration: ThemeHelper().inputBoxDecorationShadow(),
                                       child: DropDownTextField(
@@ -171,9 +175,8 @@ class _AddAddressDestinationShippingPageState extends State<AddAddressDestinatio
                                         onChanged: (val) {
                                           setState(() {
                                             areaId = val.value;
-                                            areaName = val.Name;
+                                            areaName = val.name;
                                           });
-
                                         },
                                       ),
                                     );
@@ -222,7 +225,12 @@ class _AddAddressDestinationShippingPageState extends State<AddAddressDestinatio
                                     if (_formKey.currentState!.validate()) {
                                       Navigator.pop(context);
                                       Navigator.pop(context);
-                                      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => const OrderReviewShippingPage2()));
+                                      if(widget.fromShop) {
+                                        Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => const OrderReviewShippingShopPage2()));
+                                      } else{
+                                        Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => const OrderReviewShippingPage2()));
+
+                                      }
                                     }
                                   },
                                 )),

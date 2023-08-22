@@ -1,35 +1,36 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:intl/intl.dart';
-import 'package:stay_home/Presntation/orders/pages/ShippingDelivery/cubit/shipping_cubit.dart';
+import 'package:stay_home/Presntation/orders/pages/DeliveryOrder/pages/add_address_destination_delivery_page.dart';
+import 'package:stay_home/Presntation/orders/store/pages/my_cart_page.dart';
 import 'package:stay_home/Presntation/ratings/widgets/custom_buttons.dart';
-import 'package:stay_home/Presntation/resources/assets_manager.dart';
 import 'package:stay_home/Presntation/resources/color_manager.dart';
 import 'package:stay_home/Presntation/resources/strings_manager.dart';
-import 'package:stay_home/core/widgets/custom_buttons.dart';
 import 'dart:ui' as ui;
 import 'package:day_night_time_picker/day_night_time_picker.dart';
 import '../../../../../core/utils/theme_helper.dart';
 import '../../../../../core/widgets/custom_text.dart';
 import '../../../../../core/widgets/custom_text_field.dart';
 import '../../../../resources/routes_manager.dart';
+import '../cubit/delivery_cubit.dart';
 
-class OrderReviewForShopPage1 extends StatefulWidget {
-  const OrderReviewForShopPage1({Key? key}) : super(key: key);
+class OrderReviewDeliveryShopPage1 extends StatefulWidget {
+  const OrderReviewDeliveryShopPage1({Key? key}) : super(key: key);
 
   @override
-  State<OrderReviewForShopPage1> createState() =>
-      _OrderReviewForShopPage1State();
+  State<OrderReviewDeliveryShopPage1> createState() => _OrderReviewDeliveryShopPage1State();
 }
 
 List<String> options = ['fastTime', 'selectTime'];
 
-class _OrderReviewForShopPage1State extends State<OrderReviewForShopPage1> {
+class _OrderReviewDeliveryShopPage1State extends State<OrderReviewDeliveryShopPage1> {
   String timeSelected = options[0];
   TextEditingController dateinput = TextEditingController();
   TextEditingController timeinput = TextEditingController();
   TextEditingController noteController = TextEditingController(text: "");
   TextEditingController destinationController = TextEditingController(text: "");
+
   @override
   void initState() {
     dateinput.text = "";
@@ -41,6 +42,7 @@ class _OrderReviewForShopPage1State extends State<OrderReviewForShopPage1> {
   Time _time = Time(hour: 11, minute: 30, second: 20);
   bool iosStyle = true;
   String? selectedTime;
+
   void onTimeChanged(Time newTime) {
     setState(() {
       _time = newTime;
@@ -50,9 +52,7 @@ class _OrderReviewForShopPage1State extends State<OrderReviewForShopPage1> {
 
   @override
   Widget build(BuildContext context) {
-    var shopIdController = TextEditingController(
-        text:
-            "${AppStrings.destinationText}${ShippingCubit.get(context).shoppNameCubit}");
+    var shopIdController = TextEditingController(text: "${AppStrings.sourceText}${DeliveryCubit.get(context).shoppNameCubit}");
     return Scaffold(
       resizeToAvoidBottomInset: false,
       body: Directionality(
@@ -75,11 +75,7 @@ class _OrderReviewForShopPage1State extends State<OrderReviewForShopPage1> {
                     fontWeight: FontWeight.w700,
                   ),
                   20.verticalSpace,
-                  CustomText(
-                      txt: AppStrings.chooseTheTime,
-                      fontSize: 20.sp,
-                      txtColor: ColorManager.dark,
-                      fontWeight: FontWeight.w400),
+                  CustomText(txt: AppStrings.chooseTheTime, fontSize: 20.sp, txtColor: ColorManager.dark, fontWeight: FontWeight.w400),
                   10.verticalSpace,
                   Row(
                     children: [
@@ -119,93 +115,84 @@ class _OrderReviewForShopPage1State extends State<OrderReviewForShopPage1> {
                       ),
                     ],
                   ),
-                  20.verticalSpace,
-                  Visibility(
-                    visible: timeSelected == options[1],
-                    child: Container(
-                      margin: REdgeInsetsDirectional.only(start: 21, end: 21),
-                      decoration: ThemeHelper().inputBoxDecorationShadow(),
-                      child: CustomTextFormField(
-                        controller: dateinput,
-                        onTap: () async {
-                          DateTime? pickedDate = await showDatePicker(
-                              context: context,
-                              initialDate: DateTime.now(),
-                              firstDate: DateTime.now(),
-                              lastDate: DateTime(2101));
+                  if (timeSelected == options[1])
+                    Column(
+                      children: [
+                        20.verticalSpace,
+                        Container(
+                          margin: REdgeInsetsDirectional.only(start: 21, end: 21),
+                          decoration: ThemeHelper().inputBoxDecorationShadow(),
+                          child: CustomTextFormField(
+                            controller: dateinput,
+                            onTap: () async {
+                              DateTime? pickedDate = await showDatePicker(
+                                  context: context, initialDate: DateTime.now(), firstDate: DateTime.now(), lastDate: DateTime(2101));
 
-                          if (pickedDate != null) {
-                            print(
-                                pickedDate); //pickedDate output format => 2021-03-10 00:00:00.000
-                            String formattedDate =
-                                DateFormat('yyyy-MM-dd').format(pickedDate);
-                            print(
-                                formattedDate); //formatted date output using intl package =>  2021-03-16
-                            //you can implement different kind of Date Format here according to your requirement
-                            setState(() {
-                              dateinput.text =
-                                  formattedDate; //set output date to TextField value.
-                            });
-                          } else {
-                            print("Date is not selected");
-                          }
-                        },
-                        suffexIcon: Icon(
-                          Icons.date_range,
-                          color: ColorManager.primary,
+                              if (pickedDate != null) {
+                                print(pickedDate); //pickedDate output format => 2021-03-10 00:00:00.000
+                                String formattedDate = DateFormat('yyyy-MM-dd').format(pickedDate);
+                                print(formattedDate); //formatted date output using intl package =>  2021-03-16
+                                //you can implement different kind of Date Format here according to your requirement
+                                setState(() {
+                                  dateinput.text = formattedDate; //set output date to TextField value.
+                                });
+                              } else {
+                                print("Date is not selected");
+                              }
+                            },
+                            suffexIcon: Icon(
+                              Icons.date_range,
+                              color: ColorManager.primary,
+                            ),
+                            lableText: AppStrings.textField1,
+                            color: ColorManager.secondaryGrey,
+                            readOnly: true,
+                          ),
                         ),
-                        lableText: AppStrings.textField1,
-                        color: ColorManager.secondaryGrey,
-                        readOnly: true,
-                      ),
-                    ),
-                  ),
-                  20.verticalSpace,
-                  Visibility(
-                    visible: timeSelected == options[1],
-                    child: Container(
-                      margin: REdgeInsetsDirectional.only(start: 21, end: 21),
-                      decoration: ThemeHelper().inputBoxDecorationShadow(),
-                      child: CustomTextFormField(
-                        controller: timeinput,
-                        readOnly: false,
-                        onTap: () async {
-                          TimeOfDay now = TimeOfDay.now();
-                          TimeOfDay? pickedTime = await showTimePicker(
-                            context: context,
-                            initialTime: now,
-                          );
-                          if (pickedTime != null) {
-                            String formattedTime = DateFormat('h:mm a').format(
-                              DateTime(2023, 1, 1, pickedTime.hour,
-                                  pickedTime.minute),
-                            );
-                            setState(() {
-                              selectedTime = formattedTime;
-                              timeinput.text = formattedTime;
-                            });
-                          } else {
-                            print("Time is not selected");
-                          }
-                        },
-                        lableText: AppStrings.textField2,
-                        color: ColorManager.secondaryGrey,
-                        suffexIcon: Icon(
-                          Icons.access_time_rounded,
-                          color: ColorManager.primary,
+                        20.verticalSpace,
+                        Container(
+                          margin: REdgeInsetsDirectional.only(start: 21, end: 21),
+                          decoration: ThemeHelper().inputBoxDecorationShadow(),
+                          child: CustomTextFormField(
+                            controller: timeinput,
+                            readOnly: false,
+                            onTap: () async {
+                              TimeOfDay now = TimeOfDay.now();
+                              TimeOfDay? pickedTime = await showTimePicker(
+                                context: context,
+                                initialTime: now,
+                              );
+                              if (pickedTime != null) {
+                                String formattedTime = DateFormat('h:mm a').format(
+                                  DateTime(2023, 1, 1, pickedTime.hour, pickedTime.minute),
+                                );
+                                setState(() {
+                                  selectedTime = formattedTime;
+                                  timeinput.text = formattedTime;
+                                });
+                              } else {
+                                print("Time is not selected");
+                              }
+                            },
+                            lableText: AppStrings.textField2,
+                            color: ColorManager.secondaryGrey,
+                            suffexIcon: Icon(
+                              Icons.access_time_rounded,
+                              color: ColorManager.primary,
+                            ),
+                          ),
                         ),
-                      ),
-                    ),
-                  ),
-                  20.verticalSpace,
+                        20.verticalSpace,
+                      ],
+                    ).animate().fadeIn(),
                   20.verticalSpace,
                   Container(
                     margin: REdgeInsetsDirectional.only(start: 21, end: 21),
                     decoration: ThemeHelper().inputBoxDecorationShadow(),
                     child: CustomTextFormField(
                       controller: shopIdController,
-                      readOnly: false,
-                      lableText: AppStrings.labelDestination,
+                      readOnly: true,
+                      lableText: AppStrings.labelSource,
                       color: ColorManager.secondaryGrey,
                     ),
                   ),
@@ -216,14 +203,12 @@ class _OrderReviewForShopPage1State extends State<OrderReviewForShopPage1> {
                     child: CustomTextFormField(
                       controller: destinationController,
                       onTap: () {
-                        Navigator.pushNamed(
-                            context, Routes.shippingAddressDestinationRoute);
+                        Navigator.push(context, MaterialPageRoute(builder: (context) => const AddAddressDestinationDeliveryPage(fromShop: true,)));
                       },
-                      readOnly: false,
-                      hintText:
-                          ShippingCubit.get(context).nameDestinationCubit == ''
-                              ? AppStrings.textField3
-                              : ShippingCubit.get(context).nameDestinationCubit,
+                      readOnly: true,
+                      hintText: DeliveryCubit.get(context).nameDestinationCubit == ''
+                          ? AppStrings.textField3
+                          : DeliveryCubit.get(context).nameDestinationCubit,
                       lableText: AppStrings.textField4,
                       color: ColorManager.secondaryGrey,
                     ),
@@ -234,8 +219,7 @@ class _OrderReviewForShopPage1State extends State<OrderReviewForShopPage1> {
                     decoration: ThemeHelper().inputBoxDecorationShadow(),
                     child: CustomTextFormField(
                       onTap: () {
-                        ShippingCubit.get(context)
-                            .setNote(value: noteController.text.toString());
+                        DeliveryCubit.get(context).setNote(value: noteController.text.toString());
                       },
                       controller: noteController,
                       readOnly: false,
@@ -263,18 +247,15 @@ class _OrderReviewForShopPage1State extends State<OrderReviewForShopPage1> {
                     Expanded(
                         child: CustomButtons(
                       onPressed: () {
-                        print(ShippingCubit.get(context).shopIdCubit);
-                        ShippingCubit.get(context).shippingShopCubit(
-                          note: ShippingCubit.get(context).noteCubit,
-                          destinationStreet:
-                              ShippingCubit.get(context).destinationStreetCubit,
-                          destinationAdditional: ShippingCubit.get(context)
-                              .detailsDestinationCubit,
-                          destinationAreaId:
-                              ShippingCubit.get(context).idDestinationCubit,
-                          shopId: ShippingCubit.get(context).shopIdCubit,
-                          // scheduleDate: ,
-                        );
+                        print(DeliveryCubit.get(context).shopIdCubit);
+                        // DeliveryCubit.get(context).deliveryShopCubit(
+                        //   note: DeliveryCubit.get(context).noteCubit,
+                        //   destinationStreet: DeliveryCubit.get(context).destinationStreetCubit,
+                        //   destinationAdditional: DeliveryCubit.get(context).detailsDestinationCubit,
+                        //   destinationAreaId: DeliveryCubit.get(context).idDestinationCubit,
+                        //   shopId: DeliveryCubit.get(context).shopIdCubit,
+                        //   // scheduleDate: ,
+                        // );
                         Navigator.pushNamed(context, Routes.orderReviewRoute3);
                       },
                       text: AppStrings.requestBtn,
@@ -284,7 +265,7 @@ class _OrderReviewForShopPage1State extends State<OrderReviewForShopPage1> {
                     Expanded(
                         child: CustomButtons(
                       onPressed: () {
-                        Navigator.pushNamed(context, Routes.myCartRoute);
+                        Navigator.push(context, MaterialPageRoute(builder: (context)=>const MyCartPage(isReview: true)));
                       },
                       text: AppStrings.cartBtn,
                       color: ColorManager.secondary1,

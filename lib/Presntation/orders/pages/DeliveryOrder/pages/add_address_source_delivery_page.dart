@@ -166,7 +166,7 @@ class _AddAddressSourceDeliveryPageState extends State<AddAddressSourceDeliveryP
                               DeliveryCubit.get(context).setDetailsSource(value: detailsSourceController.text);
                               if(_formKey.currentState!.validate()) {
                                 Navigator.push(
-                                  context, MaterialPageRoute(builder: (context) => const AddAddressDestinationDeliveryPage()));
+                                  context, MaterialPageRoute(builder: (context) => const AddAddressDestinationDeliveryPage(fromShop: false)));
                               }
                             },
                           ),

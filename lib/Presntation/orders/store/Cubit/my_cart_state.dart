@@ -3,6 +3,7 @@ part of 'my_cart_cubit.dart';
 @immutable
 class MyCartState {
   List<ProductCart> productsCart;
+
   MyCartState({required this.productsCart});
 }
 
@@ -18,6 +19,13 @@ class ProductCart {
   @override
   String toString() {
     return 'ProductCart{id: $id, name: $name, imageUrl: $imageUrl, cost: $cost, counter: $counter}';
+  }
+
+  Map<String, dynamic> toJson() {
+    return {
+      "productId": id,
+      "quantity": counter,
+    };
   }
 
   final String? id;

@@ -144,6 +144,8 @@ class InitialCubit extends Cubit<InitialStates> {
   }
 
   void shopCubit() async {
+    print('state test');
+    print(state);
     emit(ShopLoadingState());
     Either<String, List<ShopModel>> listShop = await _authRepo.getShop();
     listShop.fold((l) {
@@ -172,6 +174,20 @@ class InitialCubit extends Cubit<InitialStates> {
     emit(OrderCheckLoadingState());
     Either<String, OrderCheckModel> result =
         await _authRepo.orderCheck(destinationAreaId, sourceAreaId);
+    result.fold((l) {
+      emit(OrderCheckErrorState());
+      //show error
+    }, (r) {
+      emit(OrderCheckSuccessState(r as OrderCheckModel));
+      //save user
+    });
+  }
+  void orderCheckShopCubit(String destinationAreaId, String sourceAreaId) async {
+    print('orderCheckShop');
+
+    emit(OrderCheckLoadingState());
+    Either<String, OrderCheckModel> result =
+    await _authRepo.orderCheckShop(destinationAreaId, sourceAreaId);
     result.fold((l) {
       emit(OrderCheckErrorState());
       //show error

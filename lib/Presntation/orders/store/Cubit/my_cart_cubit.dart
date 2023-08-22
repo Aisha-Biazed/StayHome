@@ -52,12 +52,22 @@ class MyCartCubit extends Cubit<MyCartState> {
     return state.productsCart;
   }
 
-  // int getTotalProductsCount() {
-  //   final cart = state.productsCart;
-  //   int totalCount = 0;
-  //   for (var product in cart) {
-  //     totalCount += product.counter ?? 0;
-  //   }
-  //   return totalCount;
-  // }
+  int getTotalProductsPrice() {
+    final cart = state.productsCart;
+    int price = 0;
+    for (var product in cart) {
+      price += (product.counter??1)*(product.cost??1) ;
+    }
+    return price;
+  }
+
+
+  int getTotalProductsCount() {
+    final cart = state.productsCart;
+    int totalCount = 0;
+    for (var product in cart) {
+      totalCount += product.counter ?? 0;
+    }
+    return totalCount;
+  }
 }
