@@ -85,7 +85,7 @@ class _AddAddressDestinationPassengerPageState
                                   txt: AppStrings.addNewAddressDestination,
                                   fontSize: 25,
                                   txtColor: ColorManager.primary,
-                                  fontWeight: FontWeight.w600,
+                                  fontWeight: FontWeight.w400,
                                 )),
                             30.verticalSpace,
                             RSizedBox(

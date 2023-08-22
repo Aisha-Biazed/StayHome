@@ -19,7 +19,8 @@ class OrderReviewShippingPage1 extends StatefulWidget {
   const OrderReviewShippingPage1({Key? key}) : super(key: key);
 
   @override
-  State<OrderReviewShippingPage1> createState() => _OrderReviewShippingPage1State();
+  State<OrderReviewShippingPage1> createState() =>
+      _OrderReviewShippingPage1State();
 }
 
 List<String> options = ['fastTime', 'selectTime'];
@@ -54,9 +55,14 @@ class _OrderReviewShippingPage1State extends State<OrderReviewShippingPage1> {
 
   @override
   Widget build(BuildContext context) {
-    var destinationController = TextEditingController(text: '${AppStrings.destinationText}${ShippingCubit.get(context).nameDestinationCubit}');
-    var sourceController = TextEditingController(text: '${AppStrings.sourceText}${ShippingCubit.get(context).nameSourceCubit}');
-    var noteController = TextEditingController(text: ShippingCubit.get(context).noteCubit);
+    var destinationController = TextEditingController(
+        text:
+            '${AppStrings.destinationText}${ShippingCubit.get(context).nameDestinationCubit}');
+    var sourceController = TextEditingController(
+        text:
+            '${AppStrings.sourceText}${ShippingCubit.get(context).nameSourceCubit}');
+    var noteController =
+        TextEditingController(text: ShippingCubit.get(context).noteCubit);
     return Scaffold(
       resizeToAvoidBottomInset: false,
       body: BlocBuilder<ShippingCubit, ShippingState>(
@@ -82,10 +88,14 @@ class _OrderReviewShippingPage1State extends State<OrderReviewShippingPage1> {
                       txt: AppStrings.orderBeforeAdd,
                       fontSize: 30.sp,
                       txtColor: ColorManager.primary,
-                      fontWeight: FontWeight.w700,
+                      fontWeight: FontWeight.w500,
                     ),
                     20.verticalSpace,
-                    CustomText(txt: AppStrings.chooseTheTime, fontSize: 20.sp, txtColor: ColorManager.dark, fontWeight: FontWeight.w400),
+                    CustomText(
+                        txt: AppStrings.chooseTheTime,
+                        fontSize: 20.sp,
+                        txtColor: ColorManager.dark,
+                        fontWeight: FontWeight.w400),
                     10.verticalSpace,
                     Row(
                       children: [
@@ -130,21 +140,31 @@ class _OrderReviewShippingPage1State extends State<OrderReviewShippingPage1> {
                       Column(
                         children: [
                           Container(
-                            margin: REdgeInsetsDirectional.only(start: 21, end: 21),
-                            decoration: ThemeHelper().inputBoxDecorationShadow(),
+                            margin:
+                                REdgeInsetsDirectional.only(start: 21, end: 21),
+                            decoration:
+                                ThemeHelper().inputBoxDecorationShadow(),
                             child: CustomTextFormField(
                               controller: dateinput,
                               onTap: () async {
                                 DateTime? pickedDate = await showDatePicker(
-                                    context: context, initialDate: DateTime.now(), firstDate: DateTime.now(), lastDate: DateTime(2101));
+                                    context: context,
+                                    initialDate: DateTime.now(),
+                                    firstDate: DateTime.now(),
+                                    lastDate: DateTime(2101));
 
                                 if (pickedDate != null) {
-                                  print(pickedDate); //pickedDate output format => 2021-03-10 00:00:00.000
-                                  String formattedDate = DateFormat('yyyy-MM-dd').format(pickedDate);
-                                  print(formattedDate); //formatted date output using intl package =>  2021-03-16
+                                  print(
+                                      pickedDate); //pickedDate output format => 2021-03-10 00:00:00.000
+                                  String formattedDate =
+                                      DateFormat('yyyy-MM-dd')
+                                          .format(pickedDate);
+                                  print(
+                                      formattedDate); //formatted date output using intl package =>  2021-03-16
                                   //you can implement different kind of Date Format here according to your requirement
                                   setState(() {
-                                    dateinput.text = formattedDate; //set output date to TextField value.
+                                    dateinput.text =
+                                        formattedDate; //set output date to TextField value.
                                   });
                                 } else {
                                   print("Date is not selected");
@@ -161,8 +181,10 @@ class _OrderReviewShippingPage1State extends State<OrderReviewShippingPage1> {
                           ),
                           20.verticalSpace,
                           Container(
-                            margin: REdgeInsetsDirectional.only(start: 21, end: 21),
-                            decoration: ThemeHelper().inputBoxDecorationShadow(),
+                            margin:
+                                REdgeInsetsDirectional.only(start: 21, end: 21),
+                            decoration:
+                                ThemeHelper().inputBoxDecorationShadow(),
                             child: CustomTextFormField(
                               controller: timeinput,
                               readOnly: false,
@@ -197,7 +219,11 @@ class _OrderReviewShippingPage1State extends State<OrderReviewShippingPage1> {
                           20.verticalSpace,
                         ],
                       ).animate().fadeIn(),
-                    CustomText(txt: AppStrings.weightOfPassenger, fontSize: 20.sp, txtColor: ColorManager.dark, fontWeight: FontWeight.w400),
+                    CustomText(
+                        txt: AppStrings.weightOfPassenger,
+                        fontSize: 20.sp,
+                        txtColor: ColorManager.dark,
+                        fontWeight: FontWeight.w400),
                     5.verticalSpace,
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
@@ -234,13 +260,20 @@ class _OrderReviewShippingPage1State extends State<OrderReviewShippingPage1> {
                       child: CustomTextFormField(
                         controller: sourceController,
                         onTap: () {
-                          ShippingCubit.get(context).setNote(value: noteController.text.toString());
+                          ShippingCubit.get(context)
+                              .setNote(value: noteController.text.toString());
                           ShippingCubit.get(context).setWeight(value: weight);
-                          Navigator.push(context, MaterialPageRoute(builder: (context) => const AddAddressSourceShippingPage()));
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) =>
+                                      const AddAddressSourceShippingPage()));
                         },
                         readOnly: true,
                         hintText:
-                            ShippingCubit.get(context).nameSourceCubit == '' ? AppStrings.textField3 : ShippingCubit.get(context).nameSourceCubit,
+                            ShippingCubit.get(context).nameSourceCubit == ''
+                                ? AppStrings.textField3
+                                : ShippingCubit.get(context).nameSourceCubit,
                         color: ColorManager.secondaryGrey,
                         lableText: AppStrings.textField3,
                       ),
@@ -252,10 +285,16 @@ class _OrderReviewShippingPage1State extends State<OrderReviewShippingPage1> {
                       child: CustomTextFormField(
                         controller: destinationController,
                         onTap: () {
-                          Navigator.push(context, MaterialPageRoute(builder: (context) => const AddAddressDestinationShippingPage()));
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) =>
+                                      const AddAddressDestinationShippingPage()));
                         },
                         readOnly: true,
-                        hintText: ShippingCubit.get(context).nameDestinationCubit == ''
+                        hintText: ShippingCubit.get(context)
+                                    .nameDestinationCubit ==
+                                ''
                             ? AppStrings.textField3
                             : ShippingCubit.get(context).nameDestinationCubit,
                         lableText: AppStrings.textField4,
@@ -268,7 +307,8 @@ class _OrderReviewShippingPage1State extends State<OrderReviewShippingPage1> {
                       decoration: ThemeHelper().inputBoxDecorationShadow(),
                       child: CustomTextFormField(
                         onTap: () {
-                          ShippingCubit.get(context).setNote(value: noteController.text.toString());
+                          ShippingCubit.get(context)
+                              .setNote(value: noteController.text.toString());
                         },
                         controller: noteController,
                         readOnly: false,

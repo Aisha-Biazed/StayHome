@@ -31,9 +31,10 @@ class AuthRepo {
       return Right(result.data["response"]["accessToken"]);
     } catch (error) {
       print("error =$error");
-      if(((error as DioError).response?.data['message']as String).contains('User Not Found')){
+      if (((error as DioError).response?.data['message'] as String)
+          .contains('User Not Found')) {
         return Left('هذا الحساب غير موجود، تحقق من المعلومات المدخلة');
-      }else {
+      } else {
         return Left(ExceptionHandler.handle(error as Exception));
       }
     }
@@ -298,11 +299,25 @@ class AuthRepo {
   }
 
   Future<Either<String, Null>> rate(
-      {required int star, required String comment}) async {
+      {required int star,
+      required String comment,
+      required String idRate}) async {
     try {
-      final result = await _dio.post(
-          'Mobile/Order/Rate?Id=4a4c2eea-ea10-4b08-9cc7-7422230dcde7&Star=$star&Comment=$comment');
+      final result = await _dio
+          .post('Mobile/Order/Rate?Id=$idRate&Star=$star&Comment=$comment');
       print("SuccessfulDataRate");
+      print(result.data["response"]);
+      return Right(result.data["response"]);
+    } catch (error) {
+      print("error =$error");
+      return Left(ExceptionHandler.handle(error as Exception));
+    }
+  }
+
+  Future<Either<String, Null>> cancel({required String idOrder}) async {
+    try {
+      final result = await _dio.post('Mobile/Order/Cancel?Id=$idOrder');
+      print("SuccessfulCancel");
       print(result.data["response"]);
       return Right(result.data["response"]);
     } catch (error) {

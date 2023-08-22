@@ -16,16 +16,20 @@ class AddAddressSourceDeliveryPage extends StatefulWidget {
   const AddAddressSourceDeliveryPage({Key? key}) : super(key: key);
 
   @override
-  State<AddAddressSourceDeliveryPage> createState() => _AddAddressSourceDeliveryPageState();
+  State<AddAddressSourceDeliveryPage> createState() =>
+      _AddAddressSourceDeliveryPageState();
 }
 
-class _AddAddressSourceDeliveryPageState extends State<AddAddressSourceDeliveryPage> {
+class _AddAddressSourceDeliveryPageState
+    extends State<AddAddressSourceDeliveryPage> {
   final _formKey = GlobalKey<FormState>();
   bool checkedValue = false;
   bool checkboxValue = false;
   String dropdownValue = 'add';
-  TextEditingController streetSourceController = TextEditingController(text: "");
-  TextEditingController detailsSourceController = TextEditingController(text: "");
+  TextEditingController streetSourceController =
+      TextEditingController(text: "");
+  TextEditingController detailsSourceController =
+      TextEditingController(text: "");
   late SingleValueDropDownController _cnt;
   var areaId;
 
@@ -61,14 +65,16 @@ class _AddAddressSourceDeliveryPageState extends State<AddAddressSourceDeliveryP
                     child: Column(
                       children: [
                         Container(
-                            margin: REdgeInsetsDirectional.only(top: 100, start: 0, end: 10, bottom: 10),
-                            padding: REdgeInsetsDirectional.only(top: 0, start: 10, end: 0, bottom: 0),
+                            margin: REdgeInsetsDirectional.only(
+                                top: 100, start: 0, end: 10, bottom: 10),
+                            padding: REdgeInsetsDirectional.only(
+                                top: 0, start: 10, end: 0, bottom: 0),
                             alignment: Alignment.center,
                             child: CustomText(
                               txt: AppStrings.addNewAddressSource,
                               fontSize: 25,
                               txtColor: ColorManager.primary,
-                              fontWeight: FontWeight.w600,
+                              fontWeight: FontWeight.w400,
                             )),
                         50.verticalSpace,
                         BlocBuilder<InitialCubit, InitialStates>(
@@ -76,7 +82,8 @@ class _AddAddressSourceDeliveryPageState extends State<AddAddressSourceDeliveryP
                             if (state is GetAllAreasSuccessState) {
                               final areaList = state.result;
                               return Container(
-                                decoration: ThemeHelper().inputBoxDecorationShadow(),
+                                decoration:
+                                    ThemeHelper().inputBoxDecorationShadow(),
                                 child: DropDownTextField(
                                   controller: _cnt
                                     ..setDropDown(DropDownValueModel(
@@ -85,9 +92,11 @@ class _AddAddressSourceDeliveryPageState extends State<AddAddressSourceDeliveryP
                                       toolTipMsg: "${areaList[0].id}",
                                     )),
                                   searchDecoration: const InputDecoration(),
-                                  textFieldDecoration: ThemeHelper().textInputDecoration(AppStrings.theArea),
+                                  textFieldDecoration: ThemeHelper()
+                                      .textInputDecoration(AppStrings.theArea),
                                   clearOption: true,
-                                  autovalidateMode: AutovalidateMode.onUserInteraction,
+                                  autovalidateMode:
+                                      AutovalidateMode.onUserInteraction,
                                   validator: (value) {
                                     if (value == null) {
                                       return "هذا الحقل مطلوب";
@@ -105,7 +114,8 @@ class _AddAddressSourceDeliveryPageState extends State<AddAddressSourceDeliveryP
                                       ),
                                   ],
                                   onChanged: (val) {
-                                    areaId = val.value; // تخزين قيمة المدينة المختارة في المتغير
+                                    areaId = val
+                                        .value; // تخزين قيمة المدينة المختارة في المتغير
                                   },
                                 ),
                               );
@@ -126,7 +136,8 @@ class _AddAddressSourceDeliveryPageState extends State<AddAddressSourceDeliveryP
                             decoration: ThemeHelper().textInputDecoration(
                               AppStrings.theStreet,
                             ),
-                            autovalidateMode: AutovalidateMode.onUserInteraction,
+                            autovalidateMode:
+                                AutovalidateMode.onUserInteraction,
                             validator: (val) {
                               if (val!.isEmpty) {
                                 return "هذا الحقل مطلوب";
@@ -143,7 +154,8 @@ class _AddAddressSourceDeliveryPageState extends State<AddAddressSourceDeliveryP
                             decoration: ThemeHelper().textInputDecoration(
                               AppStrings.addDetails,
                             ),
-                            autovalidateMode: AutovalidateMode.onUserInteraction,
+                            autovalidateMode:
+                                AutovalidateMode.onUserInteraction,
                             validator: (val) {
                               if (val!.isEmpty) {
                                 return "هذا الحقل مطلوب";
@@ -154,19 +166,29 @@ class _AddAddressSourceDeliveryPageState extends State<AddAddressSourceDeliveryP
                         ),
                         70.verticalSpace,
                         Container(
-                          margin: REdgeInsetsDirectional.only(end: 25, top: 10, start: 25, bottom: 10),
-                          padding: REdgeInsetsDirectional.only(end: 10, top: 0, start: 10, bottom: 0),
-                          decoration: ThemeHelper().buttonBoxDecoration(context),
+                          margin: REdgeInsetsDirectional.only(
+                              end: 25, top: 10, start: 25, bottom: 10),
+                          padding: REdgeInsetsDirectional.only(
+                              end: 10, top: 0, start: 10, bottom: 0),
+                          decoration:
+                              ThemeHelper().buttonBoxDecoration(context),
                           child: CustomGeneralButton(
                             text: AppStrings.save,
                             onTap: () {
                               // print(_cnt.validate());
-                              DeliveryCubit.get(context).setIdSource(value: _cnt.dropDownValue?.value, name: _cnt.dropDownValue!.name);
-                              DeliveryCubit.get(context).setSourceStreet(value: streetSourceController.text);
-                              DeliveryCubit.get(context).setDetailsSource(value: detailsSourceController.text);
-                              if(_formKey.currentState!.validate()) {
+                              DeliveryCubit.get(context).setIdSource(
+                                  value: _cnt.dropDownValue?.value,
+                                  name: _cnt.dropDownValue!.name);
+                              DeliveryCubit.get(context).setSourceStreet(
+                                  value: streetSourceController.text);
+                              DeliveryCubit.get(context).setDetailsSource(
+                                  value: detailsSourceController.text);
+                              if (_formKey.currentState!.validate()) {
                                 Navigator.push(
-                                  context, MaterialPageRoute(builder: (context) => const AddAddressDestinationDeliveryPage()));
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                            const AddAddressDestinationDeliveryPage()));
                               }
                             },
                           ),

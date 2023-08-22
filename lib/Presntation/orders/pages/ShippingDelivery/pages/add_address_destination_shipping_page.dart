@@ -19,10 +19,12 @@ class AddAddressDestinationShippingPage extends StatefulWidget {
   const AddAddressDestinationShippingPage({Key? key}) : super(key: key);
 
   @override
-  State<AddAddressDestinationShippingPage> createState() => _AddAddressDestinationShippingPageState();
+  State<AddAddressDestinationShippingPage> createState() =>
+      _AddAddressDestinationShippingPageState();
 }
 
-class _AddAddressDestinationShippingPageState extends State<AddAddressDestinationShippingPage> {
+class _AddAddressDestinationShippingPageState
+    extends State<AddAddressDestinationShippingPage> {
   final _formKey = GlobalKey<FormState>();
   late SingleValueDropDownController _cnt;
   late SingleValueDropDownController _area;
@@ -30,7 +32,6 @@ class _AddAddressDestinationShippingPageState extends State<AddAddressDestinatio
   String? areaName;
   String? cityName;
   String? cityId;
-
 
   @override
   void initState() {
@@ -50,8 +51,10 @@ class _AddAddressDestinationShippingPageState extends State<AddAddressDestinatio
 
   @override
   Widget build(BuildContext context) {
-    TextEditingController streetDestinationController = TextEditingController(text: "");
-    TextEditingController detailsDestinationController = TextEditingController(text: "");
+    TextEditingController streetDestinationController =
+        TextEditingController(text: "");
+    TextEditingController detailsDestinationController =
+        TextEditingController(text: "");
     return Directionality(
         textDirection: TextDirection.rtl,
         child: Scaffold(
@@ -71,33 +74,41 @@ class _AddAddressDestinationShippingPageState extends State<AddAddressDestinatio
                         child: Column(
                           children: [
                             Container(
-                                margin: REdgeInsetsDirectional.only(top: 100, start: 0, end: 10, bottom: 10),
-                                padding: REdgeInsetsDirectional.only(top: 0, start: 10, end: 0, bottom: 0),
+                                margin: REdgeInsetsDirectional.only(
+                                    top: 100, start: 0, end: 10, bottom: 10),
+                                padding: REdgeInsetsDirectional.only(
+                                    top: 0, start: 10, end: 0, bottom: 0),
                                 alignment: Alignment.center,
                                 child: CustomText(
                                   txt: AppStrings.addNewAddressDestination,
                                   fontSize: 25,
                                   txtColor: ColorManager.primary,
-                                  fontWeight: FontWeight.w600,
+                                  fontWeight: FontWeight.w400,
                                 )),
                             20.verticalSpace,
                             BlocBuilder<InitialCubit, InitialStates>(
                               builder: (context, state) {
-                                if (state is GetAllCitiesWithAllCitiesSuccessState) {
+                                if (state
+                                    is GetAllCitiesWithAllCitiesSuccessState) {
                                   final cityList = state.result;
                                   cityId = cityId ?? cityList.first.id;
                                   cityName = cityName ?? cityList.first.name;
                                   return Container(
-                                    decoration: ThemeHelper().inputBoxDecorationShadow(),
+                                    decoration: ThemeHelper()
+                                        .inputBoxDecorationShadow(),
                                     child: DropDownTextField(
                                       controller: _area
                                         ..setDropDown(DropDownValueModel(
-                                          name: cityName ?? cityList.first.name!,
+                                          name:
+                                              cityName ?? cityList.first.name!,
                                           value: cityId ?? cityList.first.id,
-                                          toolTipMsg: "${cityId ?? cityList.first.id}",
+                                          toolTipMsg:
+                                              "${cityId ?? cityList.first.id}",
                                         )),
                                       searchDecoration: const InputDecoration(),
-                                      textFieldDecoration: ThemeHelper().textInputDecoration(AppStrings.theTown),
+                                      textFieldDecoration: ThemeHelper()
+                                          .textInputDecoration(
+                                              AppStrings.theTown),
                                       clearOption: true,
                                       validator: (value) {
                                         if (value == null) {
@@ -133,25 +144,33 @@ class _AddAddressDestinationShippingPageState extends State<AddAddressDestinatio
                             20.verticalSpace,
                             BlocBuilder<InitialCubit, InitialStates>(
                               builder: (context, state) {
-                                if (state is GetAllCitiesWithAllCitiesSuccessState) {
+                                if (state
+                                    is GetAllCitiesWithAllCitiesSuccessState) {
                                   final cityList = state.result;
                                   if (cityId == null) {
                                     return const SizedBox.shrink();
                                   } else {
-                                    final selectedCity = cityList.firstWhereOrNull((city) => city.id == cityId);
+                                    final selectedCity =
+                                        cityList.firstWhereOrNull(
+                                            (city) => city.id == cityId);
                                     final filteredAreas = selectedCity?.areas;
-                                    areaId = areaId?? filteredAreas!.first.id;
-                                    areaName = areaName?? filteredAreas!.first.name;
+                                    areaId = areaId ?? filteredAreas!.first.id;
+                                    areaName =
+                                        areaName ?? filteredAreas!.first.name;
                                     return Container(
-                                      decoration: ThemeHelper().inputBoxDecorationShadow(),
+                                      decoration: ThemeHelper()
+                                          .inputBoxDecorationShadow(),
                                       child: DropDownTextField(
                                         controller: _cnt
                                           ..setDropDown(DropDownValueModel(
                                             name: filteredAreas!.first.name!,
                                             value: filteredAreas.first.id,
                                           )),
-                                        searchDecoration: const InputDecoration(),
-                                        textFieldDecoration: ThemeHelper().textInputDecoration(AppStrings.theArea),
+                                        searchDecoration:
+                                            const InputDecoration(),
+                                        textFieldDecoration: ThemeHelper()
+                                            .textInputDecoration(
+                                                AppStrings.theArea),
                                         clearOption: true,
                                         validator: (value) {
                                           if (value == null) {
@@ -173,7 +192,6 @@ class _AddAddressDestinationShippingPageState extends State<AddAddressDestinatio
                                             areaId = val.value;
                                             areaName = val.Name;
                                           });
-
                                         },
                                       ),
                                     );
@@ -187,7 +205,8 @@ class _AddAddressDestinationShippingPageState extends State<AddAddressDestinatio
                             ),
                             30.verticalSpace,
                             Container(
-                              decoration: ThemeHelper().inputBoxDecorationShadow(),
+                              decoration:
+                                  ThemeHelper().inputBoxDecorationShadow(),
                               child: TextFormField(
                                 controller: streetDestinationController,
                                 decoration: ThemeHelper().textInputDecoration(
@@ -197,7 +216,8 @@ class _AddAddressDestinationShippingPageState extends State<AddAddressDestinatio
                             ),
                             30.verticalSpace,
                             Container(
-                              decoration: ThemeHelper().inputBoxDecorationShadow(),
+                              decoration:
+                                  ThemeHelper().inputBoxDecorationShadow(),
                               child: TextFormField(
                                 controller: detailsDestinationController,
                                 decoration: ThemeHelper().textInputDecoration(
@@ -206,23 +226,39 @@ class _AddAddressDestinationShippingPageState extends State<AddAddressDestinatio
                               ),
                             ),
                             Container(
-                                margin: REdgeInsetsDirectional.only(end: 25, start: 25, top: 210),
+                                margin: REdgeInsetsDirectional.only(
+                                    end: 25, start: 25, top: 210),
                                 padding: REdgeInsetsDirectional.only(
                                   end: 10,
                                   start: 10,
                                 ),
-                                decoration: ThemeHelper().buttonBoxDecoration(context),
+                                decoration:
+                                    ThemeHelper().buttonBoxDecoration(context),
                                 child: CustomGeneralButton(
                                   text: AppStrings.save,
                                   onTap: () {
                                     print(areaId);
-                                    ShippingCubit.get(context).setIdDestination(value: areaId.toString(), name: areaName.toString());
-                                    ShippingCubit.get(context).setDestinationStreet(value: streetDestinationController.text.toString());
-                                    ShippingCubit.get(context).setDetailsDestination(value: detailsDestinationController.text.toString());
+                                    ShippingCubit.get(context).setIdDestination(
+                                        value: areaId.toString(),
+                                        name: areaName.toString());
+                                    ShippingCubit.get(context)
+                                        .setDestinationStreet(
+                                            value: streetDestinationController
+                                                .text
+                                                .toString());
+                                    ShippingCubit.get(context)
+                                        .setDetailsDestination(
+                                            value: detailsDestinationController
+                                                .text
+                                                .toString());
                                     if (_formKey.currentState!.validate()) {
                                       Navigator.pop(context);
                                       Navigator.pop(context);
-                                      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => const OrderReviewShippingPage2()));
+                                      Navigator.pushReplacement(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (context) =>
+                                                  const OrderReviewShippingPage2()));
                                     }
                                   },
                                 )),

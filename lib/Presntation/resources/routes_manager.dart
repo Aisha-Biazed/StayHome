@@ -134,7 +134,10 @@ class RouteGenerator {
       case Routes.myCartRoute:
         return MaterialPageRoute(builder: (_) => const MyCartPage());
       case Routes.ratingRoute:
-        return MaterialPageRoute(builder: (_) => const RatingsPage());
+        return MaterialPageRoute(
+            builder: (_) => RatingsPage(
+                  idRate: '',
+                ));
       default:
         return unDefinedRoute();
     }

@@ -37,6 +37,7 @@ class _MyCartPageState extends State<MyCartPage> {
                   fontSize: 30.sp,
                   fontWeight: FontWeight.w400,
                 )),
+                10.verticalSpace,
                 BlocBuilder<MyCartCubit, MyCartState>(
                   builder: (context, state) {
                     return Stack(
@@ -105,7 +106,8 @@ class _MyCartPageState extends State<MyCartPage> {
                                         children: [
                                           IconButton(
                                               onPressed: () {
-                                                final cart = cartCubit.getCart();
+                                                final cart =
+                                                    cartCubit.getCart();
                                                 final product = ProductCart(
                                                   id: cart[index].id!,
                                                   name: cart[index].name!,
@@ -134,7 +136,8 @@ class _MyCartPageState extends State<MyCartPage> {
                                               txt: cart.counter.toString()),
                                           IconButton(
                                               onPressed: () {
-                                                final cart = cartCubit.getCart();
+                                                final cart =
+                                                    cartCubit.getCart();
                                                 final product = ProductCart(
                                                   id: cart[index].id!,
                                                   name: cart[index].name!,
@@ -205,7 +208,8 @@ class _MyCartPageState extends State<MyCartPage> {
                                 },
                               ),
                               15.horizontalSpace,
-                              Expanded(child: CustomText(txt: total.toString())),
+                              Expanded(
+                                  child: CustomText(txt: total.toString())),
                               Expanded(
                                   child: CustomGeneralButton(
                                 onTap: () {

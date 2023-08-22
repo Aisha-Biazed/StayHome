@@ -9,7 +9,7 @@ import '../../../../../core/widgets/custom_buttons.dart';
 import '../../../../../core/widgets/custom_text.dart';
 import '../../../../login/cubit/states.dart';
 import '../../../../resources/color_manager.dart';
-  import '../../../../resources/strings_manager.dart';
+import '../../../../resources/strings_manager.dart';
 import '../cubit/delivery_cubit.dart';
 import 'order_review_delivery_page_1.dart';
 import 'order_review_delivery_page_2.dart';
@@ -22,10 +22,13 @@ class AddAddressDestinationDeliveryPage extends StatefulWidget {
       _AddAddressDestinationDeliveryPageState();
 }
 
-class _AddAddressDestinationDeliveryPageState extends State<AddAddressDestinationDeliveryPage> {
+class _AddAddressDestinationDeliveryPageState
+    extends State<AddAddressDestinationDeliveryPage> {
   final _formKey = GlobalKey<FormState>();
-  TextEditingController streetDestinationController = TextEditingController(text: "");
-  TextEditingController detailsDestinationController = TextEditingController(text: "");
+  TextEditingController streetDestinationController =
+      TextEditingController(text: "");
+  TextEditingController detailsDestinationController =
+      TextEditingController(text: "");
   String dropdownValue = 'add';
   late SingleValueDropDownController _cnt;
   var cityId;
@@ -75,7 +78,7 @@ class _AddAddressDestinationDeliveryPageState extends State<AddAddressDestinatio
                                   txt: AppStrings.addNewAddressDestination,
                                   fontSize: 25,
                                   txtColor: ColorManager.primary,
-                                  fontWeight: FontWeight.w600,
+                                  fontWeight: FontWeight.w400,
                                 )),
                             20.verticalSpace,
                             BlocBuilder<InitialCubit, InitialStates>(
@@ -83,7 +86,8 @@ class _AddAddressDestinationDeliveryPageState extends State<AddAddressDestinatio
                                 if (state is GetAllAreasSuccessState) {
                                   final areaList = state.result;
                                   return Container(
-                                    decoration: ThemeHelper().inputBoxDecorationShadow(),
+                                    decoration: ThemeHelper()
+                                        .inputBoxDecorationShadow(),
                                     child: DropDownTextField(
                                       controller: _cnt
                                         ..setDropDown(DropDownValueModel(
@@ -92,9 +96,12 @@ class _AddAddressDestinationDeliveryPageState extends State<AddAddressDestinatio
                                           toolTipMsg: "${areaList[0].id}",
                                         )),
                                       searchDecoration: const InputDecoration(),
-                                      textFieldDecoration: ThemeHelper().textInputDecoration(AppStrings.theArea),
+                                      textFieldDecoration: ThemeHelper()
+                                          .textInputDecoration(
+                                              AppStrings.theArea),
                                       clearOption: true,
-                                      autovalidateMode: AutovalidateMode.onUserInteraction,
+                                      autovalidateMode:
+                                          AutovalidateMode.onUserInteraction,
                                       validator: (value) {
                                         if (value == null) {
                                           return "هذا الحقل مطلوب";
@@ -112,7 +119,8 @@ class _AddAddressDestinationDeliveryPageState extends State<AddAddressDestinatio
                                           ),
                                       ],
                                       onChanged: (val) {
-                                        areaId = val.value; // تخزين قيمة المدينة المختارة في المتغير
+                                        areaId = val
+                                            .value; // تخزين قيمة المدينة المختارة في المتغير
                                       },
                                     ),
                                   );
@@ -134,7 +142,8 @@ class _AddAddressDestinationDeliveryPageState extends State<AddAddressDestinatio
                                 decoration: ThemeHelper().textInputDecoration(
                                   AppStrings.theStreet,
                                 ),
-                                autovalidateMode: AutovalidateMode.onUserInteraction,
+                                autovalidateMode:
+                                    AutovalidateMode.onUserInteraction,
                                 validator: (val) {
                                   if (val!.isEmpty) {
                                     return "هذا الحقل مطلوب";
@@ -152,7 +161,8 @@ class _AddAddressDestinationDeliveryPageState extends State<AddAddressDestinatio
                                 decoration: ThemeHelper().textInputDecoration(
                                   AppStrings.addDetails,
                                 ),
-                                autovalidateMode: AutovalidateMode.onUserInteraction,
+                                autovalidateMode:
+                                    AutovalidateMode.onUserInteraction,
                                 validator: (val) {
                                   if (val!.isEmpty) {
                                     return "هذا الحقل مطلوب";
@@ -175,14 +185,25 @@ class _AddAddressDestinationDeliveryPageState extends State<AddAddressDestinatio
                                 text: AppStrings.save,
                                 onTap: () {
                                   print(_formKey.currentState?.validate());
-                                  DeliveryCubit.get(context).setIdDestination(value: _cnt.dropDownValue?.value, name: _cnt.dropDownValue!.name);
-                                  DeliveryCubit.get(context).setDestinationStreet(value: streetDestinationController.text);
-                                  DeliveryCubit.get(context).setDetailsDestination(value: detailsDestinationController.text);
-                                  if(_formKey.currentState!.validate()) {
+                                  DeliveryCubit.get(context).setIdDestination(
+                                      value: _cnt.dropDownValue?.value,
+                                      name: _cnt.dropDownValue!.name);
+                                  DeliveryCubit.get(context)
+                                      .setDestinationStreet(
+                                          value:
+                                              streetDestinationController.text);
+                                  DeliveryCubit.get(context)
+                                      .setDetailsDestination(
+                                          value: detailsDestinationController
+                                              .text);
+                                  if (_formKey.currentState!.validate()) {
                                     Navigator.pop(context);
                                     Navigator.pop(context);
                                     Navigator.pushReplacement(
-                                        context, MaterialPageRoute(builder: (context) => const OrderReviewDeliveryPage2()));
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                const OrderReviewDeliveryPage2()));
                                   }
                                   // Navigator.pushNamed(
                                   //     context, Routes.addressSourceRoute);

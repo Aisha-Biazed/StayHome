@@ -80,6 +80,7 @@ class _StoreDetailsState extends State<StoreDetails> {
                               children: [
                                 Icon(
                                   Icons.circle,
+                                  size: 16,
                                   color: details.isOnline!
                                       ? ColorManager.green
                                       : Colors.red,
@@ -119,14 +120,17 @@ class _StoreDetailsState extends State<StoreDetails> {
                                 CustomText(
                                   txt: details.startTime?.isNotEmpty == true
                                       ? DateFormat('dd/MM/yyyy HH:mm').format(
-                                          DateTime.tryParse(details.startTime)??DateTime.now())
+                                          DateTime.tryParse(
+                                                  details.startTime) ??
+                                              DateTime.now())
                                       : ' ',
                                   txtColor: ColorManager.secondaryGrey,
                                 ),
                                 CustomText(
                                   txt: details.endTime?.isNotEmpty == true
                                       ? DateFormat('dd/MM/yyyy HH:mm').format(
-                                          DateTime.tryParse(details.endTime)??DateTime.now())
+                                          DateTime.tryParse(details.endTime) ??
+                                              DateTime.now())
                                       : ' ',
                                   txtColor: ColorManager.secondaryGrey,
                                 ),

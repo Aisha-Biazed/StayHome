@@ -44,7 +44,6 @@ AppBar CustomAppBar() => AppBar(
                 fontSize: 20.sp,
                 fontWeight: FontWeight.w800,
               ),
-              5.horizontalSpace,
               CustomText(
                 txt: AppStrings.appbarHome2,
                 txtColor: ColorManager.primary,
@@ -55,7 +54,9 @@ AppBar CustomAppBar() => AppBar(
           ),
           20.verticalSpace,
           // Padding(
+
           //   padding: REdgeInsetsDirectional.only(start: 55,),
+
           //   child: Container(
           //     width: 293.w,
           //     height:47.h,

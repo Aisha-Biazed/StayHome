@@ -69,7 +69,7 @@ class _OrderReviewForShopPage2State extends State<OrderReviewForShopPage2> {
           padding: REdgeInsetsDirectional.only(
             start: 0,
             end: 0,
-            top: 31,
+            top: 61,
           ),
           child: Stack(
             children: [
@@ -80,7 +80,7 @@ class _OrderReviewForShopPage2State extends State<OrderReviewForShopPage2> {
                     txt: AppStrings.orderBeforeAdd,
                     fontSize: 30.sp,
                     txtColor: ColorManager.primary,
-                    fontWeight: FontWeight.w700,
+                    fontWeight: FontWeight.w500,
                   ),
                   15.verticalSpace,
                   CustomText(
@@ -240,11 +240,11 @@ class _OrderReviewForShopPage2State extends State<OrderReviewForShopPage2> {
                 ],
               ),
               Container(
-                margin: REdgeInsetsDirectional.only(top: 600, end: 0, start: 0),
+                margin: REdgeInsetsDirectional.only(top: 570, end: 0, start: 0),
                 padding: REdgeInsetsDirectional.only(
                     start: 20, end: 20, bottom: 10, top: 10),
                 width: double.infinity,
-                height: 200.h,
+                height: 230.h,
                 decoration: BoxDecoration(
                   color: ColorManager.purple,
                   borderRadius: BorderRadius.only(
@@ -342,7 +342,7 @@ class _OrderReviewForShopPage2State extends State<OrderReviewForShopPage2> {
                       children: const [
                         CustomText(
                           txt: AppStrings.finalCost,
-                          fontSize: 19,
+                          fontSize: 17,
                           fontWeight: FontWeight.w400,
                         ),
                         Spacer(),

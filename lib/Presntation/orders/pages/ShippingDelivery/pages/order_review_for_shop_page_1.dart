@@ -72,7 +72,7 @@ class _OrderReviewForShopPage1State extends State<OrderReviewForShopPage1> {
                     txt: AppStrings.orderBeforeAdd,
                     fontSize: 30.sp,
                     txtColor: ColorManager.primary,
-                    fontWeight: FontWeight.w700,
+                    fontWeight: FontWeight.w500,
                   ),
                   20.verticalSpace,
                   CustomText(

@@ -12,8 +12,8 @@ import '../../resources/assets_manager.dart';
 import '../widgets/custom_buttons.dart';
 
 class RatingsPage extends StatefulWidget {
-  const RatingsPage({Key? key}) : super(key: key);
-
+  final String idRate;
+  const RatingsPage({Key? key, required this.idRate}) : super(key: key);
   @override
   State<RatingsPage> createState() => _RatingsPageState();
 }
@@ -98,9 +98,11 @@ class _RatingsPageState extends State<RatingsPage> {
                             onPressed: () {
                               print(textEditingController.text);
                               print("numberStars $userRating");
+                              print(widget.idRate);
                               InitialCubit.get(context).rateCubit(
                                   star: userRating,
-                                  comment: textEditingController.text);
+                                  comment: textEditingController.text,
+                                  idRate: widget.idRate);
                             },
                           ),
                         ),
