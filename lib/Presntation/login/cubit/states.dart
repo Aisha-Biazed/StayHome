@@ -25,6 +25,12 @@ class CreateSuccessState extends InitialStates {}
 
 class CreateErrorState extends InitialStates {}
 
+class ModifyProfileLoadingState extends InitialStates {}
+
+class ModifyProfileSuccessState extends InitialStates {}
+
+class ModifyProfileErrorState extends InitialStates {}
+
 class ProfileLoadingState extends InitialStates {}
 
 class ProfileSuccessState extends InitialStates {
