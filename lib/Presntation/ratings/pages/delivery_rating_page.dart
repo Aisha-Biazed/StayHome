@@ -117,7 +117,8 @@ class _DeliveryRatingPageState extends State<DeliveryRatingPage> {
                                 CustomButtons(
                                   onPressed: () {
                                     if (item.star == null &&
-                                        item.canEvaluate == true) {
+                                        item.canEvaluate == true &&
+                                        item.currentStage == "Complete") {
                                       Navigator.push(
                                           context,
                                           MaterialPageRoute(
@@ -127,11 +128,13 @@ class _DeliveryRatingPageState extends State<DeliveryRatingPage> {
                                   },
                                   text: AppStrings.ratingBtnDelivery,
                                   color: item.star == null &&
-                                          item.canEvaluate == true
+                                          item.canEvaluate == true &&
+                                          item.currentStage == "Complete"
                                       ? ColorManager.primary
                                       : ColorManager.purple,
                                   colorText: item.star == null &&
-                                          item.canEvaluate == true
+                                          item.canEvaluate == true &&
+                                          item.currentStage == "Complete"
                                       ? ColorManager.white
                                       : ColorManager.dark,
                                 ),
@@ -285,7 +288,8 @@ class _DeliveryRatingPageState extends State<DeliveryRatingPage> {
                                 CustomButtons(
                                   onPressed: () {
                                     if (item.star == null &&
-                                        item.canEvaluate == true) {
+                                        item.canEvaluate == true &&
+                                        item.currentStage == "Complete") {
                                       Navigator.push(
                                           context,
                                           MaterialPageRoute(
