@@ -10,7 +10,6 @@ import 'package:stay_home/Presntation/orders/store/pages/store_page.dart';
 import 'package:stay_home/Presntation/resources/color_manager.dart';
 import '../../../../../core/widgets/custom_text.dart';
 import '../../../resources/assets_manager.dart';
-import '../../../resources/routes_manager.dart';
 import '../../../resources/strings_manager.dart';
 import '../Cubit/my_cart_cubit.dart';
 import 'my_cart_page.dart';
@@ -18,11 +17,13 @@ import 'my_cart_page.dart';
 class StoreDetails extends StatefulWidget {
   final String shopId;
   final bool? dest;
+  final bool fromHome;
 
   const StoreDetails({
     Key? key,
     required this.shopId,
     this.dest,
+    this.fromHome = false,
   }) : super(key: key);
 
   @override
@@ -33,6 +34,7 @@ class _StoreDetailsState extends State<StoreDetails> {
   @override
   void initState() {
     InitialCubit.get(context).detailsShopCubit(widget.shopId);
+    MyCartCubit.get(context).clearCart();
     super.initState();
   }
 
@@ -40,8 +42,48 @@ class _StoreDetailsState extends State<StoreDetails> {
   Widget build(BuildContext context) {
     return WillPopScope(
       onWillPop: () async {
-        Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => StorePage(dest: widget.dest,)));
-        return true;
+        final result = await showDialog<bool>(
+          context: context,
+          builder: (context) => Directionality(
+            textDirection: ui.TextDirection.rtl,
+            child: AlertDialog(
+              title: Text('حذف السلة'),
+              content: Text('بالمتابعة فإنه سيتم حذف كافة منتجات السلة'),
+              actions: [
+                TextButton(
+                    onPressed: () {
+                      Navigator.pop(context, false);
+
+                    },
+                    child: Text('إلغاء')),
+                TextButton(
+                    onPressed: () {
+                      Navigator.pop(context, true);
+                    },
+                    child: Text('حذف')),
+              ],
+            ),
+          ),
+        );
+        if (context.mounted) {
+          if (result!) {
+            if (widget.fromHome) {
+              InitialCubit.get(context).shopCubit();
+              Navigator.pop(context);
+            } else {
+              Navigator.pop(context);
+              Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => StorePage(
+                    dest: widget.dest,
+                  ),
+                ),
+              );
+            }
+          }
+        }
+        return result!;
       },
       child: Directionality(
         textDirection: ui.TextDirection.rtl,
@@ -76,7 +118,6 @@ class _StoreDetailsState extends State<StoreDetails> {
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              10.verticalSpace,
                               Center(
                                 child: Container(
                                   color: ColorManager.purple,
@@ -84,6 +125,7 @@ class _StoreDetailsState extends State<StoreDetails> {
                                   height: 3.h,
                                 ),
                               ),
+                              10.verticalSpace,
                               CustomText(
                                 txt: details.name!,
                                 fontSize: 25.sp,
@@ -119,24 +161,33 @@ class _StoreDetailsState extends State<StoreDetails> {
                                     ),
                                   ),
                                   4.horizontalSpace,
-                                  Icon(
-                                    Icons.update_outlined,
-                                    color: ColorManager.secondaryGrey,
-                                  ),
-                                  6.horizontalSpace,
-                                  CustomText(
-                                    txt: details.startTime?.isNotEmpty == true
-                                        ? DateFormat('dd/MM/yyyy HH:mm').format(DateTime.tryParse(details.startTime) ?? DateTime.now())
-                                        : ' ',
-                                    txtColor: ColorManager.secondaryGrey,
-                                  ),
-                                  CustomText(
-                                    txt: details.endTime?.isNotEmpty == true
-                                        ? DateFormat('dd/MM/yyyy HH:mm').format(DateTime.tryParse(details.endTime) ?? DateTime.now())
-                                        : ' ',
-                                    txtColor: ColorManager.secondaryGrey,
-                                  ),
                                 ],
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
+                                child: Row(
+                                  children: [
+                                    Icon(
+                                      Icons.update_outlined,
+                                      color: ColorManager.secondaryGrey,
+                                    ),
+                                    SizedBox(
+                                      width: 4,
+                                    ),
+                                    CustomText(
+                                      txt: details.startTime?.isNotEmpty == true ? details.startTime!.toString().split(':').take(2).join(':') : '',
+                                      txtColor: ColorManager.secondaryGrey,
+                                    ),
+                                    CustomText(
+                                      txt: ' -> ',
+                                      txtColor: ColorManager.secondaryGrey,
+                                    ),
+                                    CustomText(
+                                      txt: details.endTime?.isNotEmpty == true ? details.endTime!.toString().split(':').take(2).join(':') : '',
+                                      txtColor: ColorManager.secondaryGrey,
+                                    ),
+                                  ],
+                                ),
                               ),
                               20.verticalSpace,
                               SingleChildScrollView(
@@ -263,7 +314,13 @@ class _StoreDetailsState extends State<StoreDetails> {
                         FloatingActionButton.extended(
                           backgroundColor: ColorManager.secondary1,
                           onPressed: () {
-                            Navigator.push(context, MaterialPageRoute(builder: (_) => MyCartPage(dest: widget.dest,isReview: false,)));
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (_) => MyCartPage(
+                                          dest: widget.dest,
+                                          isReview: false,
+                                        )));
                           },
                           label: CustomText(
                             txt: AppStrings.cartBtn,

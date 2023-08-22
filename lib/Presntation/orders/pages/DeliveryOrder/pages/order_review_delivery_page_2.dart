@@ -18,6 +18,8 @@ import '../../../../../core/widgets/custom_text.dart';
 import '../../../../../core/widgets/custom_text_field.dart';
 import '../../../../resources/routes_manager.dart';
 import '../cubit/delivery_cubit.dart';
+import 'add_address_destination_delivery_page.dart';
+import 'add_address_source_delivery_page.dart';
 
 class OrderReviewDeliveryPage2 extends StatefulWidget {
   const OrderReviewDeliveryPage2({Key? key}) : super(key: key);
@@ -76,163 +78,179 @@ class _OrderReviewDeliveryPage2State extends State<OrderReviewDeliveryPage2> {
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      body: Directionality(
-        textDirection: ui.TextDirection.rtl,
-        child: Padding(
-          padding: REdgeInsetsDirectional.only(
-            start: 0,
-            end: 0,
-            top: 61,
-          ),
-          child: Stack(
-            children: [
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  CustomText(
-                    txt: AppStrings.orderBeforeAdd,
-                    fontSize: 30.sp,
-                    txtColor: ColorManager.primary,
-                    fontWeight: FontWeight.w500,
-                  ),
-                  20.verticalSpace,
-                 OrderDateTime(initVal: DeliveryCubit.get(context).scheduleDate, onChange: (val){
-                   DeliveryCubit.get(context).setScheduleDate(value: val);
-                 }),
-                  CustomText(
-                      txt: AppStrings.weightOfPassenger,
-                      fontSize: 20.sp,
-                      txtColor: ColorManager.dark,
-                      fontWeight: FontWeight.w400),
-                  5.verticalSpace,
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
+      body: SingleChildScrollView(
+        child: Directionality(
+          textDirection: ui.TextDirection.rtl,
+          child: Padding(
+            padding: REdgeInsetsDirectional.only(
+              start: 0,
+              end: 0,
+              top: 61,
+            ),
+            child: Stack(
+              children: [
+                SingleChildScrollView(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      IconButton(
-                          onPressed: () {
-                            setState(() {
-                              weight += 10;
-                            });
-                          },
-                          icon: Icon(
-                            Icons.add_circle,
-                            color: ColorManager.primary,
-                          )),
                       CustomText(
-                          txt: DeliveryCubit.get(context)
-                              .weightCubit
-                              .toString()),
-                      IconButton(
-                          onPressed: () {
-                            if (weight != 0) {
-                              setState(() {
-                                weight -= 10;
-                              });
-                            }
+                        txt: AppStrings.orderBeforeAdd,
+                        fontSize: 30.sp,
+                        txtColor: ColorManager.primary,
+                        fontWeight: FontWeight.w500,
+                      ),
+                      20.verticalSpace,
+                     OrderDateTime(initVal: DeliveryCubit.get(context).scheduleDate, onChange: (val){
+                       DeliveryCubit.get(context).setScheduleDate(value: val);
+                     }),
+                      CustomText(
+                          txt: AppStrings.weightOfPassenger,
+                          fontSize: 20.sp,
+                          txtColor: ColorManager.dark,
+                          fontWeight: FontWeight.w400),
+                      5.verticalSpace,
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          IconButton(
+                              onPressed: () {
+                                setState(() {
+                                  weight += 10;
+                                });
+                              },
+                              icon: Icon(
+                                Icons.add_circle,
+                                color: ColorManager.primary,
+                              )),
+                          CustomText(
+                              txt: DeliveryCubit.get(context)
+                                  .weightCubit
+                                  .toString()),
+                          IconButton(
+                              onPressed: () {
+                                if (weight != 0) {
+                                  setState(() {
+                                    weight -= 10;
+                                  });
+                                }
+                              },
+                              icon: Icon(
+                                Icons.remove_circle_outlined,
+                                color: ColorManager.primary,
+                              )),
+                        ],
+                      ),
+                      30.verticalSpace,
+                      Container(
+                        margin: REdgeInsetsDirectional.only(start: 21, end: 21),
+                        decoration: ThemeHelper().inputBoxDecorationShadow(),
+                        child: CustomTextFormField(
+                          controller: sourceController,
+                          readOnly: true,
+                          onTap: (){
+                            DeliveryCubit.get(context).setNote(value: noteController.text.toString());
+                            DeliveryCubit.get(context).setWeight(value: weight);
+                            Navigator.push(context, MaterialPageRoute(builder: (context) => const AddAddressSourceDeliveryPage()));
                           },
-                          icon: Icon(
-                            Icons.remove_circle_outlined,
-                            color: ColorManager.primary,
-                          )),
+                          lableText: AppStrings.labelSource,
+                          color: ColorManager.secondaryGrey,
+                        ),
+                      ),
+                      20.verticalSpace,
+                      Container(
+                        margin: REdgeInsetsDirectional.only(start: 21, end: 21),
+                        decoration: ThemeHelper().inputBoxDecorationShadow(),
+                        child: CustomTextFormField(
+                          controller: destinationController,
+                          onTap: (){
+                            DeliveryCubit.get(context).setNote(value: noteController.text.toString());
+                            DeliveryCubit.get(context).setWeight(value: weight);
+                              Navigator.push(
+                                  context, MaterialPageRoute(builder: (context) => const AddAddressDestinationDeliveryPage(fromShop: false)));
+
+                          },
+                          readOnly: true,
+                          lableText: AppStrings.labelDestination,
+                          color: ColorManager.secondaryGrey,
+                        ),
+                      ),
+                      20.verticalSpace,
+                      Container(
+                        margin: REdgeInsetsDirectional.only(start: 21, end: 21),
+                        decoration: ThemeHelper().inputBoxDecorationShadow(),
+                        child: CustomTextFormField(
+                          controller: noteController,
+                          readOnly: false,
+                          lableText: AppStrings.textField5,
+                          color: ColorManager.secondaryGrey,
+                        ),
+                      ),
+                      20.verticalSpace,
                     ],
                   ),
-                  30.verticalSpace,
-                  Container(
-                    margin: REdgeInsetsDirectional.only(start: 21, end: 21),
-                    decoration: ThemeHelper().inputBoxDecorationShadow(),
-                    child: CustomTextFormField(
-                      controller: sourceController,
-                      readOnly: true,
-                      lableText: AppStrings.labelSource,
-                      color: ColorManager.secondaryGrey,
-                    ),
-                  ),
-                  20.verticalSpace,
-                  Container(
-                    margin: REdgeInsetsDirectional.only(start: 21, end: 21),
-                    decoration: ThemeHelper().inputBoxDecorationShadow(),
-                    child: CustomTextFormField(
-                      controller: destinationController,
-                      readOnly: true,
-                      lableText: AppStrings.labelDestination,
-                      color: ColorManager.secondaryGrey,
-                    ),
-                  ),
-                  20.verticalSpace,
-                  Container(
-                    margin: REdgeInsetsDirectional.only(start: 21, end: 21),
-                    decoration: ThemeHelper().inputBoxDecorationShadow(),
-                    child: CustomTextFormField(
-                      controller: noteController,
-                      readOnly: false,
-                      lableText: AppStrings.textField5,
-                      color: ColorManager.secondaryGrey,
-                    ),
-                  ),
-                  20.verticalSpace,
-                ],
-              ),
-              Container(
-                margin: REdgeInsetsDirectional.only(top: 650, end: 0, start: 0),
-                padding: REdgeInsetsDirectional.only(start: 20, end: 20),
-                width: double.infinity,
-                height: 117.h,
-                decoration: BoxDecoration(
-                  color: ColorManager.purple,
-                  borderRadius: BorderRadius.only(
-                    topRight: Radius.circular(46.r),
-                    topLeft: Radius.circular(46.r),
-                  ),
                 ),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    15.horizontalSpace,
-                    Expanded(
-                        child: CustomGeneralButton(
-                      onTap: () async {
-                        final val = await DeliveryCubit.get(context)
-                            .deliveryPointCubit();
-                        if (val) {
-                          Navigator.pushNamed(
-                              context, Routes.confirmationPassengerRoute);
+                Container(
+                  margin: REdgeInsetsDirectional.only(top: 650, end: 0, start: 0),
+                  padding: REdgeInsetsDirectional.only(start: 20, end: 20),
+                  width: double.infinity,
+                  height: 117.h,
+                  decoration: BoxDecoration(
+                    color: ColorManager.purple,
+                    borderRadius: BorderRadius.only(
+                      topRight: Radius.circular(46.r),
+                      topLeft: Radius.circular(46.r),
+                    ),
+                  ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      15.horizontalSpace,
+                      Expanded(
+                          child: CustomGeneralButton(
+                        onTap: () async {
+                          final val = await DeliveryCubit.get(context)
+                              .deliveryPointCubit();
+                          if (val) {
+                            Navigator.pushNamed(
+                                context, Routes.confirmationPassengerRoute);
+                          } else {
+                            BotToast.showText(text: 'حدث خطأ ما!');
+                          }
+                        },
+                        text: AppStrings.confBtn,
+                      )),
+                      const Spacer(),
+                      Expanded(child: BlocBuilder<InitialCubit, InitialStates>(
+                          builder: (context, state) {
+                        if (state is OrderCheckSuccessState) {
+                          return Padding(
+                            padding: REdgeInsetsDirectional.only(
+                              top: 20,
+                            ),
+                            child: Column(
+                              children: [
+                                const CustomText(txt: AppStrings.costDelivery),
+                                CustomText(
+                                    txtColor: ColorManager.dark,
+                                    fontWeight: FontWeight.w400,
+                                    txt:
+                                        '${state.listOrder.deliveryCoast.toString()}ل.س '),
+                              ],
+                            ),
+                          );
                         } else {
-                          BotToast.showText(text: 'حدث خطأ ما!');
+                          return Center(
+                            child: CircularProgressIndicator(
+                              color: ColorManager.primary,
+                            ),
+                          );
                         }
-                      },
-                      text: AppStrings.confBtn,
-                    )),
-                    const Spacer(),
-                    Expanded(child: BlocBuilder<InitialCubit, InitialStates>(
-                        builder: (context, state) {
-                      if (state is OrderCheckSuccessState) {
-                        return Padding(
-                          padding: REdgeInsetsDirectional.only(
-                            top: 20,
-                          ),
-                          child: Column(
-                            children: [
-                              const CustomText(txt: AppStrings.costDelivery),
-                              CustomText(
-                                  txtColor: ColorManager.dark,
-                                  fontWeight: FontWeight.w400,
-                                  txt:
-                                      '${state.listOrder.deliveryCoast.toString()}ل.س '),
-                            ],
-                          ),
-                        );
-                      } else {
-                        return Center(
-                          child: CircularProgressIndicator(
-                            color: ColorManager.primary,
-                          ),
-                        );
-                      }
-                    })),
-                  ],
-                ),
-              )
-            ],
+                      })),
+                    ],
+                  ),
+                )
+              ],
+            ),
           ),
         ),
       ),

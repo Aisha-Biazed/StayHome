@@ -32,6 +32,15 @@ class _MyCartPageState extends State<MyCartPage> {
   String idProduct = "";
 
   @override
+  void initState() {
+    final cart = MyCartCubit.get(context).getCart();
+    for (var item in cart) {
+      total += item.counter! * item.cost!;
+    }
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: ColorManager.white,
@@ -112,8 +121,7 @@ class _MyCartPageState extends State<MyCartPage> {
                                         children: [
                                           IconButton(
                                               onPressed: () {
-                                                final cart =
-                                                    cartCubit.getCart();
+                                                final cart = cartCubit.getCart();
                                                 final product = ProductCart(
                                                   id: cart[index].id!,
                                                   name: cart[index].name!,
@@ -123,7 +131,7 @@ class _MyCartPageState extends State<MyCartPage> {
                                                 );
                                                 cartCubit.addToCart(cart, product);
                                                 idProduct = product.id!;
-                                                total = 0;
+                                                // total = 0;
                                                 for (var element in cart) {
                                                   var mul = element.counter! * element.cost!;
                                                   total += mul;
@@ -138,8 +146,7 @@ class _MyCartPageState extends State<MyCartPage> {
                                           CustomText(txt: cart.counter.toString()),
                                           IconButton(
                                               onPressed: () {
-                                                final cart =
-                                                    cartCubit.getCart();
+                                                final cart = cartCubit.getCart();
                                                 final product = ProductCart(
                                                   id: cart[index].id!,
                                                   name: cart[index].name!,
@@ -170,70 +177,59 @@ class _MyCartPageState extends State<MyCartPage> {
                             },
                           ),
                         ),
-                        if(!widget.isReview)
-                        Container(
-                          margin: REdgeInsetsDirectional.only(top: 599),
-                          padding: REdgeInsetsDirectional.only(start: 20, end: 20),
-                          width: 375.w,
-                          height: 117.h,
-                          decoration: BoxDecoration(
-                            color: ColorManager.white,
-                            boxShadow: [
-                              BoxShadow(
-                                color: ColorManager.secondaryGrey.withOpacity(0.2),
-                                spreadRadius: 5,
-                                blurRadius: 7,
-                                offset: const Offset(0, 3),
+                        if (!widget.isReview)
+                          Container(
+                            margin: REdgeInsetsDirectional.only(top: 599),
+                            padding: REdgeInsetsDirectional.only(start: 20, end: 20),
+                            width: 375.w,
+                            height: 117.h,
+                            decoration: BoxDecoration(
+                              color: ColorManager.white,
+                              boxShadow: [
+                                BoxShadow(
+                                  color: ColorManager.secondaryGrey.withOpacity(0.2),
+                                  spreadRadius: 5,
+                                  blurRadius: 7,
+                                  offset: const Offset(0, 3),
+                                ),
+                              ],
+                              borderRadius: BorderRadius.only(
+                                topRight: Radius.circular(46.r),
+                                topLeft: Radius.circular(46.r),
                               ),
-                            ],
-                            borderRadius: BorderRadius.only(
-                              topRight: Radius.circular(46.r),
-                              topLeft: Radius.circular(46.r),
                             ),
-                          ),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              15.horizontalSpace,
-                              IconButton(
-                                icon: const Icon(Icons.delete_outline_outlined),
-                                iconSize: 40,
-                                color: ColorManager.primary,
-                                onPressed: () {
-                                  final cartCubit = BlocProvider.of<MyCartCubit>(context);
-                                  cartCubit.clearCart(state.productsCart);
-                                },
-                              ),
-                              15.horizontalSpace,
-                              Expanded(
-                                  child: CustomText(txt: total.toString())),
-                              Expanded(
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                15.horizontalSpace,
+                                Expanded(child: CustomText(txt: total.toString())),
+                                Expanded(
                                   child: CustomGeneralButton(
-                                onTap: () {
-                                  // ShippingCubit.get(context).getTotalPrice(value: total);
-                                  // print(ShippingCubit.get(context).totalCubit);
-                                  final cartCubit = BlocProvider.of<MyCartCubit>(context);
-                                  if (widget.dest!) {
-                                    final deliveryCubit = DeliveryCubit.get(context);
-                                    deliveryCubit.setTotalPrice(
-                                      value: total,
-                                    );
-                                    print(DeliveryCubit.get(context).totalCubit);
-                                    Navigator.push(context, MaterialPageRoute(builder: (context)=>const OrderReviewDeliveryShopPage1()));
-                                  } else{
-                                    final shippingCubit = ShippingCubit.get(context);
-                                    shippingCubit.setTotalPrice(
-                                      value: total,
-                                    );
-                                    Navigator.push(context, MaterialPageRoute(builder: (context)=>const OrderReviewShippingShopPage1()));
-                                  }
-
-                                },
-                                text: AppStrings.requestBtn,
-                              )),
-                            ],
-                          ),
-                        )
+                                    onTap: () {
+                                      // ShippingCubit.get(context).getTotalPrice(value: total);
+                                      // print(ShippingCubit.get(context).totalCubit);
+                                      final cartCubit = BlocProvider.of<MyCartCubit>(context);
+                                      if (widget.dest!) {
+                                        final deliveryCubit = DeliveryCubit.get(context);
+                                        deliveryCubit.setTotalPrice(
+                                          value: total,
+                                        );
+                                        print(DeliveryCubit.get(context).totalCubit);
+                                        Navigator.push(context, MaterialPageRoute(builder: (context) => const OrderReviewDeliveryShopPage1()));
+                                      } else {
+                                        final shippingCubit = ShippingCubit.get(context);
+                                        shippingCubit.setTotalPrice(
+                                          value: total,
+                                        );
+                                        Navigator.push(context, MaterialPageRoute(builder: (context) => const OrderReviewShippingShopPage1()));
+                                      }
+                                    },
+                                    text: AppStrings.requestBtn,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          )
                       ],
                     );
                   },

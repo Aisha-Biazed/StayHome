@@ -107,7 +107,7 @@ class _OrderReviewShippingShopPage2State extends State<OrderReviewShippingShopPa
                     decoration: ThemeHelper().inputBoxDecorationShadow(),
                     child: CustomTextFormField(
                       controller: destinationController,
-                      readOnly: false,
+                      readOnly: true,
                       lableText: AppStrings.textField4,
                       color: ColorManager.secondaryGrey,
                     ),

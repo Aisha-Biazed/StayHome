@@ -121,7 +121,7 @@ class PassengerCubit extends Cubit<PassengerState> {
       destinationAdditional: nameDestinationCubit,
       sourceAreaID: idSourceCubit,
       destinationAreaID: idDestinationCubit,
-      // scheduleDate: scheduleDate,
+      scheduleDate: scheduleDate,
     );
     final val = result.fold((l) {
       emit(OrderPassengerErrorState());

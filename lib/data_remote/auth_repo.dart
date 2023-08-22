@@ -84,12 +84,17 @@ class AuthRepo {
     required String sourceStreet,
     required String sourceAdditional,
     required double weight,
+    required DateTime? scheduleDate,
+
     // String? shopId
     // String? scheduleDate,
   }) async {
     try {
       final result = await _dio.post(
-          'Mobile/Order/AddShippingOrder?Destination.AreaId=$destinationAreaId&Destination.Street=$destinationStreet&Destination.Additional=$destinationAdditional&Note=$note&Source.Street=$sourceStreet&Source.AreaId=$sourceAreaId&Source.Additional=$sourceAdditional&Weight=$weight');
+          'Mobile/Order/AddShippingOrder?Destination.AreaId=$destinationAreaId&Destination.Street=$destinationStreet&Destination.Additional=$destinationAdditional&Note=$note&Source.Street=$sourceStreet&Source.AreaId=$sourceAreaId&Source.Additional=$sourceAdditional&Weight=$weight',
+        queryParameters: {'ScheduleDate':scheduleDate?.toIso8601String()},
+
+      );
       //&ShopId=$shopId
       print("SuccessfulAddShippingOrder");
       return Right(result.data["response"]);
@@ -108,10 +113,13 @@ class AuthRepo {
     required String sourceStreet,
     required String sourceAdditional,
     required double weight,
+    required DateTime? scheduleDate,
   }) async {
     try {
       final result = await _dio.post(
-          'Mobile/Order/AddShippingOrder?Destination.AreaId=$destinationAreaId&Destination.Street=$destinationStreet&Destination.Additional=$destinationAdditional&Note=$note&Source.Street=$sourceStreet&Source.AreaId=$sourceAreaId&Source.Additional=$sourceAdditional&Weight=$weight');
+          'Mobile/Order/AddShippingOrder?Destination.AreaId=$destinationAreaId&Destination.Street=$destinationStreet&Destination.Additional=$destinationAdditional&Note=$note&Source.Street=$sourceStreet&Source.AreaId=$sourceAreaId&Source.Additional=$sourceAdditional&Weight=$weight',
+      queryParameters: {'ScheduleDate':scheduleDate?.toIso8601String()},
+      );
       //&ShopId=$shopId
       print("SuccessfulAddShippingOrder");
       return Right(result.data["response"]);
@@ -128,11 +136,15 @@ class AuthRepo {
     required String note,
     required String shopId,
     required List<ProductCart> cart,
+    required DateTime? scheduleDate,
+
   }) async {
     try {
       final result = await _dio.post(
           'Mobile/Order/AddDeliveryOrder?Destination.AreaId=$destinationAreaId&Destination.Street=$destinationStreet&Destination.Additional=$destinationAdditional&Note=$note&ShopId=$shopId',
-          queryParameters: listToQuery(cart),
+          queryParameters: listToQuery(cart)..addAll(
+              {'ScheduleDate':scheduleDate?.toIso8601String()}
+          ),
     );
       print("SuccessfulAddShippingOrder");
       return Right(result.data["response"]);
@@ -160,12 +172,16 @@ class AuthRepo {
     required String note,
     required String shopId,
     required List<ProductCart> cart,
+    required DateTime? scheduleDate,
+
     // String? scheduleDate,
   }) async {
     try {
       final result = await _dio.post(
         'Mobile/Order/AddShippingOrder?Destination.AreaId=$destinationAreaId&Destination.Street=$destinationStreet&Destination.Additional=$destinationAdditional&Note=$note&ShopId=$shopId',
-        queryParameters: listToQuery(cart),
+        queryParameters: listToQuery(cart)..addAll(
+            {'ScheduleDate':scheduleDate?.toIso8601String()}
+        ),
       );
       print("SuccessfulAddShopping");
       return Right(result.data["response"]);
@@ -184,10 +200,14 @@ class AuthRepo {
     required String destinationStreet,
     required String sourceAdditional,
     required String destinationAdditional,
+    required DateTime? scheduleDate,
+
   }) async {
     try {
       final result = await _dio.post(
-          'Mobile/Order/AddPassengerOrder?Note=$note&Source.AreaId=$sourceAreaID&Source.Street=$sourceStreet&Source.Additional=$sourceAdditional&Destination.AreaId=$destinationAreaID&Destination.Street=$destinationStreet&Destination.Additional=$destinationAdditional&NumberOfPassenger=$numberOfPassenger');
+          'Mobile/Order/AddPassengerOrder?Note=$note&Source.AreaId=$sourceAreaID&Source.Street=$sourceStreet&Source.Additional=$sourceAdditional&Destination.AreaId=$destinationAreaID&Destination.Street=$destinationStreet&Destination.Additional=$destinationAdditional&NumberOfPassenger=$numberOfPassenger',
+      queryParameters:  {'ScheduleDate':scheduleDate?.toIso8601String()}
+      );
       //&ScheduleDate=$scheduleDate
       print("SuccessfulDataOrderPassenger");
       print(result.data["response"]);

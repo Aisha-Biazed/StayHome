@@ -132,7 +132,9 @@ class DeliveryCubit extends Cubit<DeliveryState> {
         weight: weightCubit.toDouble(),
         sourceAdditional: detailsSourceCubit,
         sourceAreaId: idSourceCubit,
-        sourceStreet: sourceStreetCubit);
+        sourceStreet: sourceStreetCubit,
+    scheduleDate: scheduleDate
+    );
     final val = result.fold((l) {
       emit(DeliveryOrderErrorState());
       //show error
@@ -164,6 +166,7 @@ class DeliveryCubit extends Cubit<DeliveryState> {
       destinationAdditional: detailsDestinationCubit,
       note: noteCubit,
       shopId: shopIdCubit,
+      scheduleDate: scheduleDate,
       cart: cart,
     );
     final val = result.fold((l) {

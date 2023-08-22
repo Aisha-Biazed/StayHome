@@ -131,6 +131,7 @@ class ShippingCubit extends Cubit<ShippingState> {
       sourceAdditional: detailsSourceCubit,
       sourceAreaId: idSourceCubit,
       sourceStreet: sourceStreetCubit,
+      scheduleDate: scheduleDate
     );
     final val = result.fold((l) {
       emit(ShippingOrderErrorState());
@@ -162,6 +163,7 @@ class ShippingCubit extends Cubit<ShippingState> {
       destinationAdditional: detailsDestinationCubit,
       note: noteCubit,
       shopId: shopIdCubit,
+      scheduleDate: scheduleDate,
       cart: cart,
     );
     final val = result.fold((l) {

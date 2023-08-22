@@ -1,3 +1,4 @@
+import 'package:bot_toast/bot_toast.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -19,9 +20,11 @@ class StorePage extends StatefulWidget {
   // false => go to shipping
   // null => go to nav page
   final bool? dest;
+  final bool fromHome;
   const StorePage({
     Key? key,
     this.dest,
+    this.fromHome = false,
   }) : super(key: key);
 
   @override
@@ -36,7 +39,6 @@ class _StorePageState extends State<StorePage> {
     super.initState();
     _pageController = PageController(initialPage: 0);
     InitialCubit.get(context).shopCubit();
-
   }
 
   @override
@@ -156,7 +158,7 @@ class _StorePageState extends State<StorePage> {
                                 child: Container(
                                   margin: REdgeInsetsDirectional.only(top: 0, bottom: 25, end: 0, start: 0),
                                   width: 400.w,
-                                  height: 280.h,
+                                  // height: 290.h,
                                   decoration: BoxDecoration(
                                     borderRadius: BorderRadius.circular(16),
                                     border: Border.all(
@@ -181,16 +183,29 @@ class _StorePageState extends State<StorePage> {
                                           ),
                                         ),
                                         onTap: () {
-                                          if(widget.dest!){
-                                            DeliveryCubit.get(context).setShopId(value: items.id!, name: items.name!);
-                                          }else {
-                                            ShippingCubit.get(context).setShopId(value: items.id!, name: items.name!);
+                                          if (items.isOnline!) {
+                                            if (widget.dest!) {
+                                              DeliveryCubit.get(context).setShopId(value: items.id!, name: items.name!);
+                                            } else {
+                                              ShippingCubit.get(context).setShopId(value: items.id!, name: items.name!);
+                                            }
+                                            print(items.name);
+                                            print(items.id);
+                                            Navigator.push(
+                                                context,
+                                                MaterialPageRoute(
+                                                    builder: (context) => StoreDetails(
+                                                      shopId: items.id!,
+                                                      dest: widget.dest,
+                                                       fromHome: widget.fromHome,
+                                                    )));
+                                          } else{
+                                            BotToast.showText(text: 'هذا المتجر مغلق حالياً');
                                           }
-                                          print(items.name);
-                                          print(items.id);
-                                          Navigator.push(context, MaterialPageRoute(builder: (context) => StoreDetails(shopId: items.id!,dest: widget.dest,)));
+
                                         },
                                       ),
+                                      const SizedBox(height: 4,),
                                       Padding(
                                         padding: REdgeInsetsDirectional.only(start: 20),
                                         child: CustomText(
@@ -199,89 +214,78 @@ class _StorePageState extends State<StorePage> {
                                           fontSize: 20.sp,
                                         ),
                                       ),
-                                      Column(
-                                        children: [
-                                          SizedBox(
-                                            width: double.infinity,
-                                            child: Row(
-                                              children: [
-                                                10.horizontalSpace,
-                                                Icon(
-                                                  Icons.circle,
-                                                  size: 16,
-                                                  color: items.isOnline!
-                                                      ? ColorManager.green
-                                                      : Colors.red,
-                                                ),
-                                                3.horizontalSpace,
-                                                CustomText(
-                                                  txt: items.isOnline!
-                                                      ? AppStrings.open
-                                                      : AppStrings.close,
-                                                  txtColor: ColorManager
-                                                      .secondaryGrey,
-                                                ),
-                                                3.horizontalSpace,
-                                                Icon(
-                                                  Icons.location_on_outlined,
-                                                  color: ColorManager
-                                                      .secondaryGrey,
-                                                ),
-                                                CustomText(
-                                                  txt: items.address!,
-                                                  txtColor: ColorManager
-                                                      .secondaryGrey,
-                                                ),
-                                                10.horizontalSpace,
-                                                Container(
-                                                  color: ColorManager
-                                                      .secondaryGrey,
-                                                  child: const VerticalDivider(
-                                                    color: Colors.black,
-                                                    width: 2,
-                                                    thickness: 1,
-                                                    indent: 10,
-                                                    endIndent: 12,
+                                      Padding(
+                                        padding: const EdgeInsets.all(8.0),
+                                        child: Column(
+                                          children: [
+                                            SizedBox(
+                                              width: double.infinity,
+                                              child: Row(
+                                                children: [
+                                                  10.horizontalSpace,
+                                                  Icon(
+                                                    Icons.circle,
+                                                    size: 16,
+                                                    color: items.isOnline! ? ColorManager.green : Colors.red,
                                                   ),
-                                                ),
-                                                4.horizontalSpace,
-                                                Icon(
-                                                  Icons.update_outlined,
-                                                  color: ColorManager
-                                                      .secondaryGrey,
-                                                ),
-                                                CustomText(
-                                                  txt: items.startTime
-                                                              ?.isNotEmpty ==
-                                                          true
-                                                      ? DateFormat(
-                                                              'dd/MM/yyyy HH:mm')
-                                                          .format(DateTime
-                                                                  .tryParse(items
-                                                                      .startTime) ??
-                                                              DateTime.now())
-                                                      : '',
-                                                  txtColor: ColorManager
-                                                      .secondaryGrey,
-                                                ),
-                                                CustomText(
-                                                  txt: items.endTime
-                                                              ?.isNotEmpty ==
-                                                          true
-                                                      ? DateFormat(
-                                                              'dd/MM/yyyy HH:mm')
-                                                          .format(DateTime
-                                                                  .tryParse(items
-                                                                      .endTime) ??
-                                                              DateTime.now())
-                                                      : '',
-                                                  txtColor: ColorManager
-                                                      .secondaryGrey,
-                                                ),
-                                              ],
+                                                  3.horizontalSpace,
+                                                  CustomText(
+                                                    txt: items.isOnline! ? AppStrings.open : AppStrings.close,
+                                                    txtColor: ColorManager.secondaryGrey,
+                                                  ),
+                                                  3.horizontalSpace,
+                                                  Icon(
+                                                    Icons.location_on_outlined,
+                                                    color: ColorManager.secondaryGrey,
+                                                  ),
+                                                  CustomText(
+                                                    txt: items.address!,
+                                                    txtColor: ColorManager.secondaryGrey,
+                                                  ),
+                                                  10.horizontalSpace,
+                                                  Container(
+                                                    color: ColorManager.secondaryGrey,
+                                                    child: const VerticalDivider(
+                                                      color: Colors.black,
+                                                      width: 2,
+                                                      thickness: 1,
+                                                      indent: 10,
+                                                      endIndent: 12,
+                                                    ),
+                                                  ),
+                                                  4.horizontalSpace,
+                                                ],
+                                              ),
                                             ),
-                                          ),
-                                        ],
+                                            if(items.isOnline!)
+                                            Padding(
+                                              padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
+                                              child: Row(
+                                                children: [
+                                                  Icon(
+                                                    Icons.update_outlined,
+                                                    color: ColorManager.secondaryGrey,
+                                                  ),
+                                                  SizedBox(
+                                                    width: 4,
+                                                  ),
+                                                  CustomText(
+                                                    txt: items.startTime?.isNotEmpty == true ? items.startTime!.toString().split(':').take(2).join(':') : '',
+                                                    txtColor: ColorManager.secondaryGrey,
+                                                  ),
+                                                  CustomText(
+                                                    txt: ' -> ',
+                                                    txtColor: ColorManager.secondaryGrey,
+                                                  ),
+                                                  CustomText(
+                                                    txt: items.endTime?.isNotEmpty == true ? items.endTime!.toString().split(':').take(2).join(':') : '',
+                                                    txtColor: ColorManager.secondaryGrey,
+                                                  ),
+                                                ],
+                                              ),
+                                            ),
+                                          ],
+                                        ),
                                       ),
                                     ],
                                   ),

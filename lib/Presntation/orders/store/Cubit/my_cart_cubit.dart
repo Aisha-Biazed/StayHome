@@ -7,18 +7,15 @@ part 'my_cart_state.dart';
 
 class MyCartCubit extends Cubit<MyCartState> {
   MyCartCubit() : super(MyCartState(productsCart: []));
+
   static MyCartCubit get(context) => BlocProvider.of(context);
+
   void addToCart(List<ProductCart> cart, ProductCart product) {
     final pro = cart.firstWhereOrNull((element) => element.id == product.id);
     if (pro == null) {
       cart.add(product);
     } else {
-      final newProduct = ProductCart(
-          id: pro.id,
-          name: pro.name,
-          imageUrl: pro.imageUrl,
-          cost: pro.cost,
-          counter: pro.counter! + 1);
+      final newProduct = ProductCart(id: pro.id, name: pro.name, imageUrl: pro.imageUrl, cost: pro.cost, counter: pro.counter! + 1);
       cart.removeWhere((element) => element.id == pro.id);
       cart.add(newProduct);
     }
@@ -28,12 +25,7 @@ class MyCartCubit extends Cubit<MyCartState> {
   void decreaseFromCart(List<ProductCart> cart, ProductCart product) {
     final pro = cart.firstWhereOrNull((element) => element.id == product.id);
     if (pro != null && pro.counter! > 1) {
-      final newProduct = ProductCart(
-          id: pro.id,
-          name: pro.name,
-          imageUrl: pro.imageUrl,
-          cost: pro.cost,
-          counter: pro.counter! - 1);
+      final newProduct = ProductCart(id: pro.id, name: pro.name, imageUrl: pro.imageUrl, cost: pro.cost, counter: pro.counter! - 1);
       cart.removeWhere((element) => element.id == pro.id);
       cart.add(newProduct);
       emit(MyCartState(productsCart: cart));
@@ -43,9 +35,9 @@ class MyCartCubit extends Cubit<MyCartState> {
     }
   }
 
-  void clearCart(List<ProductCart> cart) {
-    cart.clear();
-    emit(MyCartState(productsCart: cart));
+  void clearCart() {
+    state.productsCart = [];
+    emit(MyCartState(productsCart: []));
   }
 
   List<ProductCart> getCart() {
@@ -56,11 +48,10 @@ class MyCartCubit extends Cubit<MyCartState> {
     final cart = state.productsCart;
     int price = 0;
     for (var product in cart) {
-      price += (product.counter??1)*(product.cost??1) ;
+      price += (product.counter ?? 1) * (product.cost ?? 1);
     }
     return price;
   }
-
 
   int getTotalProductsCount() {
     final cart = state.productsCart;

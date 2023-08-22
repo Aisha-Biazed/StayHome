@@ -22,7 +22,7 @@ class _HomeBodyViewState extends State<HomeBodyView> {
   int _currentIndex = 0;
   final List<Widget> _widgetOptions = const <Widget>[
     MainPage(),
-    StorePage(),
+    StorePage(dest: true,fromHome: true),
     DeliveryRatingPage(),
     ProfilePage(),
   ];

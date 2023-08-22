@@ -48,8 +48,8 @@ class Shop {
       name: json["name"],
       imageUrl: json["imageUrl"],
       address: json["address"],
-      startTime: json["startTime"],
-      endTime: json["endTime"],
+      startTime: json["startTime"]!=null?json["startTime"].toString():null,
+      endTime: json["endTime"]!=null?json["endTime"].toString():null,
       isOnline: json["isOnline"],
     );
   }
