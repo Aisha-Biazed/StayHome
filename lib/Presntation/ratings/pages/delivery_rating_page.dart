@@ -69,7 +69,7 @@ class _DeliveryRatingPageState extends State<DeliveryRatingPage> {
                     return 20.verticalSpace;
                   },
                   itemBuilder: (BuildContext context, int index) {
-                    final item = state.result[index];
+                    final item = state.list![index];
                     if (item.currentStage == "Rejected" ||
                         item.currentStage == "UnConfirmed") {
                       return Container(
