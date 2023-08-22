@@ -183,7 +183,7 @@ class _MainPageState extends State<MainPage> {
                                         ],
                                       ),
                                     ),
-                                    Spacer(),
+                                    const Spacer(),
                                   ],
                                 )),
                           );
@@ -202,21 +202,6 @@ class _MainPageState extends State<MainPage> {
                       ));
                     }
                   }))
-
-              // ListView(
-              //   children: const <Widget>[
-              //     CardItem2(
-              //       title: AppStrings.pizza,
-              //       subtitle: AppStrings.mario,
-              //       img: ImageAssets.store1,
-              //     ),
-              //     CardItem2(
-              //       title: AppStrings.hodi,
-              //       subtitle: AppStrings.shadowsTxt,
-              //       img: ImageAssets.store2,
-              //     ),
-              //   ],
-              // )),
             ],
           ),
         ),

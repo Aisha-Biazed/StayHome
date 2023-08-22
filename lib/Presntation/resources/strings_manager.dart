@@ -64,7 +64,7 @@ class AppStrings {
   // home
   static const homeNavLabel_1 = "الرئيسية";
   static const homeNavLabel_2 = "المتاجر";
-  static const homeNavLabel_3 = "التقييمات";
+  static const homeNavLabel_3 = "الطلبات";
   static const homeNavLabel_4 = "البروفايل";
   static const store = "أطلب الآن";
   static const service = "خدماتنا";
@@ -147,4 +147,5 @@ class AppStrings {
   static const note = "الرجاء وصول الأكل ساخن جداَ";
   static const note1 = "وجهة الهدف: دمشق-المزةَ";
   static const cancelBtn = "إلغاء";
+  static const cancelOrder = "الطلب مُلغى";
 }

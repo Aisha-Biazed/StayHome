@@ -50,7 +50,7 @@ class _HomeBodyViewState extends State<HomeBodyView> {
               label: AppStrings.homeNavLabel_2,
             ),
             BottomNavigationBarItem(
-                icon: Icon(Icons.star_rate_rounded),
+                icon: Icon(Icons.shopping_cart_checkout_sharp),
                 label: AppStrings.homeNavLabel_3),
             BottomNavigationBarItem(
               icon: Icon(Icons.person),

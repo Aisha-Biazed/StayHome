@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:stay_home/core/widgets/custom_text.dart';
-
 import '../../../../../core/widgets/custom_confirmation.dart';
-import '../../../../resources/assets_manager.dart';
+import '../../../../resources/routes_manager.dart';
 import '../../../../resources/strings_manager.dart';
 
 class ConfirmationPage extends StatelessWidget {
@@ -11,10 +8,13 @@ class ConfirmationPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
+    return Scaffold(
         body: CustomConfirmationPage(
       titleText: AppStrings.requestReceived1,
       subTitleText: AppStrings.requestReceived2,
+      onTap: () {
+        Navigator.pushReplacementNamed(context, Routes.homesRoute);
+      },
     ));
   }
 }

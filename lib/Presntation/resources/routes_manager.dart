@@ -22,6 +22,7 @@ import '../orders/pages/passenger/pages/order_review_passenger_page_2.dart';
 import '../orders/store/pages/my_cart_page.dart';
 import '../login/pages/registartion_page.dart';
 import '../login/pages/profile_page.dart';
+import '../ratings/pages/delivery_rating_page.dart';
 import '../ratings/pages/rating_page.dart';
 import '../splash/pages/splash_view.dart';
 
@@ -56,6 +57,7 @@ class Routes {
   static const String myCartRoute = "/basket";
   static const String showPicker = "/showpicker";
   static const String ratingRoute = "/rating";
+  static const String deliveryRatingRoute = "/delivery_rating";
 }
 
 class RouteGenerator {
@@ -133,6 +135,8 @@ class RouteGenerator {
             builder: (_) => const ConfirmationForPassengerPage());
       case Routes.myCartRoute:
         return MaterialPageRoute(builder: (_) => const MyCartPage(isReview: false ,));
+      case Routes.deliveryRatingRoute:
+        return MaterialPageRoute(builder: (_) => const DeliveryRatingPage());
       case Routes.ratingRoute:
         return MaterialPageRoute(
             builder: (_) => RatingsPage(
