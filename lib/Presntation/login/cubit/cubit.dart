@@ -68,6 +68,30 @@ class InitialCubit extends Cubit<InitialStates> {
     });
   }
 
+  void modifyProfileCubit(
+      {required String fullName,
+      required String email,
+      required String phoneNumber,
+      required String birthdate,
+      required BuildContext context,
+      required String gender}) async {
+    emit(ModifyProfileLoadingState());
+    Either<String, dynamic> result = await _authRepo.modifyProfile(
+      email: email,
+      fullName: fullName,
+      birthdate: birthdate,
+      phoneNumber: phoneNumber,
+      gender: gender,
+    );
+
+    result.fold((l) {
+      emit(ModifyProfileErrorState());
+      //show error
+    }, (r) {
+      emit(ModifyProfileSuccessState());
+    });
+  }
+
   void profileCubit() async {
     emit(ProfileLoadingState());
     Either<String, ProfileModel> result = await _authRepo.myProfile();
@@ -89,8 +113,6 @@ class InitialCubit extends Cubit<InitialStates> {
       //save user
     });
   }
-
-
 
   void getAllCitiesCubit() async {
     emit(GetAllCitiesLoadingState());
@@ -171,12 +193,14 @@ class InitialCubit extends Cubit<InitialStates> {
       //save user
     });
   }
-  void orderCheckShopCubit(String destinationAreaId, String sourceAreaId) async {
+
+  void orderCheckShopCubit(
+      String destinationAreaId, String sourceAreaId) async {
     print('orderCheckShop');
 
     emit(OrderCheckLoadingState());
     Either<String, OrderCheckModel> result =
-    await _authRepo.orderCheckShop(destinationAreaId, sourceAreaId);
+        await _authRepo.orderCheckShop(destinationAreaId, sourceAreaId);
     result.fold((l) {
       emit(OrderCheckErrorState());
       //show error

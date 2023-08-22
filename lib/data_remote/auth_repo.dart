@@ -21,9 +21,11 @@ class AuthRepo {
     _dio = DioFactory.instance.get();
   }
 
-  Future<Either<String, String>> loginUser({required String email, required String password}) async {
+  Future<Either<String, String>> loginUser(
+      {required String email, required String password}) async {
     try {
-      final result = await _dio.post('Mobile/Customer/LogIn?Email=$email&password=$password');
+      final result = await _dio
+          .post('Mobile/Customer/LogIn?Email=$email&password=$password');
       final SharedPreferences prefs = await SharedPreferences.getInstance();
       await prefs.setString('token', result.data["response"]["accessToken"]);
       print("SuccessfulData");
@@ -31,7 +33,8 @@ class AuthRepo {
       return Right(result.data["response"]["accessToken"]);
     } catch (error) {
       print("error =$error");
-      if (((error as DioError).response?.data['message'] as String).contains('User Not Found')) {
+      if (((error as DioError).response?.data['message'] as String)
+          .contains('User Not Found')) {
         return Left('هذا الحساب غير موجود، تحقق من المعلومات المدخلة');
       } else {
         return Left(ExceptionHandler.handle(error as Exception));
@@ -56,6 +59,25 @@ class AuthRepo {
       print("SuccessfulDataCreateUser");
       print(result.data["response"]["accessToken"]);
       return Right(result.data["response"]["accessToken"]);
+    } catch (error) {
+      print("error =$error");
+      return Left(ExceptionHandler.handle(error as Exception));
+    }
+  }
+
+  Future<Either<String, dynamic>> modifyProfile({
+    required String fullName,
+    required String birthdate,
+    required String phoneNumber,
+    required String email,
+    required String gender,
+  }) async {
+    try {
+      final result = await _dio.post(
+          'Mobile/Customer/Modify?FullName=$fullName&Email=$email&PhoneNumber=$phoneNumber&BirthDate=$birthdate&Gender=$gender');
+      print("SuccessfulModify");
+      print(result.data["response"]);
+      return Right(result.data["response"]);
     } catch (error) {
       print("error =$error");
       return Left(ExceptionHandler.handle(error as Exception));
@@ -282,7 +304,8 @@ class AuthRepo {
     }
   }
 
-  Future<Either<String, List<GetAllCitiesWithAreasModel>>> getAllCitiesWithAreas() async {
+  Future<Either<String, List<GetAllCitiesWithAreasModel>>>
+      getAllCitiesWithAreas() async {
     try {
       final result = await _dio.get('Mobile/Setting/GetAllCitiesWithAreas');
       (result.data["response"] as List).map((e) {
@@ -328,13 +351,17 @@ class AuthRepo {
     }
   }
 
-  Future<Either<String, OrderCheckModel>> orderCheck(String destinationAreaId, String sourceAreaId) async {
+  Future<Either<String, OrderCheckModel>> orderCheck(
+      String destinationAreaId, String sourceAreaId) async {
     try {
       final result = await _dio.get(
         'Mobile/Order/Check',
         // '?SourceAreaId=dda57d62-b1c0-46bd-a3f3-490210dea637',
         // 'dda57d62-b1c0-46bd-a3f3-490210dea637',
-        queryParameters: {'DestinationAreaId': destinationAreaId, 'SourceAreaId': sourceAreaId},
+        queryParameters: {
+          'DestinationAreaId': destinationAreaId,
+          'SourceAreaId': sourceAreaId
+        },
       );
       print("SuccessfulOrderCheck");
       return Right(OrderCheckModel.fromJson(result.data["response"]));
@@ -344,13 +371,17 @@ class AuthRepo {
     }
   }
 
-  Future<Either<String, OrderCheckModel>> orderCheckShop(String destinationAreaId, String sourceAreaId) async {
+  Future<Either<String, OrderCheckModel>> orderCheckShop(
+      String destinationAreaId, String sourceAreaId) async {
     try {
       final result = await _dio.get(
         'Mobile/Order/Check',
         // '?SourceAreaId=dda57d62-b1c0-46bd-a3f3-490210dea637',
         // 'dda57d62-b1c0-46bd-a3f3-490210dea637',
-        queryParameters: {'DestinationAreaId': destinationAreaId, 'ShopId': sourceAreaId},
+        queryParameters: {
+          'DestinationAreaId': destinationAreaId,
+          'ShopId': sourceAreaId
+        },
       );
       print("SuccessfulOrderCheck");
       return Right(OrderCheckModel.fromJson(result.data["response"]));

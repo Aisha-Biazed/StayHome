@@ -1,3 +1,5 @@
+import 'package:conditional_builder_null_safety/conditional_builder_null_safety.dart';
+import 'package:dropdown_textfield/dropdown_textfield.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -8,6 +10,8 @@ import 'package:stay_home/Presntation/resources/routes_manager.dart';
 import 'package:stay_home/Presntation/resources/strings_manager.dart';
 import 'package:stay_home/core/widgets/custom_text.dart';
 
+import '../../../core/utils/theme_helper.dart';
+import '../../../core/widgets/custom_buttons.dart';
 import '../../resources/assets_manager.dart';
 import '../cubit/cubit.dart';
 import '../widgets/header_widget.dart';
@@ -19,7 +23,20 @@ class ProfilePage extends StatefulWidget {
   State<ProfilePage> createState() => _ProfilePageState();
 }
 
+List<String> options = ["Male", "Female"];
+
 class _ProfilePageState extends State<ProfilePage> {
+  String gender = "";
+  final _formKey = GlobalKey<FormState>();
+  var fullNameController = TextEditingController(text: "");
+  var emailController = TextEditingController(text: "");
+  var passwordController = TextEditingController(text: "");
+  var phoneNumberController = TextEditingController(text: "");
+  var birthdateController = TextEditingController(text: "");
+  var deviceTokenController = TextEditingController(text: "");
+  var cityIdController = TextEditingController(text: "");
+  final phoneNumberFocus = FocusNode();
+
   @override
   Widget build(BuildContext context) {
     InitialCubit.get(context).profileCubit();
@@ -56,12 +73,16 @@ class _ProfilePageState extends State<ProfilePage> {
                 if (state is ProfileSuccessState) {
                   final item = state.result;
                   return Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Container(
                         alignment: Alignment.center,
                         margin: const EdgeInsets.fromLTRB(25, 10, 25, 5),
                         padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
                         child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             Container(
                               padding: const EdgeInsets.all(10),
@@ -91,93 +112,198 @@ class _ProfilePageState extends State<ProfilePage> {
                                       height: 95,
                                     ),
                             ),
-                            // child: Icon(
-                            //   Icons.person,
-                            //   size: 80,
-                            //   color: Colors.grey.shade300,
-                            // ),
-
                             20.verticalSpace,
-                            CustomText(
-                              txt: item.fullName,
-                              txtColor: ColorManager.dark,
-                              fontSize: 25.sp,
-                              fontWeight: FontWeight.w700,
-                            ),
-                            30.verticalSpace,
+                            // Container(
+                            //   margin: REdgeInsetsDirectional.only(
+                            //     start: 50,
+                            //     end: 20,
+                            //   ),
+                            //   child: TextFormField(
+                            //     readOnly: true,
+                            //     controller: fullNameController,
+                            //     style: TextStyle(
+                            //       color: ColorManager.dark,
+                            //       fontSize: 25.sp,
+                            //       fontWeight: FontWeight.w700,
+                            //     ),
+                            //     decoration: InputDecoration(
+                            //       filled: false,
+                            //       helperMaxLines: 10,
+                            //       fillColor: Colors.transparent,
+                            //       border: InputBorder.none,
+                            //       hintText: item.fullName,
+                            //       hintStyle: TextStyle(
+                            //           fontWeight: FontWeight.w700,
+                            //           color: ColorManager.dark,
+                            //           fontSize: 25.sp),
+                            //     ),
+                            //     onChanged: (value) {
+                            //       print(value);
+                            //     },
+                            //   ),
+                            // ),
                           ],
                         ),
                       ),
                       Padding(
-                        padding:
-                            REdgeInsetsDirectional.only(start: 30, end: 30),
-                        child: Card(
-                          child: Container(
-                            alignment: Alignment.topRight,
-                            padding:
-                                REdgeInsetsDirectional.only(start: 20, end: 20),
+                        padding: REdgeInsetsDirectional.only(start: 0, end: 0),
+                        child: Container(
+                          margin: const EdgeInsets.fromLTRB(25, 10, 25, 10),
+                          padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
+                          alignment: Alignment.center,
+                          child: Form(
+                            key: _formKey,
                             child: Column(
-                              children: <Widget>[
-                                ...ListTile
-                                    .divideTiles(color: Colors.grey, tiles: [
-                                  ListTile(
-                                    contentPadding: const EdgeInsets.symmetric(
-                                      horizontal: 12,
-                                      vertical: 4,
+                              children: [
+                                Container(
+                                  decoration:
+                                      ThemeHelper().inputBoxDecorationShadow(),
+                                  child: TextFormField(
+                                    keyboardType: TextInputType.text,
+                                    controller: fullNameController,
+                                    decoration:
+                                        ThemeHelper().textInputDecoration(
+                                      item.fullName,
+                                      AppStrings.firstname,
                                     ),
-                                    leading: Icon(Icons.female_outlined,
-                                        color: ColorManager.primary),
-                                    title: const CustomText(
-                                        txt: AppStrings.gender),
-                                    subtitle: Text(item.gender),
+                                    // validator: (val) {
+                                    //   if (val!.isEmpty) {
+                                    //     return AppStrings.validateBirthdate;
+                                    //   }
+                                    //   return null;
+                                    // },
                                   ),
-                                  ListTile(
-                                    contentPadding: const EdgeInsets.symmetric(
-                                      horizontal: 12,
-                                      vertical: 4,
+                                ),
+                                20.verticalSpace,
+                                Container(
+                                  decoration:
+                                      ThemeHelper().inputBoxDecorationShadow(),
+                                  child: TextFormField(
+                                    keyboardType: TextInputType.text,
+                                    controller: birthdateController,
+                                    decoration:
+                                        ThemeHelper().textInputDecoration(
+                                      item.birthDate,
+                                      AppStrings.birthDate,
                                     ),
-                                    leading: Icon(Icons.email,
-                                        color: ColorManager.primary),
-                                    title: const CustomText(
-                                        txt: AppStrings.usernameHint),
-                                    subtitle: CustomText(
-                                      txt: item.email,
-                                    ),
+                                    // validator: (val) {
+                                    //   if (val!.isEmpty) {
+                                    //     return AppStrings.validateBirthdate;
+                                    //   }
+                                    //   return null;
+                                    // },
                                   ),
-                                  GestureDetector(
-                                    onTap: () {
-                                      Navigator.pushNamed(
-                                          context, Routes.registerRoute);
-                                    },
-                                    child: ListTile(
-                                      contentPadding:
-                                          const EdgeInsets.symmetric(
-                                        horizontal: 12,
-                                        vertical: 4,
+                                ),
+                                20.verticalSpace,
+                                Container(
+                                  decoration:
+                                      ThemeHelper().inputBoxDecorationShadow(),
+                                  child: TextFormField(
+                                    controller: emailController,
+                                    decoration:
+                                        ThemeHelper().textInputDecoration(
+                                      item.email,
+                                      AppStrings.usernameHint,
+                                    ),
+                                    keyboardType: TextInputType.emailAddress,
+                                    // validator: (val) {
+                                    //   if ((val!.isEmpty) &&
+                                    //       !RegExp(r"^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,253}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,253}[a-zA-Z0-9])?)*$")
+                                    //           .hasMatch(val)) {
+                                    //     return AppStrings.validateEmail;
+                                    //   }
+                                    // },
+                                  ),
+                                ),
+                                20.verticalSpace,
+                                Container(
+                                  decoration:
+                                      ThemeHelper().inputBoxDecorationShadow(),
+                                  child: TextFormField(
+                                    controller: phoneNumberController,
+                                    maxLength: 10,
+                                    decoration: ThemeHelper()
+                                        .textInputDecoration(item.phoneNumber,
+                                            AppStrings.mobileNumber),
+                                    keyboardType: TextInputType.phone,
+                                  ),
+                                ),
+                                20.verticalSpace,
+                                Row(
+                                  children: [
+                                    Expanded(
+                                      child: RadioListTile(
+                                        activeColor: ColorManager.primary,
+                                        title: const CustomText(
+                                          txt: AppStrings.male,
+                                          fontSize: 17,
+                                        ),
+                                        value: item.gender,
+                                        groupValue: gender,
+                                        onChanged: (value) {
+                                          setState(() {
+                                            gender = value.toString();
+                                          });
+                                        },
                                       ),
-                                      leading: Icon(Icons.phone,
-                                          color: ColorManager.primary),
-                                      title: const CustomText(
-                                          txt: AppStrings.mobileNumber),
-                                      subtitle: CustomText(
-                                        txt: item.phoneNumber,
+                                    ),
+                                    Expanded(
+                                      child: RadioListTile(
+                                        activeColor: ColorManager.primary,
+                                        title: const CustomText(
+                                          txt: AppStrings.female,
+                                          fontSize: 17,
+                                        ),
+                                        value: item.gender,
+                                        groupValue: gender,
+                                        onChanged: (value) {
+                                          setState(() {
+                                            gender = value.toString();
+                                          });
+                                        },
                                       ),
                                     ),
-                                  ),
-                                  ListTile(
-                                    contentPadding: const EdgeInsets.symmetric(
-                                      horizontal: 12,
-                                      vertical: 4,
-                                    ),
-                                    leading: Icon(
-                                      Icons.calendar_month_outlined,
+                                  ],
+                                ),
+                                20.verticalSpace,
+                                ConditionalBuilder(
+                                  fallback: (BuildContext context) => Center(
+                                    child: CircularProgressIndicator(
                                       color: ColorManager.primary,
                                     ),
-                                    title: const CustomText(
-                                        txt: AppStrings.birthDate),
-                                    subtitle: CustomText(txt: item.birthDate),
                                   ),
-                                ])
+                                  condition:
+                                      state is! ModifyProfileLoadingState,
+                                  builder: (BuildContext context) => Container(
+                                    margin: const EdgeInsets.fromLTRB(
+                                        25, 0, 25, 10),
+                                    padding:
+                                        const EdgeInsets.fromLTRB(10, 0, 10, 0),
+                                    decoration: ThemeHelper()
+                                        .buttonBoxDecoration(context),
+                                    child: CustomGeneralButton(
+                                      text: AppStrings.save,
+                                      onTap: () {
+                                        if (_formKey.currentState!.validate()) {
+                                          InitialCubit.get(context)
+                                              .modifyProfileCubit(
+                                            email:
+                                                emailController.text.toString(),
+                                            fullName: fullNameController.text
+                                                .toString(),
+                                            phoneNumber: phoneNumberController
+                                                .text
+                                                .toString(),
+                                            birthdate: birthdateController.text
+                                                .toString(),
+                                            gender: gender,
+                                            context: context,
+                                          );
+                                        }
+                                      },
+                                    ),
+                                  ),
+                                ),
                               ],
                             ),
                           ),
