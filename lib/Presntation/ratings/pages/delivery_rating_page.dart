@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:bot_toast/bot_toast.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -37,7 +38,7 @@ class _DeliveryRatingPageState extends State<DeliveryRatingPage> {
   }
 
   void _startOrderTrackingUpdates() {
-    const duration = Duration(seconds: 2);
+    const duration = Duration(seconds: 200);
     _orderTrackingSubscription = Stream.periodic(duration).listen((_) {
       InitialCubit.get(context).orderTrackingCubit();
     });
@@ -65,174 +66,356 @@ class _DeliveryRatingPageState extends State<DeliveryRatingPage> {
                   },
                   itemBuilder: (BuildContext context, int index) {
                     final item = state.result[index];
-                    return Container(
-                      padding: REdgeInsetsDirectional.only(
-                          start: 6, end: 6, top: 40, bottom: 40),
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(20.0),
-                        border:
-                            Border.all(width: 1.0, color: ColorManager.primary),
-                      ),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.end,
-                        children: [
-                          Row(
-                            children: [
-                              Container(
-                                margin: REdgeInsetsDirectional.only(end: 10),
-                                width: 80,
-                                height: 80,
-                                decoration: BoxDecoration(
-                                  color: ColorManager.purple,
-                                  shape: BoxShape.circle,
-                                  border: Border.all(
-                                    color: ColorManager.purple,
-                                    width: 2.0,
-                                  ),
-                                ),
-                                child: CircleAvatar(
-                                    backgroundColor: ColorManager.purple,
-                                    child: Image.asset(
-                                      ImageAssets.box,
-                                      width: 40,
-                                    )),
-                              ),
-                              Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  CustomText(
-                                    txt: AppStrings.order,
-                                    txtColor: ColorManager.dark,
-                                  ),
-                                  CustomText(
-                                    txt:
-                                        "${AppStrings.priceRating}${item.coast}",
-                                    txtColor: ColorManager.dark,
-                                  ),
-                                ],
-                              ),
-                              const Spacer(),
-                              CustomButtons(
-                                onPressed: () {
-                                  if (item.star == null &&
-                                      item.canEvaluate == true) {
-                                    Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                            builder: (context) =>
-                                                RatingsPage(idRate: item.id!)));
-                                  }
-                                },
-                                text: AppStrings.ratingBtnDelivery,
-                                color: item.star == null &&
-                                        item.canEvaluate == true
-                                    ? ColorManager.primary
-                                    : ColorManager.purple,
-                                colorText: item.star == null &&
-                                        item.canEvaluate == true
-                                    ? ColorManager.white
-                                    : ColorManager.dark,
-                              ),
-                            ],
-                          ),
-                          Padding(
-                            padding: REdgeInsetsDirectional.only(
-                              end: 25,
-                            ),
-                            child: Visibility(
-                              visible: !(item.currentStage == "OnWay" ||
-                                  item.currentStage == "Complete"),
-                              child: CustomButtons(
-                                text: AppStrings.cancelBtn,
-                                colorText: ColorManager.dark,
-                                onPressed: () {
-                                  InitialCubit.get(context)
-                                      .cancelCubit(idOrder: item.id!);
-                                },
-                              ),
-                            ),
-                          ),
-                          Padding(
-                            padding: REdgeInsetsDirectional.only(
-                                start: 16, end: 16, top: 16),
-                            child: Row(children: <Widget>[
-                              Container(
-                                height: 10,
-                                width: 10,
-                                padding: const EdgeInsets.all(1),
-                                decoration: BoxDecoration(
-                                    color: item.currentStage == 'Confirmed' ||
-                                            item.currentStage == "OnWay" ||
-                                            item.currentStage == "Complete"
-                                        ? ColorManager.primary
-                                        : ColorManager.purple,
-                                    borderRadius: BorderRadius.circular(6)),
-                              ),
-                              Expanded(
-                                  child: Divider(
-                                thickness: 1.5,
-                                color: item.currentStage == "OnWay" ||
-                                        item.currentStage == "Complete"
-                                    ? ColorManager.primary
-                                    : ColorManager.purple,
-                              )),
-                              Container(
-                                height: 10,
-                                width: 10,
-                                padding: const EdgeInsets.all(1),
-                                decoration: BoxDecoration(
-                                    color: item.currentStage == "OnWay" ||
-                                            item.currentStage == "Complete"
-                                        ? ColorManager.primary
-                                        : ColorManager.purple,
-                                    borderRadius: BorderRadius.circular(6)),
-                              ),
-                              Expanded(
-                                  child: Divider(
-                                thickness: 1.5,
-                                color: item.currentStage == 'Complete'
-                                    ? ColorManager.primary
-                                    : ColorManager.purple,
-                              )),
-                              Container(
-                                height: 10,
-                                width: 10,
-                                padding: const EdgeInsets.all(1),
-                                decoration: BoxDecoration(
-                                    color: item.currentStage == "Complete"
-                                        ? ColorManager.primary
-                                        : ColorManager.purple,
-                                    borderRadius: BorderRadius.circular(6)),
-                              ),
-                            ]),
-                          ),
-                          Padding(
-                            padding: REdgeInsetsDirectional.only(
-                                start: 16, end: 16, top: 10),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    if (item.currentStage == "Rejected" ||
+                        item.currentStage == "UnConfirmed") {
+                      return Container(
+                        padding: REdgeInsetsDirectional.only(
+                            start: 6, end: 6, top: 40, bottom: 40),
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(20.0),
+                          border: Border.all(width: 1.0, color: Colors.red),
+                        ),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.end,
+                          children: [
+                            Row(
                               children: [
-                                CustomText(
-                                  txt: AppStrings.inPreparation,
-                                  txtColor: ColorManager.dark,
-                                  fontSize: 14,
+                                Container(
+                                  margin: REdgeInsetsDirectional.only(end: 10),
+                                  width: 80,
+                                  height: 80,
+                                  decoration: BoxDecoration(
+                                    color: ColorManager.purple,
+                                    shape: BoxShape.circle,
+                                    border: Border.all(
+                                      color: ColorManager.purple,
+                                      width: 2.0,
+                                    ),
+                                  ),
+                                  child: CircleAvatar(
+                                      backgroundColor: ColorManager.purple,
+                                      child: Image.asset(
+                                        ImageAssets.box,
+                                        width: 40,
+                                      )),
                                 ),
-                                CustomText(
-                                  txt: AppStrings.deliveryIsUnderway,
-                                  txtColor: ColorManager.dark,
-                                  fontSize: 14,
+                                Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    CustomText(
+                                      txt: AppStrings.order,
+                                      txtColor: ColorManager.dark,
+                                    ),
+                                    CustomText(
+                                      txt:
+                                          "${AppStrings.priceRating}${item.coast}",
+                                      txtColor: ColorManager.dark,
+                                    ),
+                                  ],
                                 ),
-                                CustomText(
-                                  txt: AppStrings.delivered,
-                                  txtColor: ColorManager.dark,
-                                  fontSize: 14,
+                                const Spacer(),
+                                CustomButtons(
+                                  onPressed: () {
+                                    if (item.star == null &&
+                                        item.canEvaluate == true) {
+                                      Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (context) => RatingsPage(
+                                                  idRate: item.id!)));
+                                    }
+                                  },
+                                  text: AppStrings.ratingBtnDelivery,
+                                  color: item.star == null &&
+                                          item.canEvaluate == true
+                                      ? ColorManager.primary
+                                      : ColorManager.purple,
+                                  colorText: item.star == null &&
+                                          item.canEvaluate == true
+                                      ? ColorManager.white
+                                      : ColorManager.dark,
                                 ),
                               ],
                             ),
-                          )
-                        ],
-                      ),
-                    );
+                            Padding(
+                              padding: REdgeInsetsDirectional.only(
+                                end: 4,
+                              ),
+                              child: Visibility(
+                                  visible: !(item.currentStage == "OnWay" ||
+                                      item.currentStage == "Complete"),
+                                  child: CustomButtons(
+                                    text: AppStrings.cancelOrder,
+                                    color: ColorManager.purple,
+                                    colorText: ColorManager.dark,
+                                  )),
+                            ),
+                            Padding(
+                              padding: REdgeInsetsDirectional.only(
+                                  start: 16, end: 16, top: 16),
+                              child: Row(children: <Widget>[
+                                Container(
+                                  height: 10,
+                                  width: 10,
+                                  padding: const EdgeInsets.all(1),
+                                  decoration: BoxDecoration(
+                                      color: item.currentStage == "Confirmed" ||
+                                              item.currentStage == "OnWay" ||
+                                              item.currentStage == "Complete"
+                                          ? ColorManager.primary
+                                          : ColorManager.purple,
+                                      borderRadius: BorderRadius.circular(6)),
+                                ),
+                                Expanded(
+                                    child: Divider(
+                                  thickness: 1.5,
+                                  color: item.currentStage == "OnWay" ||
+                                          item.currentStage == "Complete"
+                                      ? ColorManager.primary
+                                      : ColorManager.purple,
+                                )),
+                                Container(
+                                  height: 10,
+                                  width: 10,
+                                  padding: const EdgeInsets.all(1),
+                                  decoration: BoxDecoration(
+                                      color: item.currentStage == "OnWay" ||
+                                              item.currentStage == "Complete"
+                                          ? ColorManager.primary
+                                          : ColorManager.purple,
+                                      borderRadius: BorderRadius.circular(6)),
+                                ),
+                                Expanded(
+                                    child: Divider(
+                                  thickness: 1.5,
+                                  color: item.currentStage == "Complete"
+                                      ? ColorManager.primary
+                                      : ColorManager.purple,
+                                )),
+                                Container(
+                                  height: 10,
+                                  width: 10,
+                                  padding: const EdgeInsets.all(1),
+                                  decoration: BoxDecoration(
+                                      color: item.currentStage == "Complete"
+                                          ? ColorManager.primary
+                                          : ColorManager.purple,
+                                      borderRadius: BorderRadius.circular(6)),
+                                ),
+                              ]),
+                            ),
+                            Padding(
+                              padding: REdgeInsetsDirectional.only(
+                                  start: 16, end: 16, top: 10),
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  CustomText(
+                                    txt: AppStrings.inPreparation,
+                                    txtColor: ColorManager.dark,
+                                    fontSize: 14,
+                                  ),
+                                  CustomText(
+                                    txt: AppStrings.deliveryIsUnderway,
+                                    txtColor: ColorManager.dark,
+                                    fontSize: 14,
+                                  ),
+                                  CustomText(
+                                    txt: AppStrings.delivered,
+                                    txtColor: ColorManager.dark,
+                                    fontSize: 14,
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ],
+                        ),
+                      );
+                    } else {
+                      return Container(
+                        padding: REdgeInsetsDirectional.only(
+                            start: 6, end: 6, top: 40, bottom: 40),
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(20.0),
+                          border: Border.all(
+                            width: 1.0,
+                            color: ColorManager.primary,
+                          ),
+                        ),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.end,
+                          children: [
+                            Row(
+                              children: [
+                                Container(
+                                  margin: REdgeInsetsDirectional.only(end: 10),
+                                  width: 80,
+                                  height: 80,
+                                  decoration: BoxDecoration(
+                                    color: ColorManager.purple,
+                                    shape: BoxShape.circle,
+                                    border: Border.all(
+                                      color: ColorManager.purple,
+                                      width: 2.0,
+                                    ),
+                                  ),
+                                  child: CircleAvatar(
+                                      backgroundColor: ColorManager.purple,
+                                      child: Image.asset(
+                                        ImageAssets.box,
+                                        width: 40,
+                                      )),
+                                ),
+                                Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    CustomText(
+                                      txt: AppStrings.order,
+                                      txtColor: ColorManager.dark,
+                                    ),
+                                    CustomText(
+                                      txt:
+                                          "${AppStrings.priceRating}${item.coast}",
+                                      txtColor: ColorManager.dark,
+                                    ),
+                                  ],
+                                ),
+                                const Spacer(),
+                                CustomButtons(
+                                  onPressed: () {
+                                    if (item.star == null &&
+                                        item.canEvaluate == true) {
+                                      Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (context) => RatingsPage(
+                                                  idRate: item.id!)));
+                                    }
+                                  },
+                                  text: AppStrings.ratingBtnDelivery,
+                                  color: item.star == null &&
+                                          item.canEvaluate == true
+                                      ? ColorManager.primary
+                                      : ColorManager.purple,
+                                  colorText: item.star == null &&
+                                          item.canEvaluate == true
+                                      ? ColorManager.white
+                                      : ColorManager.dark,
+                                ),
+                              ],
+                            ),
+                            Padding(
+                              padding: REdgeInsetsDirectional.only(
+                                  top: 0, end: 6, start: 0),
+                              child: Visibility(
+                                  visible: !(item.currentStage == "OnWay" ||
+                                      item.currentStage == "Complete"),
+                                  child: RSizedBox(
+                                    width: 100,
+                                    child: OutlinedButton(
+                                        onPressed: () {
+                                          InitialCubit.get(context)
+                                              .cancelCubit(idOrder: item.id!);
+                                        },
+                                        style: OutlinedButton.styleFrom(
+                                          side: const BorderSide(
+                                              color: Colors.red),
+                                          shape: RoundedRectangleBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(20.0),
+                                          ),
+                                        ),
+                                        child: CustomText(
+                                          txt: AppStrings.cancelBtn,
+                                          fontSize: 14,
+                                          txtColor: ColorManager.dark,
+                                        )),
+                                  )),
+                            ),
+                            Padding(
+                              padding: REdgeInsetsDirectional.only(
+                                  start: 16, end: 16, top: 16),
+                              child: Row(children: <Widget>[
+                                Container(
+                                  height: 10,
+                                  width: 10,
+                                  padding: const EdgeInsets.all(1),
+                                  decoration: BoxDecoration(
+                                      color: item.currentStage == 'Confirmed' ||
+                                              item.currentStage == "OnWay" ||
+                                              item.currentStage == "Complete"
+                                          ? ColorManager.primary
+                                          : ColorManager.purple,
+                                      borderRadius: BorderRadius.circular(6)),
+                                ),
+                                Expanded(
+                                    child: Divider(
+                                  thickness: 1.5,
+                                  color: item.currentStage == "OnWay" ||
+                                          item.currentStage == "Complete"
+                                      ? ColorManager.primary
+                                      : ColorManager.purple,
+                                )),
+                                Container(
+                                  height: 10,
+                                  width: 10,
+                                  padding: const EdgeInsets.all(1),
+                                  decoration: BoxDecoration(
+                                      color: item.currentStage == "OnWay" ||
+                                              item.currentStage == "Complete"
+                                          ? ColorManager.primary
+                                          : ColorManager.purple,
+                                      borderRadius: BorderRadius.circular(6)),
+                                ),
+                                Expanded(
+                                    child: Divider(
+                                  thickness: 1.5,
+                                  color: item.currentStage == 'Complete'
+                                      ? ColorManager.primary
+                                      : ColorManager.purple,
+                                )),
+                                Container(
+                                  height: 10,
+                                  width: 10,
+                                  padding: const EdgeInsets.all(1),
+                                  decoration: BoxDecoration(
+                                      color: item.currentStage == "Complete"
+                                          ? ColorManager.primary
+                                          : ColorManager.purple,
+                                      borderRadius: BorderRadius.circular(6)),
+                                ),
+                              ]),
+                            ),
+                            Padding(
+                              padding: REdgeInsetsDirectional.only(
+                                  start: 16, end: 16, top: 10),
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  CustomText(
+                                    txt: AppStrings.inPreparation,
+                                    txtColor: ColorManager.dark,
+                                    fontSize: 14,
+                                  ),
+                                  CustomText(
+                                    txt: AppStrings.deliveryIsUnderway,
+                                    txtColor: ColorManager.dark,
+                                    fontSize: 14,
+                                  ),
+                                  CustomText(
+                                    txt: AppStrings.delivered,
+                                    txtColor: ColorManager.dark,
+                                    fontSize: 14,
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ],
+                        ),
+                      );
+                    }
                   },
                 );
               } else {
@@ -249,3 +432,21 @@ class _DeliveryRatingPageState extends State<DeliveryRatingPage> {
     );
   }
 }
+//RSizedBox(
+//                                     width: 100,
+//                                     child: OutlinedButton(
+//                                         onPressed: () {},
+//                                         style: OutlinedButton.styleFrom(
+//                                           side: BorderSide(
+//                                               color: ColorManager.purple),
+//                                           shape: RoundedRectangleBorder(
+//                                             borderRadius:
+//                                                 BorderRadius.circular(20.0),
+//                                           ),
+//                                         ),
+//                                         child: CustomText(
+//                                           txt: AppStrings.cancelOrder,
+//                                           fontSize: 14,
+//                                           txtColor: ColorManager.dark,
+//                                         )),
+//                                   )

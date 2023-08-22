@@ -325,7 +325,7 @@ class _OrderReviewShippingPage2State extends State<OrderReviewShippingPage2> {
                             .shippingPointCubit();
                         if (val) {
                           Navigator.pushNamed(
-                              context, Routes.confirmationPassengerRoute);
+                              context, Routes.confirmationRoute);
                         } else {
                           BotToast.showText(text: 'حدث خطأ ما!');
                         }

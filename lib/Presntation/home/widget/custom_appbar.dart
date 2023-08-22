@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_svg/svg.dart';
+import 'package:stay_home/Presntation/resources/assets_manager.dart';
 
 import '../../../core/widgets/custom_text.dart';
 import '../../resources/color_manager.dart';
@@ -8,6 +10,7 @@ import '../../resources/strings_manager.dart';
 
 AppBar CustomAppBar() => AppBar(
       automaticallyImplyLeading: false,
+      centerTitle: true,
       actions: [
         Padding(
           padding: REdgeInsetsDirectional.all(8.0),
@@ -38,6 +41,13 @@ AppBar CustomAppBar() => AppBar(
         children: [
           Row(
             children: [
+              SvgPicture.asset(
+                allowDrawingOutsideViewBox: true,
+                ImageAssets.logo,
+                width: 40,
+                height: 40,
+              ),
+              50.horizontalSpace,
               CustomText(
                 txt: AppStrings.appbarHome1,
                 txtColor: ColorManager.dark,
@@ -50,6 +60,7 @@ AppBar CustomAppBar() => AppBar(
                 fontSize: 20.sp,
                 fontWeight: FontWeight.w800,
               ),
+              10.horizontalSpace,
             ],
           ),
           20.verticalSpace,

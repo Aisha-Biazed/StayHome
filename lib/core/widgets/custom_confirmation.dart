@@ -32,22 +32,22 @@ class CustomConfirmationPage extends StatelessWidget {
             80.verticalSpace,
             CustomText(
               txt: titleText,
-              fontWeight: FontWeight.w700,
+              fontWeight: FontWeight.w400,
               fontSize: 20.sp,
               textAlign: TextAlign.center,
             ),
             20.verticalSpace,
             CustomText(
               txt: subTitleText,
-              fontWeight: FontWeight.w700,
+              fontWeight: FontWeight.w400,
               fontSize: 20.sp,
             ),
             40.verticalSpace,
-            if(onTap!=null)
-            CustomGeneralButton(
-              text: 'العودة للرئيسية',
-              onTap: onTap,
-            )
+            if (onTap != null)
+              CustomGeneralButton(
+                text: 'العودة للرئيسية',
+                onTap: onTap,
+              )
           ],
         ),
       ),
