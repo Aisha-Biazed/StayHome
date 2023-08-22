@@ -15,9 +15,28 @@ class PassengerCubit extends Cubit<PassengerState> {
     _authRepo = AuthRepo();
   }
 
+  DateTime? scheduleDate ;
+
+
   static PassengerCubit get(context) => BlocProvider.of(context);
   String idDestinationCubit = '';
   String nameDestinationCubit = '';
+
+
+  void reset() {
+    idSourceCubit = '';
+    nameSourceCubit = '';
+    sourceStreetCubit = '';
+    detailsSourceCubit = '';
+    idDestinationCubit = '';
+    nameDestinationCubit = '';
+    destinationStreetCubit = '';
+    detailsDestinationCubit = '';
+    scheduleDate = null;
+    noteCubit = '';
+    numberCubit = 1;
+  }
+
 
   void getIdDestination({required String value, required String name}) {
     idDestinationCubit = value;
@@ -39,6 +58,10 @@ class PassengerCubit extends Cubit<PassengerState> {
   void getSourceStreet({required String value}) {
     sourceStreetCubit = value;
     emit(GetSourceStreetState());
+  }
+
+  void setScheduleDate({required DateTime value}) {
+    scheduleDate = value;
   }
 
   String destinationStreetCubit = '';
@@ -69,7 +92,7 @@ class PassengerCubit extends Cubit<PassengerState> {
     emit(NoteState());
   }
 
-  int numberCubit = 0;
+  int numberCubit = 1;
 
   void getNumber({required int value}) {
     numberCubit = value;

@@ -27,11 +27,18 @@ class DeliveryCubit extends Cubit<DeliveryState> {
   String destinationStreetCubit = '';
   String detailsDestinationCubit = '';
 
+  DateTime? scheduleDate ;
+
   int totalCubit = 0;
   String noteCubit = '';
   String shopIdCubit = "";
   String shoppNameCubit = "";
   int weightCubit = 0;
+
+
+  void setScheduleDate({required DateTime value}) {
+    scheduleDate = value;
+  }
 
   void setIdDestination({required String value, required String name}) {
     idDestinationCubit = value;
@@ -91,7 +98,7 @@ class DeliveryCubit extends Cubit<DeliveryState> {
     nameDestinationCubit = '';
     destinationStreetCubit = '';
     detailsDestinationCubit = '';
-
+    scheduleDate = null;
     totalCubit = 0;
     noteCubit = '';
     shopIdCubit = "";

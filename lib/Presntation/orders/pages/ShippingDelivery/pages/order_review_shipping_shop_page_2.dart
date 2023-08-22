@@ -19,6 +19,7 @@ import '../../../../ratings/widgets/custom_buttons.dart';
 import '../../../../resources/routes_manager.dart';
 import '../../../store/Cubit/my_cart_cubit.dart';
 import '../../../store/pages/my_cart_page.dart';
+import '../../DeliveryOrder/pages/order_review_delivery_page_1.dart';
 
 class OrderReviewShippingShopPage2 extends StatefulWidget {
   const OrderReviewShippingShopPage2({Key? key}) : super(key: key);
@@ -86,117 +87,9 @@ class _OrderReviewShippingShopPage2State extends State<OrderReviewShippingShopPa
                     fontWeight: FontWeight.w700,
                   ),
                   15.verticalSpace,
-                  CustomText(txt: AppStrings.chooseTheTime, fontSize: 20.sp, txtColor: ColorManager.dark, fontWeight: FontWeight.w400),
-                  15.verticalSpace,
-                  Row(
-                    children: [
-                      Expanded(
-                        child: RadioListTile(
-                          activeColor: ColorManager.primary,
-                          title: CustomText(
-                            txt: AppStrings.fastTime,
-                            txtColor: ColorManager.dark,
-                            fontSize: 17,
-                          ),
-                          value: options[0],
-                          groupValue: timeSelected,
-                          onChanged: (value) {
-                            setState(() {
-                              timeSelected = value.toString();
-                            });
-                          },
-                        ),
-                      ),
-                      Expanded(
-                        child: RadioListTile(
-                          activeColor: ColorManager.primary,
-                          title: CustomText(
-                            txt: AppStrings.selectTime,
-                            txtColor: ColorManager.dark,
-                            fontSize: 17,
-                          ),
-                          value: options[1],
-                          groupValue: timeSelected,
-                          onChanged: (value) {
-                            setState(() {
-                              timeSelected = value.toString();
-                            });
-                          },
-                        ),
-                      ),
-                    ],
-                  ),
-                  15.verticalSpace,
-                  Visibility(
-                    visible: timeSelected == options[1],
-                    child: Container(
-                      margin: REdgeInsetsDirectional.only(start: 21, end: 21),
-                      decoration: ThemeHelper().inputBoxDecorationShadow(),
-                      child: CustomTextFormField(
-                        controller: dateinput,
-                        onTap: () async {
-                          DateTime? pickedDate = await showDatePicker(
-                              context: context, initialDate: DateTime.now(), firstDate: DateTime.now(), lastDate: DateTime(2101));
-
-                          if (pickedDate != null) {
-                            print(pickedDate); //pickedDate output format => 2021-03-10 00:00:00.000
-                            String formattedDate = DateFormat('yyyy-MM-dd').format(pickedDate);
-                            print(formattedDate); //formatted date output using intl package =>  2021-03-16
-                            //you can implement different kind of Date Format here according to your requirement
-                            setState(() {
-                              dateinput.text = formattedDate; //set output date to TextField value.
-                            });
-                          } else {
-                            print("Date is not selected");
-                          }
-                        },
-                        suffexIcon: Icon(
-                          Icons.date_range,
-                          color: ColorManager.primary,
-                        ),
-                        lableText: AppStrings.textField1,
-                        color: ColorManager.secondaryGrey,
-                        readOnly: true,
-                      ),
-                    ),
-                  ),
-                  15.verticalSpace,
-                  Visibility(
-                    visible: timeSelected == options[1],
-                    child: Container(
-                      margin: REdgeInsetsDirectional.only(start: 21, end: 21),
-                      decoration: ThemeHelper().inputBoxDecorationShadow(),
-                      child: CustomTextFormField(
-                        controller: timeinput,
-                        readOnly: false,
-                        onTap: () async {
-                          TimeOfDay now = TimeOfDay.now();
-                          TimeOfDay? pickedTime = await showTimePicker(
-                            context: context,
-                            initialTime: now,
-                          );
-                          if (pickedTime != null) {
-                            String formattedTime = DateFormat('h:mm a').format(
-                              DateTime(2023, 1, 1, pickedTime.hour, pickedTime.minute),
-                            );
-                            setState(() {
-                              selectedTime = formattedTime;
-                              timeinput.text = formattedTime;
-                            });
-                          } else {
-                            print("Time is not selected");
-                          }
-                        },
-                        lableText: AppStrings.textField2,
-                        color: ColorManager.secondaryGrey,
-                        suffexIcon: Icon(
-                          Icons.access_time_rounded,
-                          color: ColorManager.primary,
-                        ),
-                      ),
-                    ),
-                  ),
-                  15.verticalSpace,
+                  OrderDateTime(initVal: ShippingCubit.get(context).scheduleDate, onChange: (val){
+                    ShippingCubit.get(context).setScheduleDate(value: val);
+                  }),
                   15.verticalSpace,
                   Container(
                     margin: REdgeInsetsDirectional.only(start: 21, end: 21),

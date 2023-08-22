@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:dartz/dartz.dart' as e;
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -11,6 +12,9 @@ import 'package:stay_home/Presntation/resources/assets_manager.dart';
 import 'package:stay_home/Presntation/resources/color_manager.dart';
 import 'package:stay_home/Presntation/resources/strings_manager.dart';
 import 'package:stay_home/core/widgets/custom_text.dart';
+
+import '../../../data_remote/auth_repo.dart';
+import '../../../model/order_tracking_model.dart';
 
 class DeliveryRatingPage extends StatefulWidget {
   const DeliveryRatingPage({
@@ -39,7 +43,7 @@ class _DeliveryRatingPageState extends State<DeliveryRatingPage> {
   void _startOrderTrackingUpdates() {
     const duration = Duration(seconds: 2);
     _orderTrackingSubscription = Stream.periodic(duration).listen((_) {
-      InitialCubit.get(context).orderTrackingCubit();
+      RatingCubit.get(context).refreshOrderTrackingCubit();
     });
   }
 
@@ -49,22 +53,22 @@ class _DeliveryRatingPageState extends State<DeliveryRatingPage> {
 
   @override
   Widget build(BuildContext context) {
-    InitialCubit.get(context).orderTrackingCubit();
+    RatingCubit.get(context).orderTrackingCubit();
     return Directionality(
       textDirection: TextDirection.rtl,
       child: Scaffold(
         body: Padding(
           padding: REdgeInsetsDirectional.only(start: 10, end: 10, top: 50),
-          child: BlocBuilder<InitialCubit, InitialStates>(
+          child: BlocBuilder<RatingCubit, RatingState>(
             builder: (context, state) {
-              if (state is OrderTrackingSuccessState) {
+              if (!state.loading) {
                 return ListView.separated(
-                  itemCount: state.result.length,
+                  itemCount: state.list!.length,
                   separatorBuilder: (BuildContext context, int index) {
                     return 20.verticalSpace;
                   },
                   itemBuilder: (BuildContext context, int index) {
-                    final item = state.result[index];
+                    final item = state.list![index];
                     return Container(
                       padding: REdgeInsetsDirectional.only(
                           start: 6, end: 6, top: 40, bottom: 40),
@@ -248,4 +252,46 @@ class _DeliveryRatingPageState extends State<DeliveryRatingPage> {
       ),
     );
   }
+}
+
+class RatingCubit extends Cubit<RatingState> {
+  AuthRepo? _authRepo;
+  RatingCubit() :_authRepo = AuthRepo(), super(RatingState());
+
+  static RatingCubit get(context) => BlocProvider.of(context);
+
+  void orderTrackingCubit() async {
+    emit(RatingState(loading: true));
+    e.Either<String, List<OrderTrackingModel>> result =
+    await _authRepo!.orderTracking();
+    result.fold((l) {
+      emit(RatingState(loading: false));
+      //show error
+    }, (r) {
+      emit(RatingState(list:r ,loading: false));
+      //save user
+    });
+  }
+
+  void refreshOrderTrackingCubit() async {
+    e.Either<String, List<OrderTrackingModel>> result =
+    await _authRepo!.orderTracking();
+    result.fold((l) {
+      emit(RatingState(loading: false));
+      //show error
+    }, (r) {
+      emit(RatingState(list:r ,loading: false));
+      //save user
+    });
+  }
+}
+
+class RatingState{
+  List<OrderTrackingModel>? list;
+  bool loading;
+
+  RatingState({
+    this.list = const [],
+    this.loading = false,
+  });
 }

@@ -74,7 +74,7 @@ class AppStrings {
 // Service page
   static const serviceText1 = " توصيل الأغراض";
   static const serviceText2 = " توصيل شخصي";
-  static const serviceText3 = "توصيل بضائع";
+  static const serviceText3 = "شحن بضائع";
 
 //Store Page
   static const storeText = "المتاجر";

@@ -13,6 +13,7 @@ import 'package:stay_home/Presntation/orders/pages/ShippingDelivery/cubit/shippi
 import 'package:stay_home/Presntation/orders/pages/passenger/cubit/passenger_cubit.dart';
 import 'package:stay_home/Presntation/orders/store/Cubit/my_cart_cubit.dart';
 import 'package:stay_home/Presntation/splash/pages/splash_view.dart';
+import 'Presntation/ratings/pages/delivery_rating_page.dart';
 import 'Presntation/resources/routes_manager.dart';
 import 'data_remote/cash_helper.dart';
 
@@ -45,6 +46,9 @@ class MyApp extends StatelessWidget {
             ),
             BlocProvider(
               create: (context) => DeliveryCubit(),
+            ),
+             BlocProvider(
+              create: (context) => RatingCubit(),
             ),
           ],
           child: BlocProvider(

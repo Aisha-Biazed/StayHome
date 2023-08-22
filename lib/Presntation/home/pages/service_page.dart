@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:stay_home/Presntation/orders/pages/passenger/cubit/passenger_cubit.dart';
 import 'package:stay_home/Presntation/resources/assets_manager.dart';
 import 'package:stay_home/Presntation/resources/color_manager.dart';
 import 'package:stay_home/core/widgets/custom_text.dart';
 import '../../../core/widgets/custom_buttons.dart';
+import '../../orders/pages/DeliveryOrder/cubit/delivery_cubit.dart';
 import '../../orders/pages/DeliveryOrder/pages/order_review_delivery_page_1.dart';
+import '../../orders/pages/ShippingDelivery/cubit/shipping_cubit.dart';
 import '../../orders/store/pages/store_page.dart';
 import '../../resources/routes_manager.dart';
 import '../../resources/strings_manager.dart';
@@ -49,6 +52,7 @@ class ServicePage extends StatelessWidget {
                     children: <Widget>[
                       GestureDetector(
                         onTap: () {
+                          DeliveryCubit.get(context).reset();
                           showModalBottomSheet(
                             shape: const RoundedRectangleBorder(borderRadius: BorderRadius.vertical(top: Radius.circular(30))),
                             context: context,
@@ -97,6 +101,7 @@ class ServicePage extends StatelessWidget {
                       ),
                       GestureDetector(
                         onTap: () {
+                          PassengerCubit.get(context).reset();
                           Navigator.pushNamed(context, Routes.orderReview1PassengerRoute);
                         },
                         child: const CardItem2(
@@ -110,6 +115,7 @@ class ServicePage extends StatelessWidget {
                         },
                         child: GestureDetector(
                           onTap: () {
+                            ShippingCubit.get(context).reset();
                             showModalBottomSheet(
                               shape: const RoundedRectangleBorder(borderRadius: BorderRadius.vertical(top: Radius.circular(30))),
                               context: context,

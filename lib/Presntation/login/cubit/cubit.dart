@@ -90,18 +90,7 @@ class InitialCubit extends Cubit<InitialStates> {
     });
   }
 
-  void orderTrackingCubit() async {
-    emit(OrderTrackingLoadingState());
-    Either<String, List<OrderTrackingModel>> result =
-        await _authRepo.orderTracking();
-    result.fold((l) {
-      emit(OrderTrackingErrorState());
-      //show error
-    }, (r) {
-      emit(OrderTrackingSuccessState(r as List<OrderTrackingModel>));
-      //save user
-    });
-  }
+
 
   void getAllCitiesCubit() async {
     emit(GetAllCitiesLoadingState());

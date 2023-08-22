@@ -33,7 +33,6 @@ class _OrderReviewDeliveryPage1State extends State<OrderReviewDeliveryPage1> {
 
   @override
   void initState() {
-    DeliveryCubit.get(context).reset();
     super.initState(); //set the initial value of text field
     super.initState();
   }
@@ -67,7 +66,12 @@ class _OrderReviewDeliveryPage1State extends State<OrderReviewDeliveryPage1> {
                       fontWeight: FontWeight.w700,
                     ),
                     20.verticalSpace,
-                    OrderDateTime(),
+                    OrderDateTime(
+                        initVal: DeliveryCubit.get(context).scheduleDate,
+                        onChange: (val) {
+                          DeliveryCubit.get(context).setScheduleDate(value: val);
+                          print(val);
+                        }),
                     CustomText(txt: AppStrings.weightOfPassenger, fontSize: 20.sp, txtColor: ColorManager.dark, fontWeight: FontWeight.w400),
                     5.verticalSpace,
                     Row(
@@ -196,7 +200,14 @@ class _OrderReviewDeliveryPage1State extends State<OrderReviewDeliveryPage1> {
 }
 
 class OrderDateTime extends StatefulWidget {
-  const OrderDateTime({Key? key}) : super(key: key);
+  final Function(DateTime) onChange;
+  final DateTime? initVal;
+
+  const OrderDateTime({
+    Key? key,
+    required this.initVal,
+    required this.onChange,
+  }) : super(key: key);
 
   @override
   State<OrderDateTime> createState() => _OrderDateTimeState();
@@ -212,13 +223,15 @@ class _OrderDateTimeState extends State<OrderDateTime> {
   late String timeSelected;
   Time val = Time(hour: TimeOfDay.now().hour, minute: TimeOfDay.now().minute);
 
+  DateTime dateTime = DateTime.now();
+
   @override
   void initState() {
-    dateinput.text = "";
+    dateinput.text = DateFormat('yyyy-MM-dd').format(widget.initVal ?? dateTime);
     timeinput.text = DateFormat('HH:mm a').format(
-      DateTime(2023, 1, 1, val.hour, val.minute),
+      widget.initVal ?? DateTime(2023, 1, 1, val.hour, val.minute),
     );
-    timeSelected = options[0];
+    timeSelected = widget.initVal == null ? options[0] : options[1];
 
     super.initState();
   }
@@ -283,7 +296,9 @@ class _OrderDateTimeState extends State<OrderDateTime> {
                       String formattedDate = DateFormat('yyyy-MM-dd').format(pickedDate);
                       setState(() {
                         dateinput.text = formattedDate;
+                        dateTime = dateTime.copyWith(year: pickedDate.year, month: pickedDate.month, day: pickedDate.day);
                       });
+                      widget.onChange(dateTime);
                     } else {
                       print("Date is not selected");
                     }
@@ -307,7 +322,7 @@ class _OrderDateTimeState extends State<OrderDateTime> {
                   onTap: () async {
                     Navigator.of(context).push(await showPicker(
                       context: context,
-                      value: val ,
+                      value: val,
                       onChange: (time) {
                         setState(() {
                           val = time;
@@ -318,15 +333,14 @@ class _OrderDateTimeState extends State<OrderDateTime> {
                         String formattedTime = DateFormat('HH:mm a').format(
                           DateTime(2023, 1, 1, pickedTime.hour, pickedTime.minute),
                         );
+                        dateTime = dateTime.copyWith(hour: val.hour, minute: val.minute);
                         setState(() {
                           timeinput.text = formattedTime;
                         });
-                        setState(() {
-
-                        });
+                        setState(() {});
+                        widget.onChange(dateTime);
                       },
                     ));
-
                   },
                   lableText: AppStrings.textField2,
                   color: ColorManager.secondaryGrey,

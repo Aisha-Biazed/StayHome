@@ -131,7 +131,7 @@ class AuthRepo {
   }) async {
     try {
       final result = await _dio.post(
-          'Mobile/Order/AddShippingOrder?Destination.AreaId=$destinationAreaId&Destination.Street=$destinationStreet&Destination.Additional=$destinationAdditional&Note=$note&ShopId=$shopId',
+          'Mobile/Order/AddDeliveryOrder?Destination.AreaId=$destinationAreaId&Destination.Street=$destinationStreet&Destination.Additional=$destinationAdditional&Note=$note&ShopId=$shopId',
           queryParameters: listToQuery(cart),
     );
       print("SuccessfulAddShippingOrder");

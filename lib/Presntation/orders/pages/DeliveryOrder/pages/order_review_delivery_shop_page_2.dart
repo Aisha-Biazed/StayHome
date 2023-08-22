@@ -20,6 +20,7 @@ import '../../../../login/cubit/cubit.dart';
 import '../../../../ratings/widgets/custom_buttons.dart';
 import '../../../../resources/routes_manager.dart';
 import '../cubit/delivery_cubit.dart';
+import 'order_review_delivery_page_1.dart';
 
 class OrderReviewDeliveryShopPage2 extends StatefulWidget {
   const OrderReviewDeliveryShopPage2({Key? key}) : super(key: key);
@@ -92,116 +93,9 @@ class _OrderReviewDeliveryShopPage2State extends State<OrderReviewDeliveryShopPa
                       fontWeight: FontWeight.w700,
                     ),
                     15.verticalSpace,
-                    CustomText(txt: AppStrings.chooseTheTime, fontSize: 20.sp, txtColor: ColorManager.dark, fontWeight: FontWeight.w400),
-                    15.verticalSpace,
-                    Row(
-                      children: [
-                        Expanded(
-                          child: RadioListTile(
-                            activeColor: ColorManager.primary,
-                            title: CustomText(
-                              txt: AppStrings.fastTime,
-                              txtColor: ColorManager.dark,
-                              fontSize: 17,
-                            ),
-                            value: options[0],
-                            groupValue: timeSelected,
-                            onChanged: (value) {
-                              setState(() {
-                                timeSelected = value.toString();
-                              });
-                            },
-                          ),
-                        ),
-                        Expanded(
-                          child: RadioListTile(
-                            activeColor: ColorManager.primary,
-                            title: CustomText(
-                              txt: AppStrings.selectTime,
-                              txtColor: ColorManager.dark,
-                              fontSize: 17,
-                            ),
-                            value: options[1],
-                            groupValue: timeSelected,
-                            onChanged: (value) {
-                              setState(() {
-                                timeSelected = value.toString();
-                              });
-                            },
-                          ),
-                        ),
-                      ],
-                    ),
-                    if (timeSelected == options[1])
-                      Column(
-                        children: [
-                          15.verticalSpace,
-                          Container(
-                            margin: REdgeInsetsDirectional.only(start: 21, end: 21),
-                            decoration: ThemeHelper().inputBoxDecorationShadow(),
-                            child: CustomTextFormField(
-                              controller: dateinput,
-                              onTap: () async {
-                                DateTime? pickedDate = await showDatePicker(
-                                    context: context, initialDate: DateTime.now(), firstDate: DateTime.now(), lastDate: DateTime(2101));
-
-                                if (pickedDate != null) {
-                                  print(pickedDate); //pickedDate output format => 2021-03-10 00:00:00.000
-                                  String formattedDate = DateFormat('yyyy-MM-dd').format(pickedDate);
-                                  print(formattedDate); //formatted date output using intl package =>  2021-03-16
-                                  //you can implement different kind of Date Format here according to your requirement
-                                  setState(() {
-                                    dateinput.text = formattedDate; //set output date to TextField value.
-                                  });
-                                } else {
-                                  print("Date is not selected");
-                                }
-                              },
-                              suffexIcon: Icon(
-                                Icons.date_range,
-                                color: ColorManager.primary,
-                              ),
-                              lableText: AppStrings.textField1,
-                              color: ColorManager.secondaryGrey,
-                              readOnly: true,
-                            ),
-                          ),
-                          15.verticalSpace,
-                          Container(
-                            margin: REdgeInsetsDirectional.only(start: 21, end: 21),
-                            decoration: ThemeHelper().inputBoxDecorationShadow(),
-                            child: CustomTextFormField(
-                              controller: timeinput,
-                              readOnly: false,
-                              onTap: () async {
-                                TimeOfDay now = TimeOfDay.now();
-                                TimeOfDay? pickedTime = await showTimePicker(
-                                  context: context,
-                                  initialTime: now,
-                                );
-                                if (pickedTime != null) {
-                                  String formattedTime = DateFormat('h:mm a').format(
-                                    DateTime(2023, 1, 1, pickedTime.hour, pickedTime.minute),
-                                  );
-                                  setState(() {
-                                    selectedTime = formattedTime;
-                                    timeinput.text = formattedTime;
-                                  });
-                                } else {
-                                  print("Time is not selected");
-                                }
-                              },
-                              lableText: AppStrings.textField2,
-                              color: ColorManager.secondaryGrey,
-                              suffexIcon: Icon(
-                                Icons.access_time_rounded,
-                                color: ColorManager.primary,
-                              ),
-                            ),
-                          ),
-                          15.verticalSpace,
-                        ],
-                      ).animate().fadeIn(),
+                    OrderDateTime(initVal: DeliveryCubit.get(context).scheduleDate, onChange: (val){
+                      DeliveryCubit.get(context).setScheduleDate(value: val);
+                    }),
                     15.verticalSpace,
                     Container(
                       margin: REdgeInsetsDirectional.only(start: 21, end: 21),

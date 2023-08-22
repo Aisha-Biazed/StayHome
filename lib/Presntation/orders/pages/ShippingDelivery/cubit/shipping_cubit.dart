@@ -31,6 +31,8 @@ class ShippingCubit extends Cubit<ShippingState> {
   int totalCubit = 0;
   String shopIdCubit = "";
   String shoppNameCubit = "";
+  DateTime? scheduleDate ;
+
 
   void reset() {
     idSourceCubit = '';
@@ -41,12 +43,16 @@ class ShippingCubit extends Cubit<ShippingState> {
     nameDestinationCubit = '';
     destinationStreetCubit = '';
     detailsDestinationCubit = '';
-
+    scheduleDate = null;
     totalCubit = 0;
     noteCubit = '';
     shopIdCubit = "";
     shoppNameCubit = "";
     weightCubit = 0;
+  }
+
+  void setScheduleDate({required DateTime value}) {
+    scheduleDate = value;
   }
 
   void setIdDestination({required String value, required String name}) {
