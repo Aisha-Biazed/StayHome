@@ -340,10 +340,26 @@ class AuthRepo {
     }
   }
 
-  Future<Either<String, Null>> rate({required int star, required String comment}) async {
+  Future<Either<String, Null>> rate(
+      {required int star,
+      required String comment,
+      required String idRate}) async {
     try {
-      final result = await _dio.post('Mobile/Order/Rate?Id=4a4c2eea-ea10-4b08-9cc7-7422230dcde7&Star=$star&Comment=$comment');
+      final result = await _dio
+          .post('Mobile/Order/Rate?Id=$idRate&Star=$star&Comment=$comment');
       print("SuccessfulDataRate");
+      print(result.data["response"]);
+      return Right(result.data["response"]);
+    } catch (error) {
+      print("error =$error");
+      return Left(ExceptionHandler.handle(error as Exception));
+    }
+  }
+
+  Future<Either<String, Null>> cancel({required String idOrder}) async {
+    try {
+      final result = await _dio.post('Mobile/Order/Cancel?Id=$idOrder');
+      print("SuccessfulCancel");
       print(result.data["response"]);
       return Right(result.data["response"]);
     } catch (error) {

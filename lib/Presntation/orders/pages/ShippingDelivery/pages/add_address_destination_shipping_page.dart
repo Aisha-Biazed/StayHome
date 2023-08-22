@@ -24,10 +24,12 @@ class AddAddressDestinationShippingPage extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  State<AddAddressDestinationShippingPage> createState() => _AddAddressDestinationShippingPageState();
+  State<AddAddressDestinationShippingPage> createState() =>
+      _AddAddressDestinationShippingPageState();
 }
 
-class _AddAddressDestinationShippingPageState extends State<AddAddressDestinationShippingPage> {
+class _AddAddressDestinationShippingPageState
+    extends State<AddAddressDestinationShippingPage> {
   final _formKey = GlobalKey<FormState>();
   late SingleValueDropDownController _cnt;
   late SingleValueDropDownController _area;

@@ -80,7 +80,7 @@ class _OrderReviewPassengerPage2State extends State<OrderReviewPassengerPage2> {
                     txt: AppStrings.orderBeforeAdd,
                     fontSize: 30.sp,
                     txtColor: ColorManager.primary,
-                    fontWeight: FontWeight.w700,
+                    fontWeight: FontWeight.w500,
                   ),
                   20.verticalSpace,
                   CustomText(txt: AppStrings.chooseTheTime, fontSize: 20.sp, txtColor: ColorManager.dark, fontWeight: FontWeight.w400),

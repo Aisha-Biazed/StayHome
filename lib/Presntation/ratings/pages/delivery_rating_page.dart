@@ -5,46 +5,47 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:stay_home/Presntation/login/cubit/cubit.dart';
 import 'package:stay_home/Presntation/login/cubit/states.dart';
+import 'package:stay_home/Presntation/ratings/pages/rating_page.dart';
 import 'package:stay_home/Presntation/ratings/widgets/custom_buttons.dart';
 import 'package:stay_home/Presntation/resources/assets_manager.dart';
 import 'package:stay_home/Presntation/resources/color_manager.dart';
 import 'package:stay_home/Presntation/resources/strings_manager.dart';
 import 'package:stay_home/core/widgets/custom_text.dart';
 
-import '../../resources/routes_manager.dart';
-
 class DeliveryRatingPage extends StatefulWidget {
-  const DeliveryRatingPage({Key? key}) : super(key: key);
+  const DeliveryRatingPage({
+    Key? key,
+  }) : super(key: key);
 
   @override
   State<DeliveryRatingPage> createState() => _DeliveryRatingPageState();
 }
 
 class _DeliveryRatingPageState extends State<DeliveryRatingPage> {
-  // late StreamSubscription _orderTrackingSubscription;
-  //
-  // @override
-  // void initState() {
-  //   super.initState();
-  //   _startOrderTrackingUpdates();
-  // }
-  //
-  // @override
-  // void dispose() {
-  //   _cancelOrderTrackingUpdates();
-  //   super.dispose();
-  // }
-  //
-  // void _startOrderTrackingUpdates() {
-  //   const duration = Duration(seconds: 10);
-  //   _orderTrackingSubscription = Stream.periodic(duration).listen((_) {
-  //     InitialCubit.get(context).orderTrackingCubit();
-  //   });
-  // }
-  //
-  // void _cancelOrderTrackingUpdates() {
-  //   _orderTrackingSubscription.cancel();
-  // }
+  late StreamSubscription _orderTrackingSubscription;
+
+  @override
+  void initState() {
+    super.initState();
+    _startOrderTrackingUpdates();
+  }
+
+  @override
+  void dispose() {
+    _cancelOrderTrackingUpdates();
+    super.dispose();
+  }
+
+  void _startOrderTrackingUpdates() {
+    const duration = Duration(seconds: 2);
+    _orderTrackingSubscription = Stream.periodic(duration).listen((_) {
+      InitialCubit.get(context).orderTrackingCubit();
+    });
+  }
+
+  void _cancelOrderTrackingUpdates() {
+    _orderTrackingSubscription.cancel();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -73,6 +74,7 @@ class _DeliveryRatingPageState extends State<DeliveryRatingPage> {
                             Border.all(width: 1.0, color: ColorManager.primary),
                       ),
                       child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.end,
                         children: [
                           Row(
                             children: [
@@ -114,8 +116,11 @@ class _DeliveryRatingPageState extends State<DeliveryRatingPage> {
                                 onPressed: () {
                                   if (item.star == null &&
                                       item.canEvaluate == true) {
-                                    Navigator.pushNamed(
-                                        context, Routes.ratingRoute);
+                                    Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                RatingsPage(idRate: item.id!)));
                                   }
                                 },
                                 text: AppStrings.ratingBtnDelivery,
@@ -132,6 +137,23 @@ class _DeliveryRatingPageState extends State<DeliveryRatingPage> {
                           ),
                           Padding(
                             padding: REdgeInsetsDirectional.only(
+                              end: 25,
+                            ),
+                            child: Visibility(
+                              visible: !(item.currentStage == "OnWay" ||
+                                  item.currentStage == "Complete"),
+                              child: CustomButtons(
+                                text: AppStrings.cancelBtn,
+                                colorText: ColorManager.dark,
+                                onPressed: () {
+                                  InitialCubit.get(context)
+                                      .cancelCubit(idOrder: item.id!);
+                                },
+                              ),
+                            ),
+                          ),
+                          Padding(
+                            padding: REdgeInsetsDirectional.only(
                                 start: 16, end: 16, top: 16),
                             child: Row(children: <Widget>[
                               Container(
@@ -139,7 +161,9 @@ class _DeliveryRatingPageState extends State<DeliveryRatingPage> {
                                 width: 10,
                                 padding: const EdgeInsets.all(1),
                                 decoration: BoxDecoration(
-                                    color: item.currentStage == 'Complete'
+                                    color: item.currentStage == 'Confirmed' ||
+                                            item.currentStage == "OnWay" ||
+                                            item.currentStage == "Complete"
                                         ? ColorManager.primary
                                         : ColorManager.purple,
                                     borderRadius: BorderRadius.circular(6)),
@@ -147,8 +171,8 @@ class _DeliveryRatingPageState extends State<DeliveryRatingPage> {
                               Expanded(
                                   child: Divider(
                                 thickness: 1.5,
-                                color: item.currentStage == 'onWay' &&
-                                        item.currentStage == 'Complete'
+                                color: item.currentStage == "OnWay" ||
+                                        item.currentStage == "Complete"
                                     ? ColorManager.primary
                                     : ColorManager.purple,
                               )),
@@ -157,7 +181,8 @@ class _DeliveryRatingPageState extends State<DeliveryRatingPage> {
                                 width: 10,
                                 padding: const EdgeInsets.all(1),
                                 decoration: BoxDecoration(
-                                    color: item.currentStage == 'onWay'
+                                    color: item.currentStage == "OnWay" ||
+                                            item.currentStage == "Complete"
                                         ? ColorManager.primary
                                         : ColorManager.purple,
                                     borderRadius: BorderRadius.circular(6)),
@@ -165,8 +190,7 @@ class _DeliveryRatingPageState extends State<DeliveryRatingPage> {
                               Expanded(
                                   child: Divider(
                                 thickness: 1.5,
-                                color: item.currentStage == 'onWay' &&
-                                        item.currentStage == 'Confirmed'
+                                color: item.currentStage == 'Complete'
                                     ? ColorManager.primary
                                     : ColorManager.purple,
                               )),
@@ -175,7 +199,7 @@ class _DeliveryRatingPageState extends State<DeliveryRatingPage> {
                                 width: 10,
                                 padding: const EdgeInsets.all(1),
                                 decoration: BoxDecoration(
-                                    color: item.currentStage == 'Confirmed'
+                                    color: item.currentStage == "Complete"
                                         ? ColorManager.primary
                                         : ColorManager.purple,
                                     borderRadius: BorderRadius.circular(6)),
@@ -189,7 +213,7 @@ class _DeliveryRatingPageState extends State<DeliveryRatingPage> {
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 CustomText(
-                                  txt: AppStrings.delivered,
+                                  txt: AppStrings.inPreparation,
                                   txtColor: ColorManager.dark,
                                   fontSize: 14,
                                 ),
@@ -199,7 +223,7 @@ class _DeliveryRatingPageState extends State<DeliveryRatingPage> {
                                   fontSize: 14,
                                 ),
                                 CustomText(
-                                  txt: AppStrings.inPreparation,
+                                  txt: AppStrings.delivered,
                                   txtColor: ColorManager.dark,
                                   fontSize: 14,
                                 ),

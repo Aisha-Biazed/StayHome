@@ -22,7 +22,8 @@ class OrderReviewDeliveryPage2 extends StatefulWidget {
   const OrderReviewDeliveryPage2({Key? key}) : super(key: key);
 
   @override
-  State<OrderReviewDeliveryPage2> createState() => _OrderReviewDeliveryPage2State();
+  State<OrderReviewDeliveryPage2> createState() =>
+      _OrderReviewDeliveryPage2State();
 }
 
 List<String> options = ['fastTime', 'selectTime'];
@@ -45,10 +46,17 @@ class _OrderReviewDeliveryPage2State extends State<OrderReviewDeliveryPage2> {
   void initState() {
     dateinput.text = "";
     timeinput.text = "";
-    InitialCubit.get(context).orderCheckCubit(DeliveryCubit.get(context).idDestinationCubit, DeliveryCubit.get(context).idSourceCubit);
-    destinationController = TextEditingController(text: '${AppStrings.destinationText}${DeliveryCubit.get(context).nameDestinationCubit}');
-    sourceController = TextEditingController(text: '${AppStrings.sourceText}${DeliveryCubit.get(context).nameSourceCubit}');
-    noteController = TextEditingController(text: DeliveryCubit.get(context).noteCubit);
+    InitialCubit.get(context).orderCheckCubit(
+        DeliveryCubit.get(context).idDestinationCubit,
+        DeliveryCubit.get(context).idSourceCubit);
+    destinationController = TextEditingController(
+        text:
+            '${AppStrings.destinationText}${DeliveryCubit.get(context).nameDestinationCubit}');
+    sourceController = TextEditingController(
+        text:
+            '${AppStrings.sourceText}${DeliveryCubit.get(context).nameSourceCubit}');
+    noteController =
+        TextEditingController(text: DeliveryCubit.get(context).noteCubit);
     weight = DeliveryCubit.get(context).weightCubit;
     super.initState(); //set the initial value of text field
     super.initState();
@@ -84,10 +92,14 @@ class _OrderReviewDeliveryPage2State extends State<OrderReviewDeliveryPage2> {
                     txt: AppStrings.orderBeforeAdd,
                     fontSize: 30.sp,
                     txtColor: ColorManager.primary,
-                    fontWeight: FontWeight.w700,
+                    fontWeight: FontWeight.w500,
                   ),
                   20.verticalSpace,
-                  CustomText(txt: AppStrings.chooseTheTime, fontSize: 20.sp, txtColor: ColorManager.dark, fontWeight: FontWeight.w400),
+                  CustomText(
+                      txt: AppStrings.chooseTheTime,
+                      fontSize: 20.sp,
+                      txtColor: ColorManager.dark,
+                      fontWeight: FontWeight.w400),
                   10.verticalSpace,
                   Row(
                     children: [
@@ -132,21 +144,29 @@ class _OrderReviewDeliveryPage2State extends State<OrderReviewDeliveryPage2> {
                     Column(
                       children: [
                         Container(
-                          margin: REdgeInsetsDirectional.only(start: 21, end: 21),
+                          margin:
+                              REdgeInsetsDirectional.only(start: 21, end: 21),
                           decoration: ThemeHelper().inputBoxDecorationShadow(),
                           child: CustomTextFormField(
                             controller: dateinput,
                             onTap: () async {
                               DateTime? pickedDate = await showDatePicker(
-                                  context: context, initialDate: DateTime.now(), firstDate: DateTime.now(), lastDate: DateTime(2101));
+                                  context: context,
+                                  initialDate: DateTime.now(),
+                                  firstDate: DateTime.now(),
+                                  lastDate: DateTime(2101));
 
                               if (pickedDate != null) {
-                                print(pickedDate); //pickedDate output format => 2021-03-10 00:00:00.000
-                                String formattedDate = DateFormat('yyyy-MM-dd').format(pickedDate);
-                                print(formattedDate); //formatted date output using intl package =>  2021-03-16
+                                print(
+                                    pickedDate); //pickedDate output format => 2021-03-10 00:00:00.000
+                                String formattedDate =
+                                    DateFormat('yyyy-MM-dd').format(pickedDate);
+                                print(
+                                    formattedDate); //formatted date output using intl package =>  2021-03-16
                                 //you can implement different kind of Date Format here according to your requirement
                                 setState(() {
-                                  dateinput.text = formattedDate; //set output date to TextField value.
+                                  dateinput.text =
+                                      formattedDate; //set output date to TextField value.
                                 });
                               } else {
                                 print("Date is not selected");
@@ -163,7 +183,8 @@ class _OrderReviewDeliveryPage2State extends State<OrderReviewDeliveryPage2> {
                         ),
                         20.verticalSpace,
                         Container(
-                          margin: REdgeInsetsDirectional.only(start: 21, end: 21),
+                          margin:
+                              REdgeInsetsDirectional.only(start: 21, end: 21),
                           decoration: ThemeHelper().inputBoxDecorationShadow(),
                           child: CustomTextFormField(
                             controller: timeinput,
@@ -208,7 +229,11 @@ class _OrderReviewDeliveryPage2State extends State<OrderReviewDeliveryPage2> {
                         20.verticalSpace,
                       ],
                     ).animate().fadeIn(),
-                  CustomText(txt: AppStrings.weightOfPassenger, fontSize: 20.sp, txtColor: ColorManager.dark, fontWeight: FontWeight.w400),
+                  CustomText(
+                      txt: AppStrings.weightOfPassenger,
+                      fontSize: 20.sp,
+                      txtColor: ColorManager.dark,
+                      fontWeight: FontWeight.w400),
                   5.verticalSpace,
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -223,7 +248,10 @@ class _OrderReviewDeliveryPage2State extends State<OrderReviewDeliveryPage2> {
                             Icons.add_circle,
                             color: ColorManager.primary,
                           )),
-                      CustomText(txt: DeliveryCubit.get(context).weightCubit.toString()),
+                      CustomText(
+                          txt: DeliveryCubit.get(context)
+                              .weightCubit
+                              .toString()),
                       IconButton(
                           onPressed: () {
                             if (weight != 0) {
@@ -293,8 +321,9 @@ class _OrderReviewDeliveryPage2State extends State<OrderReviewDeliveryPage2> {
                     Expanded(
                         child: CustomGeneralButton(
                       onTap: () async {
-                        final val  = await DeliveryCubit.get(context).deliveryPointCubit();
-                        if(val) {
+                        final val = await DeliveryCubit.get(context)
+                            .deliveryPointCubit();
+                        if (val) {
                           Navigator.pushNamed(
                               context, Routes.confirmationPassengerRoute);
                         } else {
@@ -304,7 +333,8 @@ class _OrderReviewDeliveryPage2State extends State<OrderReviewDeliveryPage2> {
                       text: AppStrings.confBtn,
                     )),
                     const Spacer(),
-                    Expanded(child: BlocBuilder<InitialCubit, InitialStates>(builder: (context, state) {
+                    Expanded(child: BlocBuilder<InitialCubit, InitialStates>(
+                        builder: (context, state) {
                       if (state is OrderCheckSuccessState) {
                         return Padding(
                           padding: REdgeInsetsDirectional.only(
@@ -314,7 +344,10 @@ class _OrderReviewDeliveryPage2State extends State<OrderReviewDeliveryPage2> {
                             children: [
                               const CustomText(txt: AppStrings.costDelivery),
                               CustomText(
-                                  txtColor: ColorManager.dark, fontWeight: FontWeight.w400, txt: '${state.listOrder.deliveryCoast.toString()}ل.س '),
+                                  txtColor: ColorManager.dark,
+                                  fontWeight: FontWeight.w400,
+                                  txt:
+                                      '${state.listOrder.deliveryCoast.toString()}ل.س '),
                             ],
                           ),
                         );

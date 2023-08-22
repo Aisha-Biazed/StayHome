@@ -197,14 +197,27 @@ class InitialCubit extends Cubit<InitialStates> {
     });
   }
 
-  void rateCubit({required int star, required String comment}) async {
+  void rateCubit(
+      {required int star,
+      required String comment,
+      required String idRate}) async {
     emit(RateLoadingState());
     Either<String, Null> result =
-        await _authRepo.rate(star: star, comment: comment);
+        await _authRepo.rate(star: star, comment: comment, idRate: idRate);
     result.fold((l) {
       emit(RateErrorState());
     }, (r) {
       emit(RateSuccessState());
+    });
+  }
+
+  void cancelCubit({required String idOrder}) async {
+    emit(CancelLoadingState());
+    Either<String, Null> result = await _authRepo.cancel(idOrder: idOrder);
+    result.fold((l) {
+      emit(CancelErrorState());
+    }, (r) {
+      emit(CancelSuccessState());
     });
   }
 }

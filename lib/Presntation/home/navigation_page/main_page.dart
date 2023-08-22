@@ -30,7 +30,6 @@ class _MainPageState extends State<MainPage> {
     CardItem(urlImage: ImageAssets.homeImg3),
   ];
 
-
   // final icons = [Icons.ac_unit, Icons.access_alarm, Icons.access_time];
   @override
   Widget build(BuildContext context) {
@@ -48,7 +47,7 @@ class _MainPageState extends State<MainPage> {
                 padding: REdgeInsetsDirectional.only(start: 22, top: 10),
                 child: CustomText(
                   txt: AppStrings.service,
-                  fontWeight: FontWeight.w700,
+                  fontWeight: FontWeight.w500,
                   fontSize: 30.sp,
                 ),
               ),
@@ -96,7 +95,7 @@ class _MainPageState extends State<MainPage> {
                 ),
               ),
               Padding(
-                  padding: REdgeInsetsDirectional.only(start: 44, end: 25),
+                  padding: REdgeInsetsDirectional.only(start: 33, end: 25),
                   child: BlocBuilder<InitialCubit, InitialStates>(
                       builder: (context, state) {
                     if (state is HomeSuccessState) {
@@ -119,18 +118,16 @@ class _MainPageState extends State<MainPage> {
                                 height: 110,
                                 width: 290,
                                 child: Row(
-                                  crossAxisAlignment:
-                                      CrossAxisAlignment.center,
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.center,
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
                                     AspectRatio(
                                       aspectRatio: 3 / 2.3,
                                       child: Container(
                                         height: 110.h,
                                         margin: REdgeInsetsDirectional.only(
-                                            end: 10,
-                                            start: 20,
+                                            end: 5,
+                                            start: 5,
                                             top: 10,
                                             bottom: 10),
                                         decoration: BoxDecoration(
@@ -157,6 +154,7 @@ class _MainPageState extends State<MainPage> {
                                             children: [
                                               Icon(
                                                 Icons.circle,
+                                                size: 16,
                                                 color: item.isOnline
                                                     ? ColorManager.green
                                                     : Colors.red,
@@ -166,19 +164,19 @@ class _MainPageState extends State<MainPage> {
                                                 txt: item.isOnline
                                                     ? AppStrings.open
                                                     : AppStrings.close,
-                                                txtColor: ColorManager
-                                                    .secondaryGrey,
+                                                txtColor:
+                                                    ColorManager.secondaryGrey,
                                               ),
                                               10.horizontalSpace,
                                               Icon(
                                                 Icons.location_on_outlined,
-                                                color: ColorManager
-                                                    .secondaryGrey,
+                                                color:
+                                                    ColorManager.secondaryGrey,
                                               ),
                                               CustomText(
                                                 txt: item.area,
-                                                txtColor: ColorManager
-                                                    .secondaryGrey,
+                                                txtColor:
+                                                    ColorManager.secondaryGrey,
                                               ),
                                             ],
                                           ),
@@ -190,8 +188,7 @@ class _MainPageState extends State<MainPage> {
                                 )),
                           );
                         },
-                        separatorBuilder:
-                            (BuildContext context, int index) {
+                        separatorBuilder: (BuildContext context, int index) {
                           return const RSizedBox(
                             height: 20,
                           );
@@ -200,8 +197,8 @@ class _MainPageState extends State<MainPage> {
                     } else {
                       return Center(
                           child: CircularProgressIndicator(
-                        valueColor: AlwaysStoppedAnimation<Color>(
-                            ColorManager.primary),
+                        valueColor:
+                            AlwaysStoppedAnimation<Color>(ColorManager.primary),
                       ));
                     }
                   }))

@@ -111,3 +111,9 @@ class RateLoadingState extends InitialStates {}
 class RateSuccessState extends InitialStates {}
 
 class RateErrorState extends InitialStates {}
+
+class CancelLoadingState extends InitialStates {}
+
+class CancelSuccessState extends InitialStates {}
+
+class CancelErrorState extends InitialStates {}

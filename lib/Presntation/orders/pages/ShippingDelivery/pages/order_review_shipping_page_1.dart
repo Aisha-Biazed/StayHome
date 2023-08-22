@@ -19,7 +19,8 @@ class OrderReviewShippingPage1 extends StatefulWidget {
   const OrderReviewShippingPage1({Key? key}) : super(key: key);
 
   @override
-  State<OrderReviewShippingPage1> createState() => _OrderReviewShippingPage1State();
+  State<OrderReviewShippingPage1> createState() =>
+      _OrderReviewShippingPage1State();
 }
 
 List<String> options = ['fastTime', 'selectTime'];
@@ -82,7 +83,7 @@ class _OrderReviewShippingPage1State extends State<OrderReviewShippingPage1> {
                       txt: AppStrings.orderBeforeAdd,
                       fontSize: 30.sp,
                       txtColor: ColorManager.primary,
-                      fontWeight: FontWeight.w700,
+                      fontWeight: FontWeight.w500,
                     ),
                     20.verticalSpace,
                     CustomText(txt: AppStrings.chooseTheTime, fontSize: 20.sp, txtColor: ColorManager.dark, fontWeight: FontWeight.w400),

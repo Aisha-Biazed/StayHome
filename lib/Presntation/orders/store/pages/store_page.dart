@@ -125,7 +125,7 @@ class _StorePageState extends State<StorePage> {
                   child: const CustomText(
                     txt: AppStrings.storeText,
                     fontSize: 30,
-                    fontWeight: FontWeight.w700,
+                    fontWeight: FontWeight.w500,
                   ),
                 ),
                 Expanded(
@@ -195,8 +195,8 @@ class _StorePageState extends State<StorePage> {
                                         padding: REdgeInsetsDirectional.only(start: 20),
                                         child: CustomText(
                                           txt: items.name!,
-                                          fontWeight: FontWeight.w700,
-                                          fontSize: 24.sp,
+                                          fontWeight: FontWeight.w400,
+                                          fontSize: 20.sp,
                                         ),
                                       ),
                                       Column(
@@ -208,25 +208,34 @@ class _StorePageState extends State<StorePage> {
                                                 10.horizontalSpace,
                                                 Icon(
                                                   Icons.circle,
-                                                  color: items.isOnline! ? ColorManager.green : Colors.red,
+                                                  size: 16,
+                                                  color: items.isOnline!
+                                                      ? ColorManager.green
+                                                      : Colors.red,
                                                 ),
                                                 3.horizontalSpace,
                                                 CustomText(
-                                                  txt: items.isOnline! ? AppStrings.open : AppStrings.close,
-                                                  txtColor: ColorManager.secondaryGrey,
+                                                  txt: items.isOnline!
+                                                      ? AppStrings.open
+                                                      : AppStrings.close,
+                                                  txtColor: ColorManager
+                                                      .secondaryGrey,
                                                 ),
                                                 3.horizontalSpace,
                                                 Icon(
                                                   Icons.location_on_outlined,
-                                                  color: ColorManager.secondaryGrey,
+                                                  color: ColorManager
+                                                      .secondaryGrey,
                                                 ),
                                                 CustomText(
                                                   txt: items.address!,
-                                                  txtColor: ColorManager.secondaryGrey,
+                                                  txtColor: ColorManager
+                                                      .secondaryGrey,
                                                 ),
                                                 10.horizontalSpace,
                                                 Container(
-                                                  color: ColorManager.secondaryGrey,
+                                                  color: ColorManager
+                                                      .secondaryGrey,
                                                   child: const VerticalDivider(
                                                     color: Colors.black,
                                                     width: 2,
@@ -238,19 +247,36 @@ class _StorePageState extends State<StorePage> {
                                                 4.horizontalSpace,
                                                 Icon(
                                                   Icons.update_outlined,
-                                                  color: ColorManager.secondaryGrey,
+                                                  color: ColorManager
+                                                      .secondaryGrey,
                                                 ),
                                                 CustomText(
-                                                  txt: items.startTime?.isNotEmpty == true
-                                                      ? DateFormat('dd/MM/yyyy HH:mm').format(DateTime.tryParse(items.startTime)??DateTime.now())
+                                                  txt: items.startTime
+                                                              ?.isNotEmpty ==
+                                                          true
+                                                      ? DateFormat(
+                                                              'dd/MM/yyyy HH:mm')
+                                                          .format(DateTime
+                                                                  .tryParse(items
+                                                                      .startTime) ??
+                                                              DateTime.now())
                                                       : '',
-                                                  txtColor: ColorManager.secondaryGrey,
+                                                  txtColor: ColorManager
+                                                      .secondaryGrey,
                                                 ),
                                                 CustomText(
-                                                  txt: items.endTime?.isNotEmpty == true
-                                                      ? DateFormat('dd/MM/yyyy HH:mm').format(DateTime.tryParse(items.endTime)??DateTime.now())
+                                                  txt: items.endTime
+                                                              ?.isNotEmpty ==
+                                                          true
+                                                      ? DateFormat(
+                                                              'dd/MM/yyyy HH:mm')
+                                                          .format(DateTime
+                                                                  .tryParse(items
+                                                                      .endTime) ??
+                                                              DateTime.now())
                                                       : '',
-                                                  txtColor: ColorManager.secondaryGrey,
+                                                  txtColor: ColorManager
+                                                      .secondaryGrey,
                                                 ),
                                               ],
                                             ),

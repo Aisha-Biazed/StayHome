@@ -130,7 +130,7 @@ class AppStrings {
   static const ratingBtnSkip = "تخطي";
   static const selectBtn = "أضغط هنا";
   static const elements = "العناصر:5";
-  static const order = "الطلب";
+  static const order = "الطلبات";
   static const priceRating = "السعر:";
   static const ratingBtnDelivery = "تقييم التوصيل";
   static const inPreparation = "قبول الطلب";
@@ -146,4 +146,5 @@ class AppStrings {
   static const n700 = "7,000";
   static const note = "الرجاء وصول الأكل ساخن جداَ";
   static const note1 = "وجهة الهدف: دمشق-المزةَ";
+  static const cancelBtn = "إلغاء";
 }
