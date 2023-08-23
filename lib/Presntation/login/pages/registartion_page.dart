@@ -12,6 +12,7 @@ import 'package:stay_home/core/widgets/custom_buttons.dart';
 
 import '../../../core/utils/theme_helper.dart';
 import '../../../core/widgets/custom_text.dart';
+import '../../home/pages/home_body_view.dart';
 import '../../resources/color_manager.dart';
 import '../../resources/routes_manager.dart';
 import '../../resources/strings_manager.dart';
@@ -66,7 +67,11 @@ class _RegisterationPageState extends State<RegisterationPage> {
           child: BlocListener<InitialCubit, InitialStates>(
             listener: (context, state) {
               if (state is CreateSuccessState) {
-                Navigator.pushReplacementNamed(context, Routes.profilesRoute);
+                Navigator.pushAndRemoveUntil(context,
+                    MaterialPageRoute(builder: (BuildContext context) => const HomeBodyView()),
+                        (Route<dynamic> route) => false
+                );
+                Navigator.pushReplacementNamed(context, Routes.homesRoute);
               }
             },
             child: Scaffold(

@@ -1,14 +1,11 @@
 import 'dart:async';
 
-import 'package:bot_toast/bot_toast.dart';
 import 'package:dartz/dartz.dart' as e;
 import 'package:flutter/material.dart';
-import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:intl/intl.dart';
 import 'package:stay_home/Presntation/login/cubit/cubit.dart';
-import 'package:stay_home/Presntation/login/cubit/states.dart';
 import 'package:stay_home/Presntation/ratings/pages/rating_page.dart';
 import 'package:stay_home/Presntation/ratings/widgets/custom_buttons.dart';
 import 'package:stay_home/Presntation/resources/assets_manager.dart';
@@ -107,7 +104,7 @@ class _DeliveryRatingPageState extends State<DeliveryRatingPage> {
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     CustomText(
-                                      txt: '${state.list!.length-index+1}#',
+                                      txt: '${state.list!.length-index}#',
                                       txtColor: ColorManager.dark,
                                     ),
                                     CustomText(
@@ -258,7 +255,7 @@ class _DeliveryRatingPageState extends State<DeliveryRatingPage> {
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     CustomText(
-                                      txt: '${state.list!.length-index+1}#',
+                                      txt: '${state.list!.length-index}#',
                                       txtColor: ColorManager.dark,
                                     ),
                                     CustomText(
