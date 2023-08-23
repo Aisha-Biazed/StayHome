@@ -1,5 +1,6 @@
 import 'package:bot_toast/bot_toast.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:intl/intl.dart';
@@ -121,7 +122,7 @@ class _StorePageState extends State<StorePage> {
                       itemCount: state.listShop.length,
                     ),
                   ),
-                ),
+                ).animate().flipV(),
                 Padding(
                   padding: REdgeInsetsDirectional.only(end: 27, start: 27, top: 20),
                   child: const CustomText(
@@ -129,7 +130,7 @@ class _StorePageState extends State<StorePage> {
                     fontSize: 30,
                     fontWeight: FontWeight.w500,
                   ),
-                ),
+                ).animate().slideX(begin: 0.5, end: 0),
                 Expanded(
                   child: PageView.builder(
                       controller: _pageController,
@@ -295,7 +296,7 @@ class _StorePageState extends State<StorePage> {
                           );
                         }
                       }),
-                )
+                ).animate().shimmer(duration: Duration(milliseconds: 500))
               ],
             );
           } else {

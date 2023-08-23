@@ -56,7 +56,7 @@ class _RatingsPageState extends State<RatingsPage> {
                       textDirection: TextDirection.ltr,
                       initialRating: 1,
                       updateOnDrag: true,
-                      minRating: 0,
+                      minRating: 1,
                       direction: Axis.horizontal,
                       allowHalfRating: false,
                       itemCount: 5,

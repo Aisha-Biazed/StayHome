@@ -145,7 +145,7 @@ class _OrderReviewPassengerPage1State extends State<OrderReviewPassengerPage1> {
                         onTap: () {
                           Navigator.pushNamed(context, Routes.addressDestinationPassengerRoute);
                         },
-                        readOnly: false,
+                        readOnly: true,
                         hintText: PassengerCubit.get(context).nameDestinationCubit == ''
                             ? AppStrings.textField3
                             : PassengerCubit.get(context).nameDestinationCubit,

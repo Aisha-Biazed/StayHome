@@ -43,6 +43,7 @@ class _OrderReviewPassengerPage2State extends State<OrderReviewPassengerPage2> {
   void initState() {
     dateinput.text = "";
     timeinput.text = "";
+    number = PassengerCubit.get(context).numberCubit;
     super.initState(); //set the initial value of text field
     super.initState();
   }
@@ -84,9 +85,11 @@ class _OrderReviewPassengerPage2State extends State<OrderReviewPassengerPage2> {
                     fontWeight: FontWeight.w500,
                   ),
                   20.verticalSpace,
-                  OrderDateTime(initVal: PassengerCubit.get(context).scheduleDate, onChange: (val){
-                    PassengerCubit.get(context).setScheduleDate(value: val);
-                  }),
+                  OrderDateTime(
+                      initVal: PassengerCubit.get(context).scheduleDate,
+                      onChange: (val) {
+                        PassengerCubit.get(context).setScheduleDate(value: val);
+                      }),
                   CustomText(txt: AppStrings.numberOfPassenger, fontSize: 20.sp, txtColor: ColorManager.dark, fontWeight: FontWeight.w400),
                   5.verticalSpace,
                   Row(
@@ -102,12 +105,15 @@ class _OrderReviewPassengerPage2State extends State<OrderReviewPassengerPage2> {
                             Icons.add_circle,
                             color: ColorManager.primary,
                           )),
-                      CustomText(txt: PassengerCubit.get(context).numberCubit.toString()),
+                      CustomText(txt: number.toString()),
                       IconButton(
                           onPressed: () {
-                            setState(() {
-                              number--;
-                            });
+                            if (number == 1) {
+                            } else {
+                              setState(() {
+                                number--;
+                              });
+                            }
                           },
                           icon: Icon(
                             Icons.remove_circle_outlined,
@@ -170,6 +176,7 @@ class _OrderReviewPassengerPage2State extends State<OrderReviewPassengerPage2> {
                     Expanded(
                         child: CustomGeneralButton(
                       onTap: () async {
+                        PassengerCubit.get(context).getNumber(value: number);
                         final val = await PassengerCubit.get(context).orderPassengerCubit();
                         if (val) {
                           Navigator.pushNamed(context, Routes.confirmationPassengerRoute);

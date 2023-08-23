@@ -36,6 +36,37 @@ class CustomGeneralButton extends StatelessWidget {
   }
 }
 
+class CustomOutlinedButton extends StatelessWidget {
+  const CustomOutlinedButton({Key? key, this.text, this.onTap})
+      : super(key: key);
+  final String? text;
+  final VoidCallback? onTap;
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: onTap,
+      child: Container(
+        height: 52.h,
+        width: SizeConfig.screenWidth,
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(15.w),
+        ),
+        child: Center(
+          child: Text(
+            text!,
+            style: TextStyle(
+              fontSize: 18,
+              color: ColorManager.primary,
+              fontWeight: FontWeight.w500,
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+
 class CustomButtonWithIcon extends StatelessWidget {
   const CustomButtonWithIcon(
       {Key? key, required this.text, this.onTap, this.iconData, this.color})

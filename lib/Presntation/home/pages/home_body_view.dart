@@ -10,7 +10,9 @@ import '../../resources/strings_manager.dart';
 import '../navigation_page/main_page.dart';
 
 class HomeBodyView extends StatefulWidget {
-  const HomeBodyView({Key? key}) : super(key: key);
+  final int initPage;
+
+  const HomeBodyView({Key? key, this.initPage = 0}) : super(key: key);
 
   @override
   State<HomeBodyView> createState() => _HomeBodyViewState();
@@ -19,13 +21,21 @@ class HomeBodyView extends StatefulWidget {
 class _HomeBodyViewState extends State<HomeBodyView> {
   int selectedPageIndex = 0;
   int pageIndex = 0;
-  int _currentIndex = 0;
+  late int _currentIndex;
+
+  @override
+  void initState() {
+    _currentIndex = widget.initPage;
+    super.initState();
+  }
+
   final List<Widget> _widgetOptions = const <Widget>[
     MainPage(),
-    StorePage(dest: true,fromHome: true),
+    StorePage(dest: true, fromHome: true),
     DeliveryRatingPage(),
     ProfilePage(),
   ];
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -49,9 +59,7 @@ class _HomeBodyViewState extends State<HomeBodyView> {
               icon: Icon(Icons.storefront),
               label: AppStrings.homeNavLabel_2,
             ),
-            BottomNavigationBarItem(
-                icon: Icon(Icons.shopping_cart_checkout_sharp),
-                label: AppStrings.homeNavLabel_3),
+            BottomNavigationBarItem(icon: Icon(Icons.shopping_cart_checkout_sharp), label: AppStrings.homeNavLabel_3),
             BottomNavigationBarItem(
               icon: Icon(Icons.person),
               label: AppStrings.homeNavLabel_4,

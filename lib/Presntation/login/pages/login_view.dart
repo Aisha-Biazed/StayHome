@@ -39,6 +39,7 @@ class _LoginViewState extends State<LoginView> {
             child: BlocListener<InitialCubit, InitialStates>(
               listener: (context, state) {
                 if (state is LoginSuccessState) {
+
                   Navigator.pushReplacementNamed(context, Routes.homesRoute);
                 }
               },

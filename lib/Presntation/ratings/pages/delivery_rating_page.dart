@@ -3,8 +3,10 @@ import 'dart:async';
 import 'package:bot_toast/bot_toast.dart';
 import 'package:dartz/dartz.dart' as e;
 import 'package:flutter/material.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:intl/intl.dart';
 import 'package:stay_home/Presntation/login/cubit/cubit.dart';
 import 'package:stay_home/Presntation/login/cubit/states.dart';
 import 'package:stay_home/Presntation/ratings/pages/rating_page.dart';
@@ -13,7 +15,7 @@ import 'package:stay_home/Presntation/resources/assets_manager.dart';
 import 'package:stay_home/Presntation/resources/color_manager.dart';
 import 'package:stay_home/Presntation/resources/strings_manager.dart';
 import 'package:stay_home/core/widgets/custom_text.dart';
-
+import 'dart:ui' as ui;
 import '../../../data_remote/auth_repo.dart';
 import '../../../model/order_tracking_model.dart';
 
@@ -56,7 +58,7 @@ class _DeliveryRatingPageState extends State<DeliveryRatingPage> {
   Widget build(BuildContext context) {
     RatingCubit.get(context).orderTrackingCubit();
     return Directionality(
-      textDirection: TextDirection.rtl,
+      textDirection: ui.TextDirection.rtl,
       child: Scaffold(
         body: Padding(
           padding: REdgeInsetsDirectional.only(start: 10, end: 10, top: 50),
@@ -70,11 +72,9 @@ class _DeliveryRatingPageState extends State<DeliveryRatingPage> {
                   },
                   itemBuilder: (BuildContext context, int index) {
                     final item = state.list![index];
-                    if (item.currentStage == "Rejected" ||
-                        item.currentStage == "UnConfirmed") {
+                    if (item.currentStage == "Rejected" || item.currentStage == "CanselByCustomer" || item.currentStage == "UnConfirmed") {
                       return Container(
-                        padding: REdgeInsetsDirectional.only(
-                            start: 6, end: 6, top: 40, bottom: 40),
+                        padding: REdgeInsetsDirectional.only(start: 6, end: 6, top: 40, bottom: 40),
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(20.0),
                           border: Border.all(width: 1.0, color: Colors.red),
@@ -107,38 +107,33 @@ class _DeliveryRatingPageState extends State<DeliveryRatingPage> {
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     CustomText(
-                                      txt: AppStrings.order,
+                                      txt: '${state.list!.length-index+1}#',
                                       txtColor: ColorManager.dark,
                                     ),
                                     CustomText(
-                                      txt:
-                                          "${AppStrings.priceRating}${item.coast}",
+                                      txt: "${AppStrings.priceRating}${item.coast}",
                                       txtColor: ColorManager.dark,
+                                      fontSize: 15,
+                                    ),
+                                    CustomText(
+                                      txt: DateFormat('(HH:mm) yyyy-MM-dd ').format(item.dateCreated.toLocal()),
+                                      txtColor: ColorManager.dark,
+                                      fontSize: 14,
                                     ),
                                   ],
                                 ),
                                 const Spacer(),
                                 CustomButtons(
                                   onPressed: () {
-                                    if (item.star == null &&
-                                        item.canEvaluate == true &&
-                                        item.currentStage == "Complete") {
-                                      Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                              builder: (context) => RatingsPage(
-                                                  idRate: item.id!)));
+                                    if (item.star == null && item.canEvaluate == true && item.currentStage == "Complete") {
+                                      Navigator.push(context, MaterialPageRoute(builder: (context) => RatingsPage(idRate: item.id!)));
                                     }
                                   },
                                   text: AppStrings.ratingBtnDelivery,
-                                  color: item.star == null &&
-                                          item.canEvaluate == true &&
-                                          item.currentStage == "Complete"
+                                  color: item.star == null && item.canEvaluate == true && item.currentStage == "Complete"
                                       ? ColorManager.primary
                                       : ColorManager.purple,
-                                  colorText: item.star == null &&
-                                          item.canEvaluate == true &&
-                                          item.currentStage == "Complete"
+                                  colorText: item.star == null && item.canEvaluate == true && item.currentStage == "Complete"
                                       ? ColorManager.white
                                       : ColorManager.dark,
                                 ),
@@ -149,8 +144,7 @@ class _DeliveryRatingPageState extends State<DeliveryRatingPage> {
                                 end: 4,
                               ),
                               child: Visibility(
-                                  visible: !(item.currentStage == "OnWay" ||
-                                      item.currentStage == "Complete"),
+                                  visible: !(item.currentStage == "OnWay" || item.currentStage == "Complete"),
                                   child: CustomButtons(
                                     text: AppStrings.cancelOrder,
                                     color: ColorManager.purple,
@@ -158,17 +152,14 @@ class _DeliveryRatingPageState extends State<DeliveryRatingPage> {
                                   )),
                             ),
                             Padding(
-                              padding: REdgeInsetsDirectional.only(
-                                  start: 16, end: 16, top: 16),
+                              padding: REdgeInsetsDirectional.only(start: 16, end: 16, top: 16),
                               child: Row(children: <Widget>[
                                 Container(
                                   height: 10,
                                   width: 10,
                                   padding: const EdgeInsets.all(1),
                                   decoration: BoxDecoration(
-                                      color: item.currentStage == "Confirmed" ||
-                                              item.currentStage == "OnWay" ||
-                                              item.currentStage == "Complete"
+                                      color: item.currentStage == "Confirmed" || item.currentStage == "OnWay" || item.currentStage == "Complete"
                                           ? ColorManager.primary
                                           : ColorManager.purple,
                                       borderRadius: BorderRadius.circular(6)),
@@ -176,18 +167,14 @@ class _DeliveryRatingPageState extends State<DeliveryRatingPage> {
                                 Expanded(
                                     child: Divider(
                                   thickness: 1.5,
-                                  color: item.currentStage == "OnWay" ||
-                                          item.currentStage == "Complete"
-                                      ? ColorManager.primary
-                                      : ColorManager.purple,
+                                  color: item.currentStage == "OnWay" || item.currentStage == "Complete" ? ColorManager.primary : ColorManager.purple,
                                 )),
                                 Container(
                                   height: 10,
                                   width: 10,
                                   padding: const EdgeInsets.all(1),
                                   decoration: BoxDecoration(
-                                      color: item.currentStage == "OnWay" ||
-                                              item.currentStage == "Complete"
+                                      color: item.currentStage == "OnWay" || item.currentStage == "Complete"
                                           ? ColorManager.primary
                                           : ColorManager.purple,
                                       borderRadius: BorderRadius.circular(6)),
@@ -195,28 +182,22 @@ class _DeliveryRatingPageState extends State<DeliveryRatingPage> {
                                 Expanded(
                                     child: Divider(
                                   thickness: 1.5,
-                                  color: item.currentStage == "Complete"
-                                      ? ColorManager.primary
-                                      : ColorManager.purple,
+                                  color: item.currentStage == "Complete" ? ColorManager.primary : ColorManager.purple,
                                 )),
                                 Container(
                                   height: 10,
                                   width: 10,
                                   padding: const EdgeInsets.all(1),
                                   decoration: BoxDecoration(
-                                      color: item.currentStage == "Complete"
-                                          ? ColorManager.primary
-                                          : ColorManager.purple,
+                                      color: item.currentStage == "Complete" ? ColorManager.primary : ColorManager.purple,
                                       borderRadius: BorderRadius.circular(6)),
                                 ),
                               ]),
                             ),
                             Padding(
-                              padding: REdgeInsetsDirectional.only(
-                                  start: 16, end: 16, top: 10),
+                              padding: REdgeInsetsDirectional.only(start: 16, end: 16, top: 10),
                               child: Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                 children: [
                                   CustomText(
                                     txt: AppStrings.inPreparation,
@@ -241,8 +222,7 @@ class _DeliveryRatingPageState extends State<DeliveryRatingPage> {
                       );
                     } else {
                       return Container(
-                        padding: REdgeInsetsDirectional.only(
-                            start: 6, end: 6, top: 40, bottom: 40),
+                        padding: REdgeInsetsDirectional.only(start: 6, end: 6, top: 40, bottom: 40),
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(20.0),
                           border: Border.all(
@@ -278,60 +258,48 @@ class _DeliveryRatingPageState extends State<DeliveryRatingPage> {
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     CustomText(
-                                      txt: AppStrings.order,
+                                      txt: '${state.list!.length-index+1}#',
                                       txtColor: ColorManager.dark,
                                     ),
                                     CustomText(
-                                      txt:
-                                          "${AppStrings.priceRating}${item.coast}",
+                                      txt: "${AppStrings.priceRating}${item.coast}",
                                       txtColor: ColorManager.dark,
+                                      fontSize: 15,
+                                    ),
+                                    CustomText(
+                                      txt: DateFormat('(HH:mm) yyyy-MM-dd ').format(item.dateCreated.toLocal()),
+                                      txtColor: ColorManager.dark,
+                                      fontSize: 14,
                                     ),
                                   ],
                                 ),
                                 const Spacer(),
                                 CustomButtons(
                                   onPressed: () {
-                                    if (item.star == null &&
-                                        item.canEvaluate == true &&
-                                        item.currentStage == "Complete") {
-                                      Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                              builder: (context) => RatingsPage(
-                                                  idRate: item.id!)));
+                                    if (item.star == null && item.canEvaluate == true && item.currentStage == "Complete") {
+                                      Navigator.push(context, MaterialPageRoute(builder: (context) => RatingsPage(idRate: item.id!)));
                                     }
                                   },
                                   text: AppStrings.ratingBtnDelivery,
-                                  color: item.star == null &&
-                                          item.canEvaluate == true
-                                      ? ColorManager.primary
-                                      : ColorManager.purple,
-                                  colorText: item.star == null &&
-                                          item.canEvaluate == true
-                                      ? ColorManager.white
-                                      : ColorManager.dark,
+                                  color: item.star == null && item.canEvaluate == true ? ColorManager.primary : ColorManager.purple,
+                                  colorText: item.star == null && item.canEvaluate == true ? ColorManager.white : ColorManager.dark,
                                 ),
                               ],
                             ),
                             Padding(
-                              padding: REdgeInsetsDirectional.only(
-                                  top: 0, end: 6, start: 0),
+                              padding: REdgeInsetsDirectional.only(top: 0, end: 6, start: 0),
                               child: Visibility(
-                                  visible: !(item.currentStage == "OnWay" ||
-                                      item.currentStage == "Complete"),
+                                  visible: !(item.currentStage == "OnWay" || item.currentStage == "Complete"),
                                   child: RSizedBox(
                                     width: 100,
                                     child: OutlinedButton(
                                         onPressed: () {
-                                          InitialCubit.get(context)
-                                              .cancelCubit(idOrder: item.id!);
+                                          InitialCubit.get(context).cancelCubit(idOrder: item.id!);
                                         },
                                         style: OutlinedButton.styleFrom(
-                                          side: const BorderSide(
-                                              color: Colors.red),
+                                          side: const BorderSide(color: Colors.red),
                                           shape: RoundedRectangleBorder(
-                                            borderRadius:
-                                                BorderRadius.circular(20.0),
+                                            borderRadius: BorderRadius.circular(20.0),
                                           ),
                                         ),
                                         child: CustomText(
@@ -342,17 +310,14 @@ class _DeliveryRatingPageState extends State<DeliveryRatingPage> {
                                   )),
                             ),
                             Padding(
-                              padding: REdgeInsetsDirectional.only(
-                                  start: 16, end: 16, top: 16),
+                              padding: REdgeInsetsDirectional.only(start: 16, end: 16, top: 16),
                               child: Row(children: <Widget>[
                                 Container(
                                   height: 10,
                                   width: 10,
                                   padding: const EdgeInsets.all(1),
                                   decoration: BoxDecoration(
-                                      color: item.currentStage == 'Confirmed' ||
-                                              item.currentStage == "OnWay" ||
-                                              item.currentStage == "Complete"
+                                      color: item.currentStage == 'Confirmed' || item.currentStage == "OnWay" || item.currentStage == "Complete"
                                           ? ColorManager.primary
                                           : ColorManager.purple,
                                       borderRadius: BorderRadius.circular(6)),
@@ -360,18 +325,14 @@ class _DeliveryRatingPageState extends State<DeliveryRatingPage> {
                                 Expanded(
                                     child: Divider(
                                   thickness: 1.5,
-                                  color: item.currentStage == "OnWay" ||
-                                          item.currentStage == "Complete"
-                                      ? ColorManager.primary
-                                      : ColorManager.purple,
+                                  color: item.currentStage == "OnWay" || item.currentStage == "Complete" ? ColorManager.primary : ColorManager.purple,
                                 )),
                                 Container(
                                   height: 10,
                                   width: 10,
                                   padding: const EdgeInsets.all(1),
                                   decoration: BoxDecoration(
-                                      color: item.currentStage == "OnWay" ||
-                                              item.currentStage == "Complete"
+                                      color: item.currentStage == "OnWay" || item.currentStage == "Complete"
                                           ? ColorManager.primary
                                           : ColorManager.purple,
                                       borderRadius: BorderRadius.circular(6)),
@@ -379,28 +340,22 @@ class _DeliveryRatingPageState extends State<DeliveryRatingPage> {
                                 Expanded(
                                     child: Divider(
                                   thickness: 1.5,
-                                  color: item.currentStage == 'Complete'
-                                      ? ColorManager.primary
-                                      : ColorManager.purple,
+                                  color: item.currentStage == 'Complete' ? ColorManager.primary : ColorManager.purple,
                                 )),
                                 Container(
                                   height: 10,
                                   width: 10,
                                   padding: const EdgeInsets.all(1),
                                   decoration: BoxDecoration(
-                                      color: item.currentStage == "Complete"
-                                          ? ColorManager.primary
-                                          : ColorManager.purple,
+                                      color: item.currentStage == "Complete" ? ColorManager.primary : ColorManager.purple,
                                       borderRadius: BorderRadius.circular(6)),
                                 ),
                               ]),
                             ),
                             Padding(
-                              padding: REdgeInsetsDirectional.only(
-                                  start: 16, end: 16, top: 10),
+                              padding: REdgeInsetsDirectional.only(start: 16, end: 16, top: 10),
                               child: Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                 children: [
                                   CustomText(
                                     txt: AppStrings.inPreparation,
@@ -429,8 +384,7 @@ class _DeliveryRatingPageState extends State<DeliveryRatingPage> {
               } else {
                 return Center(
                     child: CircularProgressIndicator(
-                  valueColor:
-                      AlwaysStoppedAnimation<Color>(ColorManager.primary),
+                  valueColor: AlwaysStoppedAnimation<Color>(ColorManager.primary),
                 ));
               }
             },
@@ -461,37 +415,38 @@ class _DeliveryRatingPageState extends State<DeliveryRatingPage> {
 
 class RatingCubit extends Cubit<RatingState> {
   AuthRepo? _authRepo;
-  RatingCubit() :_authRepo = AuthRepo(), super(RatingState());
+
+  RatingCubit()
+      : _authRepo = AuthRepo(),
+        super(RatingState());
 
   static RatingCubit get(context) => BlocProvider.of(context);
 
   void orderTrackingCubit() async {
     emit(RatingState(loading: true));
-    e.Either<String, List<OrderTrackingModel>> result =
-    await _authRepo!.orderTracking();
+    e.Either<String, List<OrderTrackingModel>> result = await _authRepo!.orderTracking();
     result.fold((l) {
       emit(RatingState(loading: false));
       //show error
     }, (r) {
-      emit(RatingState(list:r ,loading: false));
+      emit(RatingState(list: r, loading: false));
       //save user
     });
   }
 
   void refreshOrderTrackingCubit() async {
-    e.Either<String, List<OrderTrackingModel>> result =
-    await _authRepo!.orderTracking();
+    e.Either<String, List<OrderTrackingModel>> result = await _authRepo!.orderTracking();
     result.fold((l) {
       emit(RatingState(loading: false));
       //show error
     }, (r) {
-      emit(RatingState(list:r ,loading: false));
+      emit(RatingState(list: r, loading: false));
       //save user
     });
   }
 }
 
-class RatingState{
+class RatingState {
   List<OrderTrackingModel>? list;
   bool loading;
 

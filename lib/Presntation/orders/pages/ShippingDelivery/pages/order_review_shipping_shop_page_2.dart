@@ -61,7 +61,7 @@ class _OrderReviewShippingShopPage2State extends State<OrderReviewShippingShopPa
 
   @override
   Widget build(BuildContext context) {
-    // InitialCubit.get(context).orderCheckCubit(ShippingCubit.get(context).idDestinationCubit, ShippingCubit.get(context).shopIdCubit);
+    InitialCubit.get(context).orderCheckShopCubit(ShippingCubit.get(context).idDestinationCubit, ShippingCubit.get(context).shopIdCubit);
     var noteController = TextEditingController(text: ShippingCubit.get(context).noteCubit);
     var shopIdController = TextEditingController(text: "${AppStrings.sourceText}${ShippingCubit.get(context).shoppNameCubit}");
     var destinationController = TextEditingController(text: "${AppStrings.destinationText}${ShippingCubit.get(context).nameDestinationCubit}");

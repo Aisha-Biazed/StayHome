@@ -75,7 +75,8 @@ class InitialCubit extends Cubit<InitialStates> {
       required String birthdate,
       required BuildContext context,
       required String gender}) async {
-    emit(ModifyProfileLoadingState());
+    // emit(ModifyProfileLoadingState());
+    BotToast.showLoading();
     Either<String, dynamic> result = await _authRepo.modifyProfile(
       email: email,
       fullName: fullName,
@@ -85,10 +86,15 @@ class InitialCubit extends Cubit<InitialStates> {
     );
 
     result.fold((l) {
-      emit(ModifyProfileErrorState());
+      // emit(ModifyProfileErrorState());
       //show error
+      BotToast.closeAllLoading();
+      BotToast.showText(text: 'حدث خطأ ما، حاول مرة أخرى');
     }, (r) {
-      emit(ModifyProfileSuccessState());
+      // emit(ModifyProfileSuccessState());
+      BotToast.closeAllLoading();
+      BotToast.showText(text: 'تم التعديل بنجاح');
+
     });
   }
 
@@ -226,11 +232,16 @@ class InitialCubit extends Cubit<InitialStates> {
 
   void cancelCubit({required String idOrder}) async {
     emit(CancelLoadingState());
+    BotToast.showLoading();
     Either<String, Null> result = await _authRepo.cancel(idOrder: idOrder);
     result.fold((l) {
       emit(CancelErrorState());
+      BotToast.closeAllLoading();
+      BotToast.showText(text: 'لم يتم إلغاء الطلب، أعد المحاولة');
     }, (r) {
       emit(CancelSuccessState());
+      BotToast.closeAllLoading();
+      BotToast.showText(text: 'تم إلغاء الطلب بنجاح');
     });
   }
 }

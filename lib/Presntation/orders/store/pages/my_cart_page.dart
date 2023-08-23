@@ -8,7 +8,6 @@ import 'package:stay_home/Presntation/resources/strings_manager.dart';
 import 'package:stay_home/core/widgets/custom_text.dart';
 
 import '../../../../core/widgets/custom_buttons.dart';
-import '../../../resources/routes_manager.dart';
 import '../../pages/DeliveryOrder/cubit/delivery_cubit.dart';
 import '../../pages/DeliveryOrder/pages/order_review_delivery_shop_page_1.dart';
 import '../../pages/ShippingDelivery/pages/order_review_shipping_shop_page_1.dart';
@@ -107,10 +106,11 @@ class _MyCartPageState extends State<MyCartPage> {
                                         bottom: 5,
                                       ),
                                       child: Column(
+                                        crossAxisAlignment:CrossAxisAlignment.start,
                                         children: [
                                           CustomText(txt: cart.name!),
                                           30.verticalSpace,
-                                          CustomText(txt: cart.cost.toString()),
+                                          CustomText(txt: '${cart.cost} ل.س '),
                                         ],
                                       ),
                                     ),
@@ -202,7 +202,7 @@ class _MyCartPageState extends State<MyCartPage> {
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 15.horizontalSpace,
-                                Expanded(child: CustomText(txt: total.toString())),
+                                Expanded(child: CustomText(txt: '$total ل.س ')),
                                 Expanded(
                                   child: CustomGeneralButton(
                                     onTap: () {

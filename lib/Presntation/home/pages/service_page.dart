@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:stay_home/Presntation/orders/pages/passenger/cubit/passenger_cubit.dart';
 import 'package:stay_home/Presntation/resources/assets_manager.dart';
@@ -25,6 +26,7 @@ class ServicePage extends StatelessWidget {
         body: Column(
           children: [
             Stack(
+              alignment: Alignment.center,
               children: [
                 Container(
                   decoration: BoxDecoration(
@@ -34,16 +36,13 @@ class ServicePage extends StatelessWidget {
                     ImageAssets.servicesImg,
                   ),
                 ),
-                Padding(
-                  padding: REdgeInsetsDirectional.only(start: 127, end: 30, top: 65),
-                  child: CustomText(
-                    txt: AppStrings.service,
-                    txtColor: ColorManager.white,
-                    fontSize: 40.sp,
-                  ),
+                CustomText(
+                  txt: AppStrings.service,
+                  txtColor: ColorManager.white,
+                  fontSize: 40.sp,
                 ),
               ],
-            ),
+            ).animate().slideY(duration: const Duration(milliseconds: 500)),
             RSizedBox(
               height: 500.h,
               child: Padding(
