@@ -13,7 +13,9 @@ import '../widgets/custom_buttons.dart';
 
 class RatingsPage extends StatefulWidget {
   final String idRate;
+
   const RatingsPage({Key? key, required this.idRate}) : super(key: key);
+
   @override
   State<RatingsPage> createState() => _RatingsPageState();
 }
@@ -31,8 +33,7 @@ class _RatingsPageState extends State<RatingsPage> {
           builder: (context, state) {
             return SingleChildScrollView(
               child: Padding(
-                padding: const EdgeInsetsDirectional.only(
-                    start: 33, end: 33, top: 70),
+                padding: const EdgeInsetsDirectional.only(start: 33, end: 33, top: 70),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -42,10 +43,7 @@ class _RatingsPageState extends State<RatingsPage> {
                       height: 240.h,
                       width: 294.w,
                     ),
-                    const CustomText(
-                        txt: AppStrings.ratingsText_1,
-                        fontSize: 25,
-                        fontWeight: FontWeight.w400),
+                    const CustomText(txt: AppStrings.ratingsText_1, fontSize: 25, fontWeight: FontWeight.w400),
                     const CustomText(
                       txt: AppStrings.ratingsText_2,
                       fontSize: 25,
@@ -76,16 +74,14 @@ class _RatingsPageState extends State<RatingsPage> {
                         controller: textEditingController,
                         textDirection: TextDirection.rtl,
                         decoration: InputDecoration(
-                          border: InputBorder.none, // remove underline Ms.mish
+                          border: InputBorder.none,
+                          // remove underline Ms.mish
                           hintText: AppStrings.ratingsAddComments,
                           labelText: AppStrings.ratingsAddComments,
-                          focusedBorder: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(30.0),
-                              borderSide: const BorderSide(color: Colors.grey)),
-                          enabledBorder: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(30.0),
-                              borderSide:
-                                  BorderSide(color: Colors.grey.shade400)),
+                          focusedBorder:
+                              OutlineInputBorder(borderRadius: BorderRadius.circular(30.0), borderSide: const BorderSide(color: Colors.grey)),
+                          enabledBorder:
+                              OutlineInputBorder(borderRadius: BorderRadius.circular(30.0), borderSide: BorderSide(color: Colors.grey.shade400)),
                         )),
                     20.verticalSpace,
                     Row(
@@ -95,21 +91,27 @@ class _RatingsPageState extends State<RatingsPage> {
                           child: CustomButtons(
                             text: AppStrings.ratingsBtn,
                             color: ColorManager.primary,
-                            onPressed: () {
+                            onPressed: () async {
                               print(textEditingController.text);
                               print("numberStars $userRating");
                               print(widget.idRate);
-                              InitialCubit.get(context).rateCubit(
-                                  star: userRating,
-                                  comment: textEditingController.text,
-                                  idRate: widget.idRate);
+                              final val = await InitialCubit.get(context).rateCubit(
+                                star: userRating,
+                                comment: textEditingController.text,
+                                idRate: widget.idRate,
+                              );
+                              if (val) {
+                                Navigator.pop(context);
+                              } else {}
                             },
                           ),
                         ),
                         10.horizontalSpace,
                         Expanded(
                           child: CustomButtons(
-                            onPressed: () {},
+                            onPressed: () {
+                              Navigator.pop(context);
+                            },
                             text: AppStrings.ratingBtnSkip,
                             colorText: ColorManager.primary,
                           ),

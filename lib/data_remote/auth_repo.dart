@@ -394,7 +394,7 @@ class AuthRepo {
   Future<Either<String, Null>> rate(
       {required int star,
       required String comment,
-      required String idRate}) async {
+      required String idRate,}) async {
     try {
       final result = await _dio
           .post('Mobile/Order/Rate?Id=$idRate&Star=$star&Comment=$comment');

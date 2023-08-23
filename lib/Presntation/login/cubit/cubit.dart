@@ -23,10 +23,10 @@ class InitialCubit extends Cubit<InitialStates> {
   }
 
   static InitialCubit get(context) => BlocProvider.of(context);
+
   void login({required String email, required String password}) async {
     emit(LoginLoadingState());
-    Either<String, String> result =
-        await _authRepo.loginUser(email: email, password: password);
+    Either<String, String> result = await _authRepo.loginUser(email: email, password: password);
     result.fold((l) {
       BotToast.showText(text: l);
       emit(LoginErrorState());
@@ -94,7 +94,6 @@ class InitialCubit extends Cubit<InitialStates> {
       // emit(ModifyProfileSuccessState());
       BotToast.closeAllLoading();
       BotToast.showText(text: 'تم التعديل بنجاح');
-
     });
   }
 
@@ -122,8 +121,7 @@ class InitialCubit extends Cubit<InitialStates> {
 
   void getAllCitiesCubit() async {
     emit(GetAllCitiesLoadingState());
-    Either<String, List<GetAllCitiesModel>> result =
-        await _authRepo.getAllCities();
+    Either<String, List<GetAllCitiesModel>> result = await _authRepo.getAllCities();
     result.fold((l) {
       emit(GetAllCitiesErrorState());
       //show error
@@ -135,8 +133,7 @@ class InitialCubit extends Cubit<InitialStates> {
 
   void getAllAreasCubit() async {
     emit(GetAllAreasLoadingState());
-    Either<String, List<GetAllAreasModel>> result =
-        await _authRepo.getAllAreas();
+    Either<String, List<GetAllAreasModel>> result = await _authRepo.getAllAreas();
     result.fold((l) {
       emit(GetAllAreasErrorState());
       //show error
@@ -148,14 +145,12 @@ class InitialCubit extends Cubit<InitialStates> {
 
   void getAllCitiesWithAreasCubit() async {
     emit(GetAllCitiesWithAllCitiesLoadingState());
-    Either<String, List<GetAllCitiesWithAreasModel>> result =
-        await _authRepo.getAllCitiesWithAreas();
+    Either<String, List<GetAllCitiesWithAreasModel>> result = await _authRepo.getAllCitiesWithAreas();
     result.fold((l) {
       emit(GetAllCitiesWithAllCitiesErrorState());
       //show error
     }, (r) {
-      emit(GetAllCitiesWithAllCitiesSuccessState(
-          r as List<GetAllCitiesWithAreasModel>));
+      emit(GetAllCitiesWithAllCitiesSuccessState(r as List<GetAllCitiesWithAreasModel>));
       //save user
     });
   }
@@ -176,8 +171,7 @@ class InitialCubit extends Cubit<InitialStates> {
 
   void detailsShopCubit(String shopId) async {
     emit(DetailsLoadingState());
-    Either<String, DetailsShopModel> result =
-        await _authRepo.detailsShop(shopId);
+    Either<String, DetailsShopModel> result = await _authRepo.detailsShop(shopId);
     result.fold((l) {
       emit(DetailsShopErrorState());
       //show error
@@ -189,8 +183,7 @@ class InitialCubit extends Cubit<InitialStates> {
 
   void orderCheckCubit(String destinationAreaId, String sourceAreaId) async {
     emit(OrderCheckLoadingState());
-    Either<String, OrderCheckModel> result =
-        await _authRepo.orderCheck(destinationAreaId, sourceAreaId);
+    Either<String, OrderCheckModel> result = await _authRepo.orderCheck(destinationAreaId, sourceAreaId);
     result.fold((l) {
       emit(OrderCheckErrorState());
       //show error
@@ -200,13 +193,11 @@ class InitialCubit extends Cubit<InitialStates> {
     });
   }
 
-  void orderCheckShopCubit(
-      String destinationAreaId, String sourceAreaId) async {
+  void orderCheckShopCubit(String destinationAreaId, String sourceAreaId) async {
     print('orderCheckShop');
 
     emit(OrderCheckLoadingState());
-    Either<String, OrderCheckModel> result =
-        await _authRepo.orderCheckShop(destinationAreaId, sourceAreaId);
+    Either<String, OrderCheckModel> result = await _authRepo.orderCheckShop(destinationAreaId, sourceAreaId);
     result.fold((l) {
       emit(OrderCheckErrorState());
       //show error
@@ -216,18 +207,27 @@ class InitialCubit extends Cubit<InitialStates> {
     });
   }
 
-  void rateCubit(
-      {required int star,
-      required String comment,
-      required String idRate}) async {
+  Future<bool> rateCubit({
+    required int star,
+    required String comment,
+    required String idRate,
+  }) async {
     emit(RateLoadingState());
-    Either<String, Null> result =
-        await _authRepo.rate(star: star, comment: comment, idRate: idRate);
-    result.fold((l) {
+    BotToast.showLoading();
+    Either<String, Null> result = await _authRepo.rate(star: star, comment: comment, idRate: idRate);
+    final val = result.fold((l) {
       emit(RateErrorState());
+      BotToast.closeAllLoading();
+      BotToast.showText(text: 'حدث خطأ ما، أعد المحاولة');
+      return false;
     }, (r) {
       emit(RateSuccessState());
+      BotToast.closeAllLoading();
+      BotToast.showText(text: 'شكرًا لك على تقييمك! يساعدنا تقييمك في تحسين تجربة عملائنا.');
+
+      return true;
     });
+    return val;
   }
 
   void cancelCubit({required String idOrder}) async {

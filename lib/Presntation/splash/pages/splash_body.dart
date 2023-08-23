@@ -55,7 +55,7 @@ class _SplashViewBodyState extends State<SplashViewBody>
             ),
           ),
         ),
-        Image.asset(ImageAssets.splashLogo),
+        Image.asset(ImageAssets.logo),
         const Spacer()
       ],
     );
