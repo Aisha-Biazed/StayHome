@@ -1,1 +1,0 @@
-const loginEndpoints ='login';
